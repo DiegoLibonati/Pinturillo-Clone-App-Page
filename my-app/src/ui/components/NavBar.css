@@ -1,0 +1,22 @@
+.header_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: row wrap;
+  width: 100%;
+  height: 105px;
+  background-color: #454545;
+  padding: 5px;
+}
+
+.header_container_logo {
+  width: auto;
+  height: 60px;
+  transform: rotate(-15deg);
+  object-fit: cover;
+  transition: transform 1s;
+}
+
+.header_container_logo:hover {
+  transform: scale(1.2);
+}
