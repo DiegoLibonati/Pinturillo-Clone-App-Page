@@ -1,0 +1,47 @@
+.main_mobile_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+  width: 100%;
+  height: calc(100vh - 105px);
+  background-color: #336666;
+}
+
+.mobile_section_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.mobile_section_container_logo {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+.mobile_section_container_downloads {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+  width: 100%;
+  height: auto;
+  margin: 30px 0 0 0;
+}
+
+.mobile_section_container_downloads h2 {
+  font-size: 25px;
+  color: #fff;
+}
+
+.mobile_section_container_downloads img {
+  width: 250px;
+  height: auto;
+  object-fit: contain;
+  margin: 10px 0 10px 0;
+}
