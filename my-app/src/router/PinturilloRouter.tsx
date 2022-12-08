@@ -1,12 +1,22 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { IndexPage } from "../pages/exports";
+import { AuthRoutes } from "../auth/routes/AuthRoutes";
+import { useAuth } from "../hooks/exports";
+import { PinturilloRoutes } from "../pinturillo/routes/PinturilloRoutes";
 
 export const PinturilloRouter = () => {
+  const { auth } = useAuth();
   return (
     <Routes>
-      <Route path="/" element={<IndexPage></IndexPage>}></Route>
+      {auth ? (
+        <Route
+          path="/*"
+          element={<PinturilloRoutes></PinturilloRoutes>}
+        ></Route>
+      ) : (
+        <Route path="/auth/*" element={<AuthRoutes></AuthRoutes>}></Route>
+      )}
 
-      <Route path="/*" element={<Navigate to="/"></Navigate>}></Route>
+      <Route path="/*" element={<Navigate to="/auth/login"></Navigate>}></Route>
     </Routes>
   );
 };
