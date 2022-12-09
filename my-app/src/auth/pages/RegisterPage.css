@@ -1,4 +1,4 @@
-.main_desktop_container {
+.main_register_container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,13 +8,13 @@
   background-color: #336666;
 }
 
-.main_desktop_container img {
+.main_register_container img {
   width: 300px;
   height: auto;
   object-fit: cover;
 }
 
-.section_container_desktop {
+.section_container_register {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,20 +23,20 @@
   height: auto;
 }
 
-.section_container_desktop_form {
+.section_container_register_form {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-flow: row wrap;
-  width: 300px;
-  height: auto;
+  width: 400px;
+  height: 200px;
   background-color: #fff;
   border-radius: 10px;
   padding: 20px;
   margin-top: 10px;
 }
 
-.section_container_desktop_form label {
+.section_container_register_form label {
   font-size: 20px;
   font-weight: 800;
   width: 30%;
@@ -44,16 +44,7 @@
   margin: 10px 0 10px 0;
 }
 
-.section_container_desktop_form select {
-  font-size: 20px;
-  font-weight: 800;
-  width: 60%;
-  background-color: #eeeecc;
-  color: #000;
-  border: 2px solid #cccc88;
-}
-
-.section_container_desktop_form input {
+.section_container_register_form input {
   width: 60%;
   padding: 5px;
   background-color: #eeeecc;
@@ -61,11 +52,21 @@
   outline: none;
 }
 
-.section_container_desktop_form button {
+.section_container_register a {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 25px;
+  text-decoration: none;
+  margin: 10px 0 10px 0;
+  color: #fff;
+}
+
+.section_container_register_form button {
   padding: 5px 20px 5px 20px;
   font-size: 20px;
   font-weight: 800;
-  margin: 10px 0 0 0;
   border-radius: 10px;
   cursor: pointer;
+  margin-top: 10px;
 }

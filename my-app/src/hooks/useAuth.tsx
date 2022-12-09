@@ -9,7 +9,7 @@ export const useAuth = () => {
   const { user } = userStates;
 
   useEffect(() => {
-    if (!user.username) {
+    if (!user.isAuth) {
       setAuth(false);
     } else {
       setAuth(true);

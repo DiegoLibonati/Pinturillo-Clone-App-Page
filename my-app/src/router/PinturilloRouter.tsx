@@ -1,22 +1,33 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AuthRoutes } from "../auth/routes/AuthRoutes";
-import { useAuth } from "../hooks/exports";
+import { useAuth, useMediaMatch } from "../hooks/exports";
 import { PinturilloRoutes } from "../pinturillo/routes/PinturilloRoutes";
+import { MobileView } from "../views/MobileView";
 
 export const PinturilloRouter = () => {
   const { auth } = useAuth();
-  return (
-    <Routes>
-      {auth ? (
+
+  const { matchMediaQuery } = useMediaMatch();
+  console.log(auth);
+  if (!matchMediaQuery) {
+    return <MobileView></MobileView>;
+  } else {
+    return (
+      <Routes>
+        {auth ? (
+          <Route
+            path="/*"
+            element={<PinturilloRoutes></PinturilloRoutes>}
+          ></Route>
+        ) : (
+          <Route path="/auth/*" element={<AuthRoutes></AuthRoutes>}></Route>
+        )}
+
         <Route
           path="/*"
-          element={<PinturilloRoutes></PinturilloRoutes>}
+          element={<Navigate to="/auth/login"></Navigate>}
         ></Route>
-      ) : (
-        <Route path="/auth/*" element={<AuthRoutes></AuthRoutes>}></Route>
-      )}
-
-      <Route path="/*" element={<Navigate to="/auth/login"></Navigate>}></Route>
-    </Routes>
-  );
+      </Routes>
+    );
+  }
 };
