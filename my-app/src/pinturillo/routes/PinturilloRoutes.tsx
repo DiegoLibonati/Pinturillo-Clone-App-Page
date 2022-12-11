@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ChooseLobby } from "../pages/ChooseLobby";
+import { Lobby } from "../pages/Lobby";
 
 export const PinturilloRoutes = () => {
   return (
@@ -9,6 +10,8 @@ export const PinturilloRoutes = () => {
           path="/pinturillo/index"
           element={<ChooseLobby></ChooseLobby>}
         ></Route>
+
+        <Route path="/pinturillo/lobby" element={<Lobby></Lobby>}></Route>
 
         <Route
           path="/*"

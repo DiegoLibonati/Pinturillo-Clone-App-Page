@@ -8,7 +8,7 @@ export const PinturilloRouter = () => {
   const { auth } = useAuth();
 
   const { matchMediaQuery } = useMediaMatch();
-  console.log(auth);
+
   if (!matchMediaQuery) {
     return <MobileView></MobileView>;
   } else {

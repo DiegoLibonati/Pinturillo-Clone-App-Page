@@ -6,6 +6,8 @@ import { useForm } from "../../hooks/useForm";
 import pinturilloApi from "../../api/pinturilloApi";
 import { logo4 } from "../../assets/exports";
 import { NavBar } from "../../ui/components/NavBar";
+import { setLoginUser } from "../../store/user/userSlice";
+import { useAppDispatch } from "../../hooks/ReduxToolkitHooks";
 
 const formData = {
   username: "",
@@ -39,6 +41,7 @@ export const RegisterPage = () => {
     onInputChange,
     isFormValid,
   } = useForm(formData, formValidations);
+  const dispath = useAppDispatch();
   const onSubmitForm = (e) => {
     e.preventDefault();
 
@@ -57,12 +60,20 @@ export const RegisterPage = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          const { token, username, hashedPassword, userId } = res.data;
+          const { token, username, userId } = res.data;
 
           cookies.set("token", token);
           cookies.set("username", username);
-          cookies.set("hashedPassword", hashedPassword);
           cookies.set("userId", userId);
+
+          dispath(
+            setLoginUser({
+              userId: cookies.get("userId"),
+              username: cookies.get("username"),
+              token: token,
+              isAuth: true,
+            })
+          );
         }
       });
   };

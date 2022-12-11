@@ -7,7 +7,7 @@ import { useAppDispatch } from "./hooks/ReduxToolkitHooks";
 import { setLoginUser } from "./store/user/userSlice";
 
 export const PinturilloApp = () => {
-  const API_KEY = "46crsxsxjddd";
+  const API_KEY = `${process.env.API_KEY}`;
   const client = StreamChat.getInstance(API_KEY);
   const cookies = new Cookies();
   const token = cookies.get("token");
@@ -19,7 +19,6 @@ export const PinturilloApp = () => {
         {
           id: cookies.get("userId"),
           name: cookies.get("username"),
-          hashedPassword: cookies.get("hashedPassword"),
         },
         token
       )

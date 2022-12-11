@@ -6,6 +6,8 @@ import { useForm } from "../../hooks/useForm";
 import pinturilloApi from "../../api/pinturilloApi";
 import { logo4 } from "../../assets/exports";
 import { NavBar } from "../../ui/components/NavBar";
+import { useAppDispatch } from "../../hooks/ReduxToolkitHooks";
+import { setLoginUser } from "../../store/user/userSlice";
 
 const formData = {
   username: "",
@@ -31,6 +33,7 @@ const formValidations = {
 
 export const LoginPage = () => {
   const cookies = new Cookies();
+  const dispatch = useAppDispatch();
   const {
     username,
     usernameValid,
@@ -62,7 +65,23 @@ export const LoginPage = () => {
           cookies.set("token", token);
           cookies.set("username", username);
           cookies.set("userId", userId);
+
+          dispatch(
+            setLoginUser({
+              userId: cookies.get("userId"),
+              username: cookies.get("username"),
+              token: token,
+              isAuth: true,
+            })
+          );
         }
+      })
+      .catch((e) => {
+        return Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: e.response.data.message,
+        });
       });
   };
 
