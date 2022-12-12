@@ -1,19 +1,15 @@
 import Swal from "sweetalert2";
-import Cookies from "universal-cookie";
 import "./LoginPage.css";
-import { Link } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
-import pinturilloApi from "../../api/pinturilloApi";
 import { logo4 } from "../../assets/exports";
 import { NavBar } from "../../ui/components/NavBar";
 import { useAppDispatch } from "../../hooks/ReduxToolkitHooks";
 import { setLoginUser } from "../../store/user/userSlice";
+import uuid from "react-uuid";
 
 const formData = {
   username: "",
   usernameValid: false,
-  password: "",
-  passwordValid: false,
 };
 
 const formValidations = {
@@ -23,25 +19,16 @@ const formValidations = {
       "The username must have at least 3 characters",
     ],
   ],
-  password: [
-    [
-      (value: String) => value.length >= 6,
-      "The password must have at least 6 characters",
-    ],
-  ],
 };
 
 export const LoginPage = () => {
-  const cookies = new Cookies();
+  const { username, usernameValid, onInputChange, isFormValid } = useForm(
+    formData,
+    formValidations
+  );
+
   const dispatch = useAppDispatch();
-  const {
-    username,
-    usernameValid,
-    password,
-    passwordValid,
-    onInputChange,
-    isFormValid,
-  } = useForm(formData, formValidations);
+
   const onSubmitForm = (e) => {
     e.preventDefault();
 
@@ -49,40 +36,17 @@ export const LoginPage = () => {
       return Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: usernameValid || passwordValid,
+        text: usernameValid,
       });
     }
 
-    pinturilloApi
-      .post("/login", {
-        username,
-        password,
+    dispatch(
+      setLoginUser({
+        userId: uuid(),
+        username: username,
+        isAuth: true,
       })
-      .then((res) => {
-        if (res.status === 200) {
-          const { token, username, userId } = res.data;
-
-          cookies.set("token", token);
-          cookies.set("username", username);
-          cookies.set("userId", userId);
-
-          dispatch(
-            setLoginUser({
-              userId: cookies.get("userId"),
-              username: cookies.get("username"),
-              token: token,
-              isAuth: true,
-            })
-          );
-        }
-      })
-      .catch((e) => {
-        return Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: e.response.data.message,
-        });
-      });
+    );
   };
 
   return (
@@ -104,17 +68,8 @@ export const LoginPage = () => {
               value={username}
               onChange={(e) => onInputChange(e)}
             />
-            <label htmlFor="password">Password:</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={password}
-              onChange={(e) => onInputChange(e)}
-            />
             <button type="submit">¡GO PLAY!</button>
           </form>
-          <Link to="/auth/register">Register</Link>
         </section>
       </main>
     </>

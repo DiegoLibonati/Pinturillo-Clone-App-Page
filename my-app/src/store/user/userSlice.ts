@@ -6,7 +6,6 @@ interface userState {
   user: {
     userId: String;
     username: String;
-    token: String;
     isAuth: Boolean;
   };
 }
@@ -14,7 +13,6 @@ interface userState {
 interface payloadUserState {
   userId: String;
   username: String;
-  token: String;
   isAuth: Boolean;
 }
 
@@ -23,7 +21,6 @@ const initialState: userState = {
   user: {
     userId: "",
     username: "",
-    token: "",
     isAuth: false,
   },
 };
@@ -36,7 +33,6 @@ export const userSlice = createSlice({
     setLoginUser: (state, action: PayloadAction<payloadUserState>) => {
       state.user.userId = action.payload.userId;
       state.user.username = action.payload.username;
-      state.user.token = action.payload.token;
       state.user.isAuth = action.payload.isAuth;
     },
   },

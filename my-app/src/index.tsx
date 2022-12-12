@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { PinturilloApp } from "./PinturilloApp";
 import { store } from "./store/store";
@@ -8,9 +7,7 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PinturilloApp />
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>
+    <PinturilloApp />
+  </Provider>
 );

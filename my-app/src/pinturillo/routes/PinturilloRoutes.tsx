@@ -11,7 +11,10 @@ export const PinturilloRoutes = () => {
           element={<ChooseLobby></ChooseLobby>}
         ></Route>
 
-        <Route path="/pinturillo/lobby" element={<Lobby></Lobby>}></Route>
+        <Route
+          path="/pinturillo/lobby/:roomid"
+          element={<Lobby></Lobby>}
+        ></Route>
 
         <Route
           path="/*"
