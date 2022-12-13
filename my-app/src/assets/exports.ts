@@ -6,4 +6,6 @@ import logo4 from "./logo4.png";
 import GooglePlay from "./gp.png";
 import AppleStore from "./as.png";
 
-export { logo, logo2, logo3, logo4, GooglePlay, AppleStore };
+import owner from "./owner.png";
+
+export { logo, logo2, logo3, logo4, GooglePlay, AppleStore, owner };

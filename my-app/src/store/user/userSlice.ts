@@ -7,13 +7,30 @@ interface userState {
     userId: String;
     username: String;
     isAuth: Boolean;
+    isOwner?: Boolean;
   };
+  users: Array<{
+    userId: String;
+    username: String;
+    isAuth: Boolean;
+    isOwner?: Boolean;
+  }>;
 }
 
 interface payloadUserState {
   userId: String;
   username: String;
   isAuth: Boolean;
+  isOwner?: Boolean;
+}
+
+interface payloadUsersState {
+  users: Array<{
+    userId: String;
+    username: String;
+    isAuth: Boolean;
+    isOwner?: Boolean;
+  }>;
 }
 
 // Define the initial state using that type
@@ -22,7 +39,9 @@ const initialState: userState = {
     userId: "",
     username: "",
     isAuth: false,
+    isOwner: false,
   },
+  users: [],
 };
 
 export const userSlice = createSlice({
@@ -35,9 +54,19 @@ export const userSlice = createSlice({
       state.user.username = action.payload.username;
       state.user.isAuth = action.payload.isAuth;
     },
+    setOwnerUser: (state) => {
+      state.user.isOwner = true;
+    },
+    setUsers: (state, action: PayloadAction<payloadUsersState>) => {
+      state.users = action.payload.users;
+    },
+    setNewUser: (state, action: PayloadAction<payloadUserState>) => {
+      state.users.push(action.payload);
+    },
   },
 });
 
-export const { setLoginUser } = userSlice.actions;
+export const { setLoginUser, setOwnerUser, setUsers, setNewUser } =
+  userSlice.actions;
 
 export default userSlice.reducer;

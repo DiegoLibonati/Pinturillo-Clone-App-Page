@@ -42,7 +42,7 @@ export const ChooseLobby = () => {
       });
     }
 
-    createRoom(roomId);
+    createRoom({ roomId: roomId });
   };
 
   return (
