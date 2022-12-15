@@ -33,7 +33,12 @@ export const roomHandler = (socket: Socket) => {
       (room) => room.userId === user.userId
     );
     if (rooms[roomId] && userInRoom.length === 0) {
-      rooms[roomId].push(user);
+      if (rooms[roomId].length === 0) {
+        rooms[roomId].push({ ...user, isOwner: true });
+      } else {
+        rooms[roomId].push(user);
+      }
+
       socket.join(roomId);
       socket.emit("get-users", {
         roomId: roomId,
@@ -50,10 +55,21 @@ export const roomHandler = (socket: Socket) => {
   };
 
   const leaveRoom = ({ roomId, user }: IRoomParams) => {
-    const userId = user.userId;
+    if (rooms[roomId]) {
+      const userId = user.userId;
 
-    rooms[roomId] = rooms[roomId].filter((room) => room.userId !== userId);
-    socket.to(roomId).emit("user-disconnect", user);
+      rooms[roomId] = rooms[roomId].filter((room) => room.userId !== userId);
+
+      if (user.isOwner && rooms[roomId][0]) {
+        rooms[roomId][0]["isOwner"] = true;
+      }
+
+      socket.to(roomId).emit("user-disconnect", { user });
+
+      if (rooms[roomId].length === 0) {
+        delete rooms[roomId];
+      }
+    }
   };
 
   socket.on("create-room", (roomId) => createRoom(roomId));

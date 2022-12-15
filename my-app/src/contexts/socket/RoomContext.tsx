@@ -2,7 +2,12 @@ import { createContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import { useAppDispatch } from "../../hooks/ReduxToolkitHooks";
-import { setNewUser, setOwnerUser, setUsers } from "../../store/user/userSlice";
+import {
+  setDisconnectUser,
+  setNewUser,
+  setOwnerUser,
+  setUsers,
+} from "../../store/user/userSlice";
 
 interface RoomContextProps {
   children: React.ReactNode;
@@ -43,6 +48,10 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     dispatch(setNewUser(user));
   };
 
+  const getUserDisconnect = ({ user }) => {
+    dispatch(setDisconnectUser(user));
+  };
+
   useEffect(() => {
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
@@ -52,6 +61,9 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     ws.on("user-joined", getNewUser);
   }, []);
 
+  useEffect(() => {
+    ws.on("user-disconnect", getUserDisconnect);
+  }, []);
   return (
     <RoomContext.Provider value={{ ws, createRoom, joinRoom }}>
       {children}

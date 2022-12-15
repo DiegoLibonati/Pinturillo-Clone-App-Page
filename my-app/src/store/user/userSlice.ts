@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
 // Define a type for the slice state
 interface userState {
   user: {
@@ -63,10 +62,28 @@ export const userSlice = createSlice({
     setNewUser: (state, action: PayloadAction<payloadUserState>) => {
       state.users.push(action.payload);
     },
+    setDisconnectUser: (state, action: PayloadAction<payloadUserState>) => {
+      state.users = state.users.filter(
+        (user) => user.userId !== action.payload.userId
+      );
+
+      if (
+        action.payload.isOwner &&
+        state.user.userId === state.users[0].userId
+      ) {
+        state.users[0]["isOwner"] = true;
+        state.user.isOwner = true;
+      }
+    },
   },
 });
 
-export const { setLoginUser, setOwnerUser, setUsers, setNewUser } =
-  userSlice.actions;
+export const {
+  setLoginUser,
+  setOwnerUser,
+  setUsers,
+  setNewUser,
+  setDisconnectUser,
+} = userSlice.actions;
 
 export default userSlice.reducer;
