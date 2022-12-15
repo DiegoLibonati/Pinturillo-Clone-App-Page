@@ -39,7 +39,10 @@ export const LobbyPage = () => {
           </article>
 
           {user.isOwner && (
-            <Link to="/" onClick={() => startGame(roomId)}>
+            <Link
+              to={`/pinturillo/game/${roomId}`}
+              onClick={() => startGame(roomId)}
+            >
               START GAME
             </Link>
           )}

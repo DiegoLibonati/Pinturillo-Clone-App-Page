@@ -32,7 +32,6 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   };
 
   const enterRoom = ({ roomId }: { roomId: String }) => {
-    console.log("hola");
     dispatch(setOwnerUser());
   };
 
@@ -53,8 +52,11 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   };
 
   const startGame = (roomId) => {
-    ws.emit("start-game", { roomId });
-    console.log("EL JUEGO ARRANCO");
+    ws.emit("start-game", roomId);
+  };
+
+  const startGameRoom = (roomId) => {
+    navigate(`/pinturillo/game/${roomId}`);
   };
 
   useEffect(() => {
@@ -71,7 +73,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   }, []);
 
   useEffect(() => {
-    ws.on("start-game", startGame);
+    ws.on("start-game-room", startGameRoom);
   }, []);
   return (
     <RoomContext.Provider value={{ ws, createRoom, joinRoom, startGame }}>
