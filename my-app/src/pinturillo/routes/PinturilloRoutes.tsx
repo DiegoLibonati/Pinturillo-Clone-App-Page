@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ChooseLobby } from "../pages/ChooseLobby";
-import { Lobby } from "../pages/Lobby";
+import { ChooseLobbyPage } from "../pages/ChooseLobbyPage";
+import { LobbyPage } from "../pages/LobbyPage";
 
 export const PinturilloRoutes = () => {
   return (
@@ -8,12 +8,12 @@ export const PinturilloRoutes = () => {
       <Routes>
         <Route
           path="/pinturillo/index"
-          element={<ChooseLobby></ChooseLobby>}
+          element={<ChooseLobbyPage></ChooseLobbyPage>}
         ></Route>
 
         <Route
-          path="/pinturillo/lobby/:roomid"
-          element={<Lobby></Lobby>}
+          path="/pinturillo/lobby/:roomId"
+          element={<LobbyPage></LobbyPage>}
         ></Route>
 
         <Route

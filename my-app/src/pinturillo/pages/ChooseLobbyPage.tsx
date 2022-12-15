@@ -4,7 +4,7 @@ import { RoomContext } from "../../contexts/socket/RoomContext";
 //import { useAppDispatch } from "../../hooks/ReduxToolkitHooks";
 import { useForm } from "../../hooks/useForm";
 import { NavBar } from "../../ui/components/NavBar";
-import "./ChooseLobby.css";
+import "./ChooseLobbyPage.css";
 import { useContext } from "react";
 
 const formData = {
@@ -21,7 +21,7 @@ const formValidations = {
   ],
 };
 
-export const ChooseLobby = () => {
+export const ChooseLobbyPage = () => {
   const { roomId, roomIdValid, onInputChange, isFormValid } = useForm(
     formData,
     formValidations

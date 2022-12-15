@@ -72,7 +72,15 @@ export const roomHandler = (socket: Socket) => {
     }
   };
 
+  const startGameRoom = ({ roomId }) => {
+    if (rooms[roomId]) {
+      socket.to(roomId).emit("start-game");
+    }
+  };
+
   socket.on("create-room", (roomId) => createRoom(roomId));
 
   socket.on("join-room", (roomId) => joinRoom(roomId));
+
+  socket.on("start-game", (roomId) => startGameRoom(roomId));
 };

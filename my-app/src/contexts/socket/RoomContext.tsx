@@ -52,6 +52,11 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     dispatch(setDisconnectUser(user));
   };
 
+  const startGame = (roomId) => {
+    ws.emit("start-game", { roomId });
+    console.log("EL JUEGO ARRANCO");
+  };
+
   useEffect(() => {
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
@@ -64,8 +69,12 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   useEffect(() => {
     ws.on("user-disconnect", getUserDisconnect);
   }, []);
+
+  useEffect(() => {
+    ws.on("start-game", startGame);
+  }, []);
   return (
-    <RoomContext.Provider value={{ ws, createRoom, joinRoom }}>
+    <RoomContext.Provider value={{ ws, createRoom, joinRoom, startGame }}>
       {children}
     </RoomContext.Provider>
   );

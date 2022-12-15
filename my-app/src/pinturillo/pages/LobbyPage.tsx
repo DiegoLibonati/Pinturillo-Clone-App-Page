@@ -4,21 +4,21 @@ import { owner } from "../../assets/exports";
 import { RoomContext } from "../../contexts/socket/RoomContext";
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { NavBar } from "../../ui/components/NavBar";
-import "./Lobby.css";
+import "./LobbyPage.css";
 
-export const Lobby = () => {
-  const { roomid } = useParams();
+export const LobbyPage = () => {
+  const { roomId } = useParams();
 
-  const { joinRoom } = useContext(RoomContext);
+  const { joinRoom, startGame } = useContext(RoomContext);
 
   const { user, users } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     if (user.isAuth && user.username) {
-      joinRoom({ roomId: roomid, user: user });
+      joinRoom({ roomId: roomId, user: user });
     }
     // eslint-disable-next-line
-  }, [roomid, user]);
+  }, [roomId, user]);
 
   return (
     <>
@@ -26,7 +26,7 @@ export const Lobby = () => {
 
       <main className="main_lobby_container">
         <section className="menu_container">
-          <h2>WELCOME TO: {roomid}</h2>
+          <h2>WELCOME TO: {roomId}</h2>
           <article className="menu_container_players">
             {users.map((user, index) => {
               return (
@@ -38,7 +38,11 @@ export const Lobby = () => {
             })}
           </article>
 
-          {user.isOwner && <Link to="/">START GAME</Link>}
+          {user.isOwner && (
+            <Link to="/" onClick={() => startGame(roomId)}>
+              START GAME
+            </Link>
+          )}
         </section>
       </main>
     </>
