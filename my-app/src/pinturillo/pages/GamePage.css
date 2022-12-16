@@ -1,0 +1,149 @@
+.main_game_container {
+  display: grid;
+  grid-template-columns: 10% 60% 15%;
+  width: 100vw;
+  height: 100vh;
+  padding: 10px;
+  column-gap: 10px;
+  row-gap: 10px;
+  justify-content: center;
+  align-items: center;
+  background-color: #336666;
+}
+
+.players_score_container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-flow: column wrap;
+  width: 100%;
+  height: 500px;
+  background-color: #eeeecc;
+  border: 2px solid #cccc88;
+  border-radius: 10px;
+}
+
+.player_score_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  width: 100%;
+  height: auto;
+  margin: 5px 0 5px 0;
+  padding: 5px;
+}
+
+.canvas_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+}
+
+.canvas_container h1 {
+  font-size: 30px;
+  margin-bottom: 10px;
+  letter-spacing: 10px;
+  color: #fff;
+}
+
+.canvas_container canvas {
+  border: 0.1rem solid #000;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.canvas_container_toolbox {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-flow: row wrap;
+  background-color: #cccc88;
+  width: 600px;
+  margin-top: 10px;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.canvas_container_toolbox > * {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px 0 5px;
+  border: 2px solid #336666;
+  padding: 5px;
+  font-size: 25px;
+  height: 50px;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.chat_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+  width: 100%;
+  height: 500px;
+  background-color: #cccc88;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.chat_container_messages {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-flow: column nowrap;
+  width: 100%;
+  height: 80%;
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+.chat_container_messages h2 {
+  font-size: 15px;
+  margin-bottom: 5px;
+  width: 100%;
+  height: auto;
+}
+
+.chat_container_input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+  width: 100%;
+  height: 20%;
+}
+
+.chat_container_input input {
+  font-size: 15px;
+  border: none;
+  background-color: #336666;
+  color: #fff;
+  border-radius: 10px;
+  padding: 5px;
+  outline: none;
+}
+
+.chat_container_input input::placeholder {
+  color: #fff;
+}
+
+.chat_container_input button {
+  padding: 5px;
+  font-size: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid #336666;
+  margin: 5px 0 5px 0;
+  background-color: transparent;
+}
