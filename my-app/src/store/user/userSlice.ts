@@ -7,12 +7,14 @@ interface userState {
     username: String;
     isAuth: Boolean;
     isOwner?: Boolean;
+    score?: Number;
   };
   users: Array<{
     userId: String;
     username: String;
     isAuth: Boolean;
     isOwner?: Boolean;
+    score?: Number;
   }>;
 }
 
@@ -21,6 +23,7 @@ interface payloadUserState {
   username: String;
   isAuth: Boolean;
   isOwner?: Boolean;
+  score?: Number;
 }
 
 interface payloadUsersState {
@@ -29,6 +32,7 @@ interface payloadUsersState {
     username: String;
     isAuth: Boolean;
     isOwner?: Boolean;
+    score?: Number;
   }>;
 }
 
@@ -39,6 +43,7 @@ const initialState: userState = {
     username: "",
     isAuth: false,
     isOwner: false,
+    score: 0,
   },
   users: [],
 };

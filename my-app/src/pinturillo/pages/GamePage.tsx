@@ -1,9 +1,12 @@
 import "./GamePage.css";
 import { useState, useEffect } from "react";
 import { getIncognito } from "../helpers/getIncognito";
+import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
 
 export const GamePage = () => {
   const [misteryWord, setMisteryWord] = useState("");
+
+  const { users } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     setMisteryWord(() => getIncognito("JIRAFA"));
@@ -13,20 +16,14 @@ export const GamePage = () => {
     <>
       <main className="main_game_container">
         <section className="players_score_container">
-          <article className="player_score_container">
-            <h2>Diego</h2>
-            <h3>30 PTS</h3>
-          </article>
-
-          <article className="player_score_container">
-            <h2>Diego</h2>
-            <h3>30 PTS</h3>
-          </article>
-
-          <article className="player_score_container">
-            <h2>Diego</h2>
-            <h3>30 PTS</h3>
-          </article>
+          {users.map((user, index) => {
+            return (
+              <article key={index * 587} className="player_score_container">
+                <h2>{user.username}</h2>
+                <h3>{user.score?.toString()}</h3>
+              </article>
+            );
+          })}
         </section>
 
         <section className="canvas_container">

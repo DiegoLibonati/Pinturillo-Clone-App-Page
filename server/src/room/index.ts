@@ -7,6 +7,7 @@ interface UserParams {
   username: string;
   isAuth: boolean;
   isOwner?: boolean;
+  score?: number;
 }
 
 interface IRoomParams {
@@ -16,6 +17,7 @@ interface IRoomParams {
     username: string;
     isAuth: boolean;
     isOwner?: boolean;
+    score?: number;
   };
 }
 
