@@ -1,9 +1,23 @@
 import "./GamePage.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { getIncognito } from "../helpers/getIncognito";
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
+import { useCanvas } from "../hooks/useCanvas";
 
 export const GamePage = () => {
+  const {
+    color,
+    size,
+    canvasRef,
+    startDrawing,
+    finishDrawing,
+    draw,
+    increaseSize,
+    decreaseSize,
+    changeColor,
+    clearCanvas,
+  } = useCanvas();
+
   const [misteryWord, setMisteryWord] = useState("");
 
   const { users } = useAppSelector((state) => state.user);
@@ -12,46 +26,6 @@ export const GamePage = () => {
     setMisteryWord(() => getIncognito("JIRAFA"));
   }, []);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
-  const [isDrawing, setIsDrawing] = useState(false);
-
-  const startDrawing = ({ nativeEvent }) => {
-    const { offsetX, offsetY } = nativeEvent;
-
-    contextRef?.current?.beginPath();
-    contextRef?.current?.moveTo(offsetX, offsetY);
-    setIsDrawing(true);
-  };
-
-  const finishDrawing = () => {
-    contextRef?.current?.closePath();
-    setIsDrawing(false);
-  };
-
-  const draw = ({ nativeEvent }) => {
-    if (!isDrawing) {
-      return;
-    }
-
-    const { offsetX, offsetY } = nativeEvent;
-
-    contextRef?.current?.lineTo(offsetX, offsetY);
-    contextRef?.current?.stroke();
-  };
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-
-    if (canvas) {
-      const context = canvas.getContext("2d");
-      context?.scale(1, 1);
-      context!.lineCap = "round";
-      context!.strokeStyle = "red";
-      context!.lineWidth = 2;
-      contextRef.current = context;
-    }
-  }, []);
   return (
     <>
       <main className="main_game_container">
@@ -78,11 +52,22 @@ export const GamePage = () => {
             ref={canvasRef}
           ></canvas>
           <article className="canvas_container_toolbox">
-            <button id="increase">+</button>
-            <span id="size">30</span>
-            <button id="decrease">-</button>
-            <input type="color" id="color" />
-            <button id="clear">Clear</button>
+            <button id="increase" onClick={increaseSize}>
+              +
+            </button>
+            <span id="size">{size}</span>
+            <button id="decrease" onClick={decreaseSize}>
+              -
+            </button>
+            <input
+              type="color"
+              id="color"
+              value={color}
+              onChange={changeColor}
+            />
+            <button id="clear" onClick={clearCanvas}>
+              Clear
+            </button>
           </article>
         </section>
 
