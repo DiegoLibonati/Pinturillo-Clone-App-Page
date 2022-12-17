@@ -1,5 +1,5 @@
 import "./GamePage.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getIncognito } from "../helpers/getIncognito";
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
 
@@ -12,6 +12,46 @@ export const GamePage = () => {
     setMisteryWord(() => getIncognito("JIRAFA"));
   }, []);
 
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+
+  const startDrawing = ({ nativeEvent }) => {
+    const { offsetX, offsetY } = nativeEvent;
+
+    contextRef?.current?.beginPath();
+    contextRef?.current?.moveTo(offsetX, offsetY);
+    setIsDrawing(true);
+  };
+
+  const finishDrawing = () => {
+    contextRef?.current?.closePath();
+    setIsDrawing(false);
+  };
+
+  const draw = ({ nativeEvent }) => {
+    if (!isDrawing) {
+      return;
+    }
+
+    const { offsetX, offsetY } = nativeEvent;
+
+    contextRef?.current?.lineTo(offsetX, offsetY);
+    contextRef?.current?.stroke();
+  };
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      context?.scale(1, 1);
+      context!.lineCap = "round";
+      context!.strokeStyle = "red";
+      context!.lineWidth = 2;
+      contextRef.current = context;
+    }
+  }, []);
   return (
     <>
       <main className="main_game_container">
@@ -28,7 +68,15 @@ export const GamePage = () => {
 
         <section className="canvas_container">
           <h1>{misteryWord}</h1>
-          <canvas id="canvas" width="600px" height="600px"></canvas>
+          <canvas
+            id="canvas"
+            width="600px"
+            height="600px"
+            onMouseDown={startDrawing}
+            onMouseUp={finishDrawing}
+            onMouseMove={draw}
+            ref={canvasRef}
+          ></canvas>
           <article className="canvas_container_toolbox">
             <button id="increase">+</button>
             <span id="size">30</span>
