@@ -43,7 +43,7 @@ const initialState: userState = {
     username: "",
     isAuth: false,
     isOwner: false,
-    score: 0,
+    score: Math.floor(Math.random() * 10),
   },
   users: [],
 };

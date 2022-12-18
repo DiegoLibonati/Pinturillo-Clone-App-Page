@@ -1,10 +1,11 @@
 import "./GamePage.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { getIncognito } from "../helpers/getIncognito";
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { useCanvas } from "../hooks/useCanvas";
 import { useParams } from "react-router-dom";
 import { pincel } from "../../assets/exports";
+import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
 
 export const GamePage = () => {
   const {
@@ -30,11 +31,13 @@ export const GamePage = () => {
     setMisteryWord(() => getIncognito("JIRAFA"));
   }, []);
 
+  const newArray = [...users].sort(getSortMayorToMinor);
+
   return (
     <>
       <main className="main_game_container">
         <section className="players_score_container">
-          {users.map((user, index) => {
+          {newArray.map((user, index) => {
             return (
               <article key={index * 587} className="player_score_container">
                 <div className="player_score_container_information">
