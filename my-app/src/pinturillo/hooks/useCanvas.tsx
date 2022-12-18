@@ -1,6 +1,11 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { RoomContext } from "../../contexts/socket/RoomContext";
 
 export const useCanvas = () => {
+  const { ws, canvasImage } = useContext(RoomContext);
+  const { roomId } = useParams();
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
   const [isDrawing, setIsDrawing] = useState(false);
@@ -29,6 +34,10 @@ export const useCanvas = () => {
 
     contextRef?.current?.lineTo(offsetX, offsetY);
     contextRef?.current?.stroke();
+
+    const base64ImageData = canvasRef.current?.toDataURL("image/png");
+
+    ws.emit("canvas-data", roomId, base64ImageData);
   };
 
   const increaseSize = () => {
@@ -69,6 +78,20 @@ export const useCanvas = () => {
       contextRef.current = context;
     }
   }, [size, color]);
+
+  useEffect(() => {
+    const image = new Image();
+
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const context = canvas.getContext("2d");
+      image.onload = function () {
+        context?.drawImage(image, 0, 0);
+      };
+      image.src = canvasImage;
+    }
+  }, [canvasImage]);
 
   return {
     color,

@@ -8,6 +8,7 @@ import {
   setOwnerUser,
   setUsers,
 } from "../../store/user/userSlice";
+import { useState } from "react";
 
 interface RoomContextProps {
   children: React.ReactNode;
@@ -22,6 +23,8 @@ const ws = socketIOClient(WS);
 export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   children,
 }) => {
+  const [canvasImage, setCanvasImage] = useState(null);
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -75,8 +78,14 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   useEffect(() => {
     ws.on("start-game-room", startGameRoom);
   }, []);
+
+  useEffect(() => {
+    ws.on("canvas-data", (data) => setCanvasImage(data));
+  }, []);
   return (
-    <RoomContext.Provider value={{ ws, createRoom, joinRoom, startGame }}>
+    <RoomContext.Provider
+      value={{ ws, canvasImage, createRoom, joinRoom, startGame }}
+    >
       {children}
     </RoomContext.Provider>
   );

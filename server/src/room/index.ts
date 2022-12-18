@@ -80,9 +80,15 @@ export const roomHandler = (socket: Socket) => {
     }
   };
 
+  const getCanvasData = (roomId, base64ImageData) => {
+    socket.to(roomId).emit("canvas-data", base64ImageData);
+  };
+
   socket.on("create-room", (roomId) => createRoom(roomId));
 
   socket.on("join-room", (roomId) => joinRoom(roomId));
 
   socket.on("start-game", (roomId) => startGameRoom(roomId));
+
+  socket.on("canvas-data", getCanvasData);
 };
