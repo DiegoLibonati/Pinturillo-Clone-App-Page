@@ -25,7 +25,7 @@ export const GamePage = () => {
 
   const [misteryWord, setMisteryWord] = useState("");
 
-  const { users } = useAppSelector((state) => state.user);
+  const { users, user } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     setMisteryWord(() => getIncognito("JIRAFA"));
@@ -61,28 +61,32 @@ export const GamePage = () => {
             <h1>{misteryWord}</h1>
           </article>
           <article className="canvas_container_toolbox">
-            <button id="increase" onClick={increaseSize}>
-              +
-            </button>
-            <span id="size">{size}</span>
-            <button id="decrease" onClick={decreaseSize}>
-              -
-            </button>
-            <input
-              type="color"
-              id="color"
-              value={color}
-              onChange={changeColor}
-            />
-            <button id="clear" onClick={clearCanvas}>
-              B
-            </button>
+            {user.isPainting && (
+              <>
+                <button id="increase" onClick={increaseSize}>
+                  +
+                </button>
+                <span id="size">{size}</span>
+                <button id="decrease" onClick={decreaseSize}>
+                  -
+                </button>
+                <input
+                  type="color"
+                  id="color"
+                  value={color}
+                  onChange={changeColor}
+                />
+                <button id="clear" onClick={clearCanvas}>
+                  B
+                </button>
+              </>
+            )}
           </article>
           <canvas
             id="canvas"
-            onMouseDown={startDrawing}
-            onMouseUp={finishDrawing}
-            onMouseMove={draw}
+            onMouseDown={user.isPainting && startDrawing}
+            onMouseUp={user.isPainting && finishDrawing}
+            onMouseMove={user.isPainting && draw}
             ref={canvasRef}
             width="800"
             height="781"

@@ -8,6 +8,8 @@ interface userState {
     isAuth: Boolean;
     isOwner?: Boolean;
     score?: Number;
+    isPainting?: Boolean;
+    wasPainter?: Boolean;
   };
   users: Array<{
     userId: String;
@@ -15,6 +17,8 @@ interface userState {
     isAuth: Boolean;
     isOwner?: Boolean;
     score?: Number;
+    isPainting?: Boolean;
+    wasPainter?: Boolean;
   }>;
 }
 
@@ -24,6 +28,8 @@ interface payloadUserState {
   isAuth: Boolean;
   isOwner?: Boolean;
   score?: Number;
+  isPainting?: Boolean;
+  wasPainter?: Boolean;
 }
 
 interface payloadUsersState {
@@ -33,6 +39,8 @@ interface payloadUsersState {
     isAuth: Boolean;
     isOwner?: Boolean;
     score?: Number;
+    isPainting?: Boolean;
+    wasPainter?: Boolean;
   }>;
 }
 
@@ -43,7 +51,9 @@ const initialState: userState = {
     username: "",
     isAuth: false,
     isOwner: false,
-    score: Math.floor(Math.random() * 10),
+    score: 0,
+    isPainting: false,
+    wasPainter: false,
   },
   users: [],
 };
