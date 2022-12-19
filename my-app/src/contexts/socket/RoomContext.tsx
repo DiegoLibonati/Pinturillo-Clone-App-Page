@@ -9,6 +9,7 @@ import {
   setUsers,
 } from "../../store/user/userSlice";
 import { useState } from "react";
+import { setNewMessage } from "../../store/game/gameSlice";
 
 interface RoomContextProps {
   children: React.ReactNode;
@@ -62,6 +63,11 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     navigate(`/pinturillo/game/${roomId}`);
   };
 
+  const getNewMessage = (newData) => {
+    console.log(newData);
+    dispatch(setNewMessage(newData));
+  };
+
   useEffect(() => {
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
@@ -81,6 +87,10 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
 
   useEffect(() => {
     ws.on("canvas-data", (data) => setCanvasImage(data));
+  }, []);
+
+  useEffect(() => {
+    ws.on("new-message", getNewMessage);
   }, []);
   return (
     <RoomContext.Provider

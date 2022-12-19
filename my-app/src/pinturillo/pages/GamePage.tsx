@@ -1,13 +1,21 @@
 import "./GamePage.css";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useContext } from "react";
 import { getIncognito } from "../helpers/getIncognito";
-import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { useCanvas } from "../hooks/useCanvas";
 import { useParams } from "react-router-dom";
 import { pincel } from "../../assets/exports";
 import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
+import { RoomContext } from "../../contexts/socket/RoomContext";
+import { setNewMessage } from "../../store/game/gameSlice";
 
 export const GamePage = () => {
+  const [message, setMessage] = useState("");
+
+  const { ws } = useContext(RoomContext);
+
+  const dispatch = useAppDispatch();
+
   const {
     color,
     size,
@@ -26,12 +34,30 @@ export const GamePage = () => {
   const [misteryWord, setMisteryWord] = useState("");
 
   const { users, user } = useAppSelector((state) => state.user);
+  const { messages } = useAppSelector((state) => state.game);
 
   useEffect(() => {
     setMisteryWord(() => getIncognito("JIRAFA"));
   }, []);
 
   const newArray = [...users].sort(getSortMayorToMinor);
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+
+    const data = {
+      userId: user.userId,
+      username: user.username,
+      message: message,
+      roomId: roomId,
+    };
+
+    ws.emit("new-message", data);
+
+    dispatch(setNewMessage({ author: user.username, message: message }));
+
+    setMessage("");
+  };
 
   return (
     <>
@@ -84,9 +110,9 @@ export const GamePage = () => {
           </article>
           <canvas
             id="canvas"
-            onMouseDown={user.isPainting && startDrawing}
-            onMouseUp={user.isPainting && finishDrawing}
-            onMouseMove={user.isPainting && draw}
+            onMouseDown={user.isPainting ? startDrawing : undefined}
+            onMouseUp={user.isPainting ? finishDrawing : undefined}
+            onMouseMove={user.isPainting ? draw : undefined}
             ref={canvasRef}
             width="800"
             height="781"
@@ -95,14 +121,22 @@ export const GamePage = () => {
 
         <section className="chat_container">
           <article className="chat_container_messages">
-            <h2>Diego say: pepe</h2>
-            <h2>Diego say: pepe</h2>
-            <h2>Diego say: pepe</h2>
-            <h2>Diego say: pepe</h2>
+            {messages.map((message, index) => {
+              return (
+                <h2 key={index * 57}>
+                  {message.author}: {message.message}
+                </h2>
+              );
+            })}
           </article>
 
-          <form className="chat_container_input">
-            <input type="text" placeholder="Write..."></input>
+          <form className="chat_container_input" onSubmit={sendMessage}>
+            <input
+              type="text"
+              placeholder="Write..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            ></input>
           </form>
         </section>
       </main>
