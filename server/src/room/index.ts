@@ -95,6 +95,28 @@ export const roomHandler = (socket: Socket) => {
     socket.to(roomId).emit("new-message", newData);
   };
 
+  const getNewScore = (roomId, user) => {
+    if (rooms[roomId]) {
+      const userId = user.userId;
+      const userScore = user.score;
+
+      if (userId && userScore) {
+        const usersUpdate = rooms[roomId].map((user) => {
+          if (user.userId === userId) {
+            user.score = userScore;
+
+            return user;
+          }
+          return user;
+        });
+
+        rooms[roomId] = usersUpdate;
+
+        socket.to(roomId).emit("update-score-user", rooms[roomId]);
+      }
+    }
+  };
+
   socket.on("create-room", (roomId) => createRoom(roomId));
 
   socket.on("join-room", (roomId) => joinRoom(roomId));
@@ -104,4 +126,6 @@ export const roomHandler = (socket: Socket) => {
   socket.on("canvas-data", getCanvasData);
 
   socket.on("new-message", getMessage);
+
+  socket.on("update-score-user", getNewScore);
 };

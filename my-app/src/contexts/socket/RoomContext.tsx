@@ -68,6 +68,10 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     dispatch(setNewMessage(newData));
   };
 
+  const setUpdateUsersScore = (users) => {
+    dispatch(setUsers({ users }));
+  };
+
   useEffect(() => {
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
@@ -91,6 +95,10 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
 
   useEffect(() => {
     ws.on("new-message", getNewMessage);
+  }, []);
+
+  useEffect(() => {
+    ws.on("update-score-user", setUpdateUsersScore);
   }, []);
   return (
     <RoomContext.Provider

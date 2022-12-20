@@ -7,7 +7,7 @@ interface userState {
     username: String;
     isAuth: Boolean;
     isOwner?: Boolean;
-    score?: Number;
+    score: number;
     isPainting?: Boolean;
     wasPainter?: Boolean;
   };
@@ -16,7 +16,7 @@ interface userState {
     username: String;
     isAuth: Boolean;
     isOwner?: Boolean;
-    score?: Number;
+    score: number;
     isPainting?: Boolean;
     wasPainter?: Boolean;
   }>;
@@ -27,7 +27,7 @@ interface payloadUserState {
   username: String;
   isAuth: Boolean;
   isOwner?: Boolean;
-  score?: Number;
+  score: number;
   isPainting?: Boolean;
   wasPainter?: Boolean;
 }
@@ -38,10 +38,14 @@ interface payloadUsersState {
     username: String;
     isAuth: Boolean;
     isOwner?: Boolean;
-    score?: Number;
+    score: number;
     isPainting?: Boolean;
     wasPainter?: Boolean;
   }>;
+}
+
+interface payloadPoints {
+  newPoints: number;
 }
 
 // Define the initial state using that type
@@ -90,6 +94,17 @@ export const userSlice = createSlice({
         state.user.isOwner = true;
       }
     },
+    setNewPoints: (state, action: PayloadAction<payloadPoints>) => {
+      state.user.score = Math.floor(action.payload.newPoints);
+
+      state.users = state.users.map((user) => {
+        if (user.userId === state.user.userId) {
+          user.score = Math.floor(action.payload.newPoints);
+          return user;
+        }
+        return user;
+      });
+    },
   },
 });
 
@@ -99,6 +114,7 @@ export const {
   setUsers,
   setNewUser,
   setDisconnectUser,
+  setNewPoints,
 } = userSlice.actions;
 
 export default userSlice.reducer;

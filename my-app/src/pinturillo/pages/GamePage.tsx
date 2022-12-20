@@ -8,11 +8,14 @@ import { pincel } from "../../assets/exports";
 import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
 import { RoomContext } from "../../contexts/socket/RoomContext";
 import { setNewMessage } from "../../store/game/gameSlice";
+import { useCountdown } from "../hooks/useCountdown";
+import { setNewPoints } from "../../store/user/userSlice";
 
 export const GamePage = () => {
   const [message, setMessage] = useState("");
 
   const { ws } = useContext(RoomContext);
+  const { countdown } = useCountdown(90);
 
   const dispatch = useAppDispatch();
 
@@ -31,6 +34,7 @@ export const GamePage = () => {
 
   const { roomId } = useParams();
 
+  const [misteryWordToSolved, setMisteryWordToSolved] = useState("");
   const [misteryWord, setMisteryWord] = useState("");
 
   const { users, user } = useAppSelector((state) => state.user);
@@ -38,6 +42,7 @@ export const GamePage = () => {
 
   useEffect(() => {
     setMisteryWord(() => getIncognito("JIRAFA"));
+    setMisteryWord("JIRAFA");
   }, []);
 
   const newArray = [...users].sort(getSortMayorToMinor);
@@ -56,8 +61,23 @@ export const GamePage = () => {
 
     dispatch(setNewMessage({ author: user.username, message: message }));
 
+    const messageWordToLowerCase = message.toLowerCase();
+    const misteryWordToLowerCase = misteryWord.toLowerCase();
+
+    if (messageWordToLowerCase === misteryWordToLowerCase) {
+      const sumPoints = countdown * 0.5;
+
+      const newPoints = user?.score + sumPoints;
+
+      dispatch(setNewPoints({ newPoints }));
+    }
+
     setMessage("");
   };
+
+  useEffect(() => {
+    ws.emit("update-score-user", roomId, user);
+  }, [user.score]);
 
   return (
     <>
@@ -78,13 +98,13 @@ export const GamePage = () => {
 
         <section className="canvas_container">
           <article className="canvas_container_title">
-            <h2>90</h2>
+            <h2>{countdown}</h2>
             <div className="canvas_container_title_header">
               <h3>Room: {roomId}</h3>
               <h3>Ronda 1/1</h3>
               <h3>Paiting: Die</h3>
             </div>
-            <h1>{misteryWord}</h1>
+            <h1>{misteryWordToSolved}</h1>
           </article>
           <article className="canvas_container_toolbox">
             {user.isPainting && (

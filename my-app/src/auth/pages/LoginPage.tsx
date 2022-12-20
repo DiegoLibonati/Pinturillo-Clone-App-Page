@@ -45,6 +45,7 @@ export const LoginPage = () => {
         userId: uuid(),
         username: username,
         isAuth: true,
+        score: 0,
       })
     );
   };
