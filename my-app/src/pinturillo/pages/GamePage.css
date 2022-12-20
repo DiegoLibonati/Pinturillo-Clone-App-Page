@@ -30,6 +30,7 @@
   height: auto;
   border-bottom: 2px solid #000;
   margin: 10px;
+  position: relative;
 }
 
 .player_score_container_information {
@@ -49,11 +50,20 @@
   font-size: 20px;
 }
 
-.player_score_container img {
+.player_score_container .pincel_guess {
   width: 25%;
   height: auto;
   object-fit: cover;
   padding: 10px;
+}
+
+.player_score_container .image_guess {
+  position: absolute;
+  width: 25px;
+  height: auto;
+  object-fit: cover;
+  left: 0;
+  top: 0;
 }
 
 .canvas_container {
@@ -120,6 +130,13 @@
   position: relative;
   background-color: #8b2828;
   padding: 10px;
+}
+
+.canvas_container_toolbox h3 {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  letter-spacing: 2px;
 }
 
 .canvas_container_toolbox button {

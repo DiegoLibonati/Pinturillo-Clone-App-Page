@@ -3,21 +3,27 @@ import { Socket } from "socket.io";
 const rooms: Record<string, UserParams[]> = {};
 
 interface UserParams {
-  userId: string;
-  username: string;
-  isAuth: boolean;
-  isOwner?: boolean;
-  score?: number;
+  userId: String;
+  username: String;
+  isAuth: Boolean;
+  isOwner?: Boolean;
+  score: number;
+  isPainting?: Boolean;
+  wasPainter?: Boolean;
+  guessTheWord?: Boolean;
 }
 
 interface IRoomParams {
   roomId: string;
   user: {
-    userId: string;
-    username: string;
-    isAuth: boolean;
-    isOwner?: boolean;
-    score?: number;
+    userId: String;
+    username: String;
+    isAuth: Boolean;
+    isOwner?: Boolean;
+    score: number;
+    isPainting?: Boolean;
+    wasPainter?: Boolean;
+    guessTheWord?: Boolean;
   };
 }
 
@@ -104,7 +110,7 @@ export const roomHandler = (socket: Socket) => {
         const usersUpdate = rooms[roomId].map((user) => {
           if (user.userId === userId) {
             user.score = userScore;
-
+            user.guessTheWord = true;
             return user;
           }
           return user;
@@ -112,7 +118,7 @@ export const roomHandler = (socket: Socket) => {
 
         rooms[roomId] = usersUpdate;
 
-        socket.to(roomId).emit("update-score-user", rooms[roomId]);
+        socket.to(roomId).emit("update-score-user", rooms[roomId], user);
       }
     }
   };

@@ -9,5 +9,16 @@ import AppleStore from "./as.png";
 import owner from "./owner.png";
 
 import pincel from "./pincel.png";
+import estrella from "./estrella.png";
 
-export { logo, logo2, logo3, logo4, GooglePlay, AppleStore, owner, pincel };
+export {
+  logo,
+  logo2,
+  logo3,
+  logo4,
+  GooglePlay,
+  AppleStore,
+  owner,
+  pincel,
+  estrella,
+};

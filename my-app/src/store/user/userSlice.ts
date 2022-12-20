@@ -10,6 +10,7 @@ interface userState {
     score: number;
     isPainting?: Boolean;
     wasPainter?: Boolean;
+    guessTheWord?: Boolean;
   };
   users: Array<{
     userId: String;
@@ -19,6 +20,17 @@ interface userState {
     score: number;
     isPainting?: Boolean;
     wasPainter?: Boolean;
+    guessTheWord?: Boolean;
+  }>;
+  usersGuessed: Array<{
+    userId: String;
+    username: String;
+    isAuth: Boolean;
+    isOwner?: Boolean;
+    score: number;
+    isPainting?: Boolean;
+    wasPainter?: Boolean;
+    guessTheWord?: Boolean;
   }>;
 }
 
@@ -30,6 +42,7 @@ interface payloadUserState {
   score: number;
   isPainting?: Boolean;
   wasPainter?: Boolean;
+  guessTheWord?: Boolean;
 }
 
 interface payloadUsersState {
@@ -41,7 +54,22 @@ interface payloadUsersState {
     score: number;
     isPainting?: Boolean;
     wasPainter?: Boolean;
+    guessTheWord?: Boolean;
   }>;
+}
+
+interface payloadUpdateUserScore {
+  users: Array<{
+    userId: String;
+    username: String;
+    isAuth: Boolean;
+    isOwner?: Boolean;
+    score: number;
+    isPainting?: Boolean;
+    wasPainter?: Boolean;
+    guessTheWord?: Boolean;
+  }>;
+  user: payloadUserState;
 }
 
 interface payloadPoints {
@@ -58,8 +86,10 @@ const initialState: userState = {
     score: 0,
     isPainting: false,
     wasPainter: false,
+    guessTheWord: false,
   },
   users: [],
+  usersGuessed: [],
 };
 
 export const userSlice = createSlice({
@@ -96,14 +126,24 @@ export const userSlice = createSlice({
     },
     setNewPoints: (state, action: PayloadAction<payloadPoints>) => {
       state.user.score = Math.floor(action.payload.newPoints);
+      state.user.guessTheWord = true;
+      state.usersGuessed.push(state.user);
 
       state.users = state.users.map((user) => {
         if (user.userId === state.user.userId) {
           user.score = Math.floor(action.payload.newPoints);
+          user.guessTheWord = true;
           return user;
         }
         return user;
       });
+    },
+    updateScoreToAllUsers: (
+      state,
+      action: PayloadAction<payloadUpdateUserScore>
+    ) => {
+      state.users = action.payload.users;
+      state.usersGuessed.push(action.payload.user);
     },
   },
 });
@@ -115,6 +155,7 @@ export const {
   setNewUser,
   setDisconnectUser,
   setNewPoints,
+  updateScoreToAllUsers,
 } = userSlice.actions;
 
 export default userSlice.reducer;

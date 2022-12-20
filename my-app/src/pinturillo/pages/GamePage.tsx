@@ -4,7 +4,7 @@ import { getIncognito } from "../helpers/getIncognito";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { useCanvas } from "../hooks/useCanvas";
 import { useParams } from "react-router-dom";
-import { pincel } from "../../assets/exports";
+import { estrella, pincel } from "../../assets/exports";
 import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
 import { RoomContext } from "../../contexts/socket/RoomContext";
 import { setNewMessage } from "../../store/game/gameSlice";
@@ -41,7 +41,7 @@ export const GamePage = () => {
   const { messages } = useAppSelector((state) => state.game);
 
   useEffect(() => {
-    setMisteryWord(() => getIncognito("JIRAFA"));
+    setMisteryWordToSolved(() => getIncognito("JIRAFA"));
     setMisteryWord("JIRAFA");
   }, []);
 
@@ -90,7 +90,14 @@ export const GamePage = () => {
                   <h2>{user.username}</h2>
                   <h3>{user.score?.toString()}</h3>
                 </div>
-                <img src={pincel} alt="pincel"></img>
+                <img className="pincel_guess" src={pincel} alt="pincel"></img>
+                {user.guessTheWord && (
+                  <img
+                    className="image_guess"
+                    src={estrella}
+                    alt="estrella"
+                  ></img>
+                )}
               </article>
             );
           })}
@@ -101,13 +108,12 @@ export const GamePage = () => {
             <h2>{countdown}</h2>
             <div className="canvas_container_title_header">
               <h3>Room: {roomId}</h3>
-              <h3>Ronda 1/1</h3>
-              <h3>Paiting: Die</h3>
+              <h3>Ronda 1/3</h3>
             </div>
             <h1>{misteryWordToSolved}</h1>
           </article>
           <article className="canvas_container_toolbox">
-            {user.isPainting && (
+            {user.isPainting ? (
               <>
                 <button id="increase" onClick={increaseSize}>
                   +
@@ -126,6 +132,8 @@ export const GamePage = () => {
                   B
                 </button>
               </>
+            ) : (
+              <h3>Die is painting</h3>
             )}
           </article>
           <canvas
@@ -150,14 +158,16 @@ export const GamePage = () => {
             })}
           </article>
 
-          <form className="chat_container_input" onSubmit={sendMessage}>
-            <input
-              type="text"
-              placeholder="Write..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-            ></input>
-          </form>
+          {!user.guessTheWord && (
+            <form className="chat_container_input" onSubmit={sendMessage}>
+              <input
+                type="text"
+                placeholder="Write..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              ></input>
+            </form>
+          )}
         </section>
       </main>
     </>

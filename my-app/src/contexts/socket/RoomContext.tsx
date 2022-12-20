@@ -7,6 +7,7 @@ import {
   setNewUser,
   setOwnerUser,
   setUsers,
+  updateScoreToAllUsers,
 } from "../../store/user/userSlice";
 import { useState } from "react";
 import { setNewMessage } from "../../store/game/gameSlice";
@@ -68,8 +69,8 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     dispatch(setNewMessage(newData));
   };
 
-  const setUpdateUsersScore = (users) => {
-    dispatch(setUsers({ users }));
+  const setUpdateUsersScore = (users, user) => {
+    dispatch(updateScoreToAllUsers({ users, user }));
   };
 
   useEffect(() => {
