@@ -90,7 +90,9 @@ export const GamePage = () => {
                   <h2>{user.username}</h2>
                   <h3>{user.score?.toString()}</h3>
                 </div>
-                <img className="pincel_guess" src={pincel} alt="pincel"></img>
+                {(user.wasPainter || user.isPainting) && (
+                  <img className="pincel_guess" src={pincel} alt="pincel"></img>
+                )}
                 {user.guessTheWord && (
                   <img
                     className="image_guess"
@@ -108,7 +110,7 @@ export const GamePage = () => {
             <h2>{countdown}</h2>
             <div className="canvas_container_title_header">
               <h3>Room: {roomId}</h3>
-              <h3>Ronda 1/3</h3>
+              <h3>Round 1/3</h3>
             </div>
             <h1>{misteryWordToSolved}</h1>
           </article>
