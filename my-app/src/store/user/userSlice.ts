@@ -2,74 +2,98 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 // Define a type for the slice state
 interface userState {
-  user: {
-    userId: String;
-    username: String;
-    isAuth: Boolean;
-    isOwner?: Boolean;
-    score: number;
-    isPainting?: Boolean;
-    wasPainter?: Boolean;
-    guessTheWord?: Boolean;
-  };
+  user: payloadUserState;
   users: Array<{
-    userId: String;
-    username: String;
-    isAuth: Boolean;
-    isOwner?: Boolean;
+    userId: string;
+    username: string;
+    isAuth: boolean;
+    isOwner?: boolean;
     score: number;
-    isPainting?: Boolean;
-    wasPainter?: Boolean;
-    guessTheWord?: Boolean;
+    isPainting?: boolean;
+    wasPainter?: boolean;
+    guessTheWord?: boolean;
   }>;
-  usersGuessed: Array<{
-    userId: String;
-    username: String;
-    isAuth: Boolean;
-    isOwner?: Boolean;
-    score: number;
-    isPainting?: Boolean;
-    wasPainter?: Boolean;
-    guessTheWord?: Boolean;
-  }>;
+  usersGuessed: Array<payloadUserState>;
 }
 
 interface payloadUserState {
-  userId: String;
-  username: String;
-  isAuth: Boolean;
-  isOwner?: Boolean;
+  userId: string;
+  username: string;
+  isAuth: boolean;
+  isOwner?: boolean;
   score: number;
-  isPainting?: Boolean;
-  wasPainter?: Boolean;
-  guessTheWord?: Boolean;
+  isPainting?: boolean;
+  wasPainter?: boolean;
+  guessTheWord?: boolean;
 }
 
 interface payloadUsersState {
   users: Array<{
-    userId: String;
-    username: String;
-    isAuth: Boolean;
-    isOwner?: Boolean;
+    userId: string;
+    username: string;
+    isAuth: boolean;
+    isOwner?: boolean;
     score: number;
-    isPainting?: Boolean;
-    wasPainter?: Boolean;
-    guessTheWord?: Boolean;
+    isPainting?: boolean;
+    wasPainter?: boolean;
+    guessTheWord?: boolean;
   }>;
 }
 
 interface payloadUpdateUserScore {
   users: Array<{
-    userId: String;
-    username: String;
-    isAuth: Boolean;
-    isOwner?: Boolean;
+    userId: string;
+    username: string;
+    isAuth: boolean;
+    isOwner?: boolean;
     score: number;
-    isPainting?: Boolean;
-    wasPainter?: Boolean;
-    guessTheWord?: Boolean;
+    isPainting?: boolean;
+    wasPainter?: boolean;
+    guessTheWord?: boolean;
   }>;
-  user: payloadUserState;
+  user: {
+    userId: string;
+    username: string;
+    isAuth: boolean;
+    isOwner?: boolean;
+    score: number;
+    isPainting?: boolean;
+    wasPainter?: boolean;
+    guessTheWord?: boolean;
+  };
+}
+
+interface payloadUpdatePainters {
+  users: Array<{
+    userId: string;
+    username: string;
+    isAuth: boolean;
+    isOwner?: boolean;
+    score: number;
+    isPainting?: boolean;
+    wasPainter?: boolean;
+    guessTheWord?: boolean;
+  }>;
+  user: {
+    userId: string;
+    username: string;
+    isAuth: boolean;
+    isOwner?: boolean;
+    score: number;
+    isPainting?: boolean;
+    wasPainter?: boolean;
+    guessTheWord?: boolean;
+  };
+  userWasPainter: {
+    userId: string;
+    username: string;
+    isAuth: boolean;
+    isOwner?: boolean;
+    score: number;
+    isPainting?: boolean;
+    wasPainter?: boolean;
+    guessTheWord?: boolean;
+  };
 }
 
 interface payloadPoints {
@@ -145,6 +169,25 @@ export const userSlice = createSlice({
       state.users = action.payload.users;
       state.usersGuessed.push(action.payload.user);
     },
+    usersUpdatePainter: (
+      state,
+      action: PayloadAction<payloadUpdatePainters>
+    ) => {
+      state.usersGuessed = [];
+
+      if (
+        action.payload.userWasPainter &&
+        state.user.userId === action.payload.userWasPainter.userId
+      ) {
+        state.user = action.payload.userWasPainter;
+      }
+
+      if (state.user.userId === action.payload.user.userId) {
+        state.user = action.payload.user;
+      }
+      state.usersGuessed.push(action.payload.user);
+      state.users = action.payload.users;
+    },
   },
 });
 
@@ -156,6 +199,7 @@ export const {
   setDisconnectUser,
   setNewPoints,
   updateScoreToAllUsers,
+  usersUpdatePainter,
 } = userSlice.actions;
 
 export default userSlice.reducer;

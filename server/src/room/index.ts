@@ -123,6 +123,45 @@ export const roomHandler = (socket: Socket) => {
     }
   };
 
+  const getNewPainter = (roomId, userWasPainter = null) => {
+    let newPaiterSetted = false;
+    let userPainting = null;
+    let userWasAPainter = null;
+
+    if (userWasPainter) {
+      const usersUpdate = rooms[roomId].map((user) => {
+        if (user.userId === userWasPainter) {
+          userWasAPainter = user;
+          user.wasPainter = true;
+          user.isPainting = false;
+          return user;
+        }
+        return user;
+      });
+
+      rooms[roomId] = usersUpdate;
+    }
+
+    const usersUpdate = rooms[roomId].map((user) => {
+      if (!user.wasPainter && !newPaiterSetted) {
+        user.isPainting = true;
+        newPaiterSetted = true;
+        user.guessTheWord = false;
+        userPainting = user;
+        return user;
+      }
+      user.isPainting = false;
+      user.guessTheWord = false;
+      return user;
+    });
+
+    rooms[roomId] = usersUpdate;
+
+    socket
+      .to(roomId)
+      .emit("new-painter", rooms[roomId], userPainting, userWasAPainter);
+  };
+
   socket.on("create-room", (roomId) => createRoom(roomId));
 
   socket.on("join-room", (roomId) => joinRoom(roomId));
@@ -134,4 +173,6 @@ export const roomHandler = (socket: Socket) => {
   socket.on("new-message", getMessage);
 
   socket.on("update-score-user", getNewScore);
+
+  socket.on("new-painter", getNewPainter);
 };

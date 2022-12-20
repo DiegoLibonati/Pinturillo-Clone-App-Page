@@ -8,6 +8,7 @@ import {
   setOwnerUser,
   setUsers,
   updateScoreToAllUsers,
+  usersUpdatePainter,
 } from "../../store/user/userSlice";
 import { useState } from "react";
 import { setNewMessage } from "../../store/game/gameSlice";
@@ -73,6 +74,10 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     dispatch(updateScoreToAllUsers({ users, user }));
   };
 
+  const setNewPainter = (users, user, userWasPainter) => {
+    dispatch(usersUpdatePainter({ users, user, userWasPainter }));
+  };
+
   useEffect(() => {
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
@@ -100,6 +105,10 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
 
   useEffect(() => {
     ws.on("update-score-user", setUpdateUsersScore);
+  }, []);
+
+  useEffect(() => {
+    ws.on("new-painter", setNewPainter);
   }, []);
   return (
     <RoomContext.Provider

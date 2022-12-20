@@ -15,7 +15,7 @@ export const GamePage = () => {
   const [message, setMessage] = useState("");
 
   const { ws } = useContext(RoomContext);
-  const { countdown } = useCountdown(90);
+  const { countdown, setCountdown, setLastPainter } = useCountdown(90);
 
   const dispatch = useAppDispatch();
 
@@ -37,7 +37,7 @@ export const GamePage = () => {
   const [misteryWordToSolved, setMisteryWordToSolved] = useState("");
   const [misteryWord, setMisteryWord] = useState("");
 
-  const { users, user } = useAppSelector((state) => state.user);
+  const { users, user, usersGuessed } = useAppSelector((state) => state.user);
   const { messages } = useAppSelector((state) => state.game);
 
   useEffect(() => {
@@ -79,6 +79,15 @@ export const GamePage = () => {
     ws.emit("update-score-user", roomId, user);
   }, [user.score]);
 
+  useEffect(() => {
+    if (countdown === 0 || usersGuessed.length === users.length) {
+      const userPainter = users.filter((user) => user.isPainting === true)[0]
+        .userId;
+      setCountdown(90);
+      setLastPainter(userPainter);
+    }
+  }, [countdown, usersGuessed]);
+
   return (
     <>
       <main className="main_game_container">
@@ -112,7 +121,7 @@ export const GamePage = () => {
               <h3>Room: {roomId}</h3>
               <h3>Round 1/3</h3>
             </div>
-            <h1>{misteryWordToSolved}</h1>
+            <h1>{user.isPainting ? misteryWord : misteryWordToSolved}</h1>
           </article>
           <article className="canvas_container_toolbox">
             {user.isPainting ? (
@@ -160,7 +169,7 @@ export const GamePage = () => {
             })}
           </article>
 
-          {!user.guessTheWord && (
+          {!user.guessTheWord && !user.isPainting && (
             <form className="chat_container_input" onSubmit={sendMessage}>
               <input
                 type="text"
