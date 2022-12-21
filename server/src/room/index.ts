@@ -124,7 +124,7 @@ export const roomHandler = (socket: Socket) => {
   };
 
   const getNewPainter = (roomId, userWasPainter = null) => {
-    let newPaiterSetted = false;
+    let newPainterSetted = false;
     let userPainting = null;
     let userWasAPainter = null;
 
@@ -134,8 +134,10 @@ export const roomHandler = (socket: Socket) => {
           userWasAPainter = user;
           user.wasPainter = true;
           user.isPainting = false;
+          user.guessTheWord = false;
           return user;
         }
+        user.guessTheWord = false;
         return user;
       });
 
@@ -143,9 +145,9 @@ export const roomHandler = (socket: Socket) => {
     }
 
     const usersUpdate = rooms[roomId].map((user) => {
-      if (!user.wasPainter && !newPaiterSetted) {
+      if (!user.wasPainter && !newPainterSetted) {
         user.isPainting = true;
-        newPaiterSetted = true;
+        newPainterSetted = true;
         user.guessTheWord = false;
         userPainting = user;
         return user;
@@ -157,9 +159,13 @@ export const roomHandler = (socket: Socket) => {
 
     rooms[roomId] = usersUpdate;
 
-    socket
-      .to(roomId)
-      .emit("new-painter", rooms[roomId], userPainting, userWasAPainter);
+    if (newPainterSetted) {
+      socket
+        .to(roomId)
+        .emit("new-painter", rooms[roomId], userPainting, userWasAPainter);
+    } else {
+      socket.to(roomId).emit("final-round", rooms[roomId]);
+    }
   };
 
   socket.on("create-room", (roomId) => createRoom(roomId));

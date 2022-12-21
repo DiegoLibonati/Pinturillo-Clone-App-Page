@@ -1,3 +1,19 @@
+.main_game_container_loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column wrap;
+  width: 100vw;
+  height: 100vh;
+  background-color: #e9e9eb;
+}
+
+.loader {
+  width: 50%;
+  height: auto;
+  object-fit: cover;
+}
+
 .main_game_container {
   display: flex;
   align-items: center;

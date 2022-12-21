@@ -1,17 +1,18 @@
 import { createContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import socketIOClient from "socket.io-client";
-import { useAppDispatch } from "../../hooks/ReduxToolkitHooks";
+import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import {
   setDisconnectUser,
   setNewUser,
   setOwnerUser,
   setUsers,
   updateScoreToAllUsers,
+  updateUsersFinalRound,
   usersUpdatePainter,
 } from "../../store/user/userSlice";
 import { useState } from "react";
-import { setNewMessage } from "../../store/game/gameSlice";
+import { setNewMessage, setNewRoundGame } from "../../store/game/gameSlice";
 
 interface RoomContextProps {
   children: React.ReactNode;
@@ -30,6 +31,8 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const { round, limitRound } = useAppSelector((state) => state.game);
 
   const createRoom = ({ roomId }) => {
     ws.emit("create-room", { roomId: roomId });
@@ -75,7 +78,14 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   };
 
   const setNewPainter = (users, user, userWasPainter) => {
-    dispatch(usersUpdatePainter({ users, user, userWasPainter }));
+    if (round < limitRound) {
+      dispatch(usersUpdatePainter({ users, user, userWasPainter }));
+    }
+  };
+
+  const setNewRound = (users) => {
+    dispatch(updateUsersFinalRound({ users }));
+    dispatch(setNewRoundGame());
   };
 
   useEffect(() => {
@@ -109,6 +119,10 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
 
   useEffect(() => {
     ws.on("new-painter", setNewPainter);
+  }, []);
+
+  useEffect(() => {
+    ws.on("final-round", setNewRound);
   }, []);
   return (
     <RoomContext.Provider

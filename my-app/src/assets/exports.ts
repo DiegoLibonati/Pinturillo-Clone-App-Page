@@ -10,6 +10,7 @@ import owner from "./owner.png";
 
 import pincel from "./pincel.png";
 import estrella from "./estrella.png";
+import loader from "./loader.gif";
 
 export {
   logo,
@@ -21,4 +22,5 @@ export {
   owner,
   pincel,
   estrella,
+  loader,
 };

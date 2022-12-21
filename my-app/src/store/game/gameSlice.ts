@@ -7,6 +7,8 @@ interface gameState {
     author: String;
     message: String;
   }>;
+  round: number;
+  limitRound: number;
 }
 
 interface payloadMessage {
@@ -24,6 +26,8 @@ interface payloadMessages {
 // Define the initial state using that type
 const initialState: gameState = {
   messages: [{ author: "pepe", message: "jirafa" }],
+  round: 0,
+  limitRound: 1,
 };
 
 export const gameSlice = createSlice({
@@ -34,9 +38,12 @@ export const gameSlice = createSlice({
     setNewMessage: (state, action: PayloadAction<payloadMessage>) => {
       state.messages.push(action.payload);
     },
+    setNewRoundGame: (state) => {
+      state.round = state.round + 1;
+    },
   },
 });
 
-export const { setNewMessage } = gameSlice.actions;
+export const { setNewMessage, setNewRoundGame } = gameSlice.actions;
 
 export default gameSlice.reducer;

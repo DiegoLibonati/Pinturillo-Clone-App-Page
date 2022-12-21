@@ -174,6 +174,7 @@ export const userSlice = createSlice({
       action: PayloadAction<payloadUpdatePainters>
     ) => {
       state.usersGuessed = [];
+      state.user.guessTheWord = false;
 
       if (
         action.payload.userWasPainter &&
@@ -188,6 +189,17 @@ export const userSlice = createSlice({
       state.usersGuessed.push(action.payload.user);
       state.users = action.payload.users;
     },
+    updateUsersFinalRound: (
+      state,
+      action: PayloadAction<payloadUsersState>
+    ) => {
+      state.users = action.payload.users;
+
+      if (state.user.isPainting === true) {
+        state.user.isPainting = false;
+        state.user.wasPainter = true;
+      }
+    },
   },
 });
 
@@ -200,6 +212,7 @@ export const {
   setNewPoints,
   updateScoreToAllUsers,
   usersUpdatePainter,
+  updateUsersFinalRound,
 } = userSlice.actions;
 
 export default userSlice.reducer;
