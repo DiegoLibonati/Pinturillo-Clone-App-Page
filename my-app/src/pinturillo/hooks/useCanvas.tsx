@@ -6,8 +6,11 @@ export const useCanvas = () => {
   const { ws, canvasImage } = useContext(RoomContext);
   const { roomId } = useParams();
 
+  // Canvas Refs
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+
+  // Canvas States
   const [isDrawing, setIsDrawing] = useState(false);
   const [size, setSize] = useState(5);
   const [color, setColor] = useState("black");
