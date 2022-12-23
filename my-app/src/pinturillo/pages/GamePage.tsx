@@ -1,4 +1,3 @@
-import "./GamePage.css";
 import { useState, useEffect, useContext } from "react";
 import { getIncognito } from "../helpers/getIncognito";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
@@ -10,6 +9,7 @@ import { RoomContext } from "../../contexts/socket/RoomContext";
 import { setNewMessage } from "../../store/game/gameSlice";
 import { useCountdown } from "../hooks/useCountdown";
 import { setNewPoints } from "../../store/user/userSlice";
+import "./GamePage.css";
 
 export const GamePage = () => {
   const [message, setMessage] = useState("");
