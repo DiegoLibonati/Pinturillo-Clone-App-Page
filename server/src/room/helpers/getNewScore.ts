@@ -1,7 +1,9 @@
 import { rooms } from "..";
 
 export const getNewScore = (roomId, user, socket) => {
-  if (rooms[roomId].participants) {
+  const roomParticipants = rooms[roomId].participants;
+
+  if (roomParticipants) {
     const userId = user.userId;
     const userScore = user.score;
 
