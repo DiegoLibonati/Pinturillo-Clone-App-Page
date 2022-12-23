@@ -66,6 +66,18 @@ export const useCanvas = () => {
       const context = canvas.getContext("2d");
 
       context!.clearRect(0, 0, canvas.width, canvas.height);
+
+      ws.emit("clear-canvas", roomId);
+    }
+  };
+
+  const clearCanvasToAll = () => {
+    const canvas = canvasRef.current;
+
+    if (canvas) {
+      const context = canvas.getContext("2d");
+
+      context!.clearRect(0, 0, canvas.width, canvas.height);
     }
   };
 
@@ -95,6 +107,14 @@ export const useCanvas = () => {
       image.src = canvasImage;
     }
   }, [canvasImage]);
+
+  useEffect(() => {
+    ws.on("clear-canvas", clearCanvasToAll);
+
+    return () => {
+      ws.off("clear-canvas");
+    };
+  }, []);
 
   return {
     color,

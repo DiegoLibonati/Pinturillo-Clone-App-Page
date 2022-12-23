@@ -41,6 +41,7 @@ export const getNewPainter = (roomId, userWasPainter = null, socket) => {
       .to(roomId)
       .emit(
         "new-painter",
+        roomId,
         rooms[roomId].participants,
         userPainting,
         userWasAPainter

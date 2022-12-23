@@ -78,8 +78,9 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     dispatch(updateScoreToAllUsers({ users, user }));
   };
 
-  const setNewPainter = (users, user, userWasPainter) => {
+  const setNewPainter = (roomId, users, user, userWasPainter) => {
     if (round < limitRound) {
+      ws.emit("clear-canvas", roomId);
       dispatch(usersUpdatePainter({ users, user, userWasPainter }));
       dispatch(setCleanChat());
     }
