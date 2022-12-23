@@ -5,17 +5,19 @@ export const joinRoom = (roomId, user, socket) => {
   const userInRoom = rooms[roomId].participants.filter(
     (room) => room.userId === user.userId
   );
-  if (rooms[roomId] && userInRoom.length === 0) {
-    if (rooms[roomId].participants.length === 0) {
-      rooms[roomId].participants.push({ ...user, isOwner: true });
+  const room = rooms[roomId];
+  const roomParticipants = rooms[roomId].participants;
+  if (room && userInRoom.length === 0) {
+    if (roomParticipants.length === 0) {
+      roomParticipants.push({ ...user, isOwner: true });
     } else {
-      rooms[roomId].participants.push(user);
+      roomParticipants.push(user);
     }
 
     socket.join(roomId);
     socket.emit("get-users", {
       roomId: roomId,
-      participants: rooms[roomId].participants,
+      participants: roomParticipants,
     });
     socket.to(roomId).emit("user-joined", { user });
     console.log(`user joined the room: ${roomId} - ${user.userId}`);
