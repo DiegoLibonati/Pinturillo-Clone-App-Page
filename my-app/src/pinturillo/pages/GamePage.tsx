@@ -9,6 +9,7 @@ import { RoomContext } from "../../contexts/socket/RoomContext";
 import { setNewMessage } from "../../store/game/gameSlice";
 import { useCountdown } from "../hooks/useCountdown";
 import { setNewPoints } from "../../store/user/userSlice";
+import uuid from "react-uuid";
 import "./GamePage.css";
 
 export const GamePage = () => {
@@ -96,9 +97,9 @@ export const GamePage = () => {
       <>
         <main className="main_game_container">
           <section className="players_score_container">
-            {newArray.map((user, index) => {
+            {newArray.map((user) => {
               return (
-                <article key={index * 587} className="player_score_container">
+                <article key={uuid()} className="player_score_container">
                   <div className="player_score_container_information">
                     <h2>{user.username}</h2>
                     <h3>{user.score?.toString()}</h3>
@@ -175,9 +176,9 @@ export const GamePage = () => {
 
           <section className="chat_container">
             <article className="chat_container_messages">
-              {messages.map((message, index) => {
+              {messages.map((message) => {
                 return (
-                  <h2 key={index * 57}>
+                  <h2 key={uuid()}>
                     {message.author}: {message.message}
                   </h2>
                 );

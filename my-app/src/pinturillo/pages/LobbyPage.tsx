@@ -4,6 +4,7 @@ import { owner } from "../../assets/exports";
 import { RoomContext } from "../../contexts/socket/RoomContext";
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { NavBar } from "../../ui/components/NavBar";
+import uuid from "react-uuid";
 import "./LobbyPage.css";
 
 export const LobbyPage = () => {
@@ -28,9 +29,9 @@ export const LobbyPage = () => {
         <section className="menu_container">
           <h2>WELCOME TO: {roomId}</h2>
           <article className="menu_container_players">
-            {users.map((user, index) => {
+            {users.map((user) => {
               return (
-                <div key={index * 58} className="menu_container_players_player">
+                <div key={uuid()} className="menu_container_players_player">
                   <h2>{user.username}</h2>
                   {user.isOwner && <img src={owner} alt="owner"></img>}
                 </div>
