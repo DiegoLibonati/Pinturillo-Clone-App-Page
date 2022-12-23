@@ -6,6 +6,7 @@
   width: 100vw;
   height: 100vh;
   background-color: #e9e9eb;
+  position: relative;
 }
 
 .loader {
