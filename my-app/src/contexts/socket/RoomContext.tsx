@@ -12,7 +12,11 @@ import {
   usersUpdatePainter,
 } from "../../store/user/userSlice";
 import { useState } from "react";
-import { setNewMessage, setNewRoundGame } from "../../store/game/gameSlice";
+import {
+  setCleanChat,
+  setNewMessage,
+  setNewRoundGame,
+} from "../../store/game/gameSlice";
 
 interface RoomContextProps {
   children: React.ReactNode;
@@ -69,7 +73,6 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   };
 
   const getNewMessage = (newData) => {
-    console.log(newData);
     dispatch(setNewMessage(newData));
   };
 
@@ -80,6 +83,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   const setNewPainter = (users, user, userWasPainter) => {
     if (round < limitRound) {
       dispatch(usersUpdatePainter({ users, user, userWasPainter }));
+      dispatch(setCleanChat());
     }
   };
 
