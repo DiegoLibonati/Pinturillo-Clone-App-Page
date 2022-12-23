@@ -1,7 +1,9 @@
 import { rooms } from "..";
 
 export const startGameRoom = (roomId, socket) => {
-  if (rooms[roomId].participants) {
+  const roomParticipants = rooms[roomId].participants;
+
+  if (roomParticipants) {
     socket.to(roomId).emit("start-game-room", roomId);
   }
 };
