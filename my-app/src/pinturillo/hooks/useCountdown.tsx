@@ -33,13 +33,11 @@ export const useCountdown = (time: number) => {
       ws.emit("all-users-guess");
       const userPainter = users.filter((user) => user.isPainting === true)[0]
         .userId;
-      setCountdown(90);
       setLastPainter(userPainter);
     }
   }, [usersGuessed]);
 
   const getCountdown = (count) => {
-    console.log(count);
     setCountdown(count.countdown);
   };
 
