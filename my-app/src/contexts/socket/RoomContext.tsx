@@ -32,11 +32,9 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   children,
 }) => {
   const [canvasImage, setCanvasImage] = useState(null);
-
+  const { round, limitRound } = useAppSelector((state) => state.game);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  const { round, limitRound } = useAppSelector((state) => state.game);
 
   const createRoom = ({ roomId }) => {
     ws.emit("create-room", { roomId: roomId });
@@ -95,38 +93,27 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   useEffect(() => {
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
-  }, []);
-
-  useEffect(() => {
     ws.on("user-joined", getNewUser);
-  }, []);
-
-  useEffect(() => {
     ws.on("user-disconnect", getUserDisconnect);
-  }, []);
-
-  useEffect(() => {
     ws.on("start-game-room", startGameRoom);
-  }, []);
-
-  useEffect(() => {
     ws.on("canvas-data", (data) => setCanvasImage(data));
-  }, []);
-
-  useEffect(() => {
     ws.on("new-message", getNewMessage);
-  }, []);
-
-  useEffect(() => {
-    ws.on("update-score-user", setUpdateUsersScore);
-  }, []);
-
-  useEffect(() => {
-    ws.on("new-painter", setNewPainter);
-  }, []);
-
-  useEffect(() => {
     ws.on("final-round", setNewRound);
+    ws.on("new-painter", setNewPainter);
+    ws.on("update-score-user", setUpdateUsersScore);
+
+    return () => {
+      ws.off("room-created");
+      ws.off("get-users");
+      ws.off("user-joined");
+      ws.off("user-disconnect");
+      ws.off("start-game-room");
+      ws.off("canvas-data");
+      ws.off("new-message");
+      ws.off("final-round");
+      ws.off("new-painter");
+      ws.off("update-score-user");
+    };
   }, []);
 
   return (
