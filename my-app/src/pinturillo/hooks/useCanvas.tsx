@@ -13,7 +13,7 @@ export const useCanvas = () => {
   // Canvas States
   const [isDrawing, setIsDrawing] = useState(false);
   const [size, setSize] = useState(5);
-  const [color, setColor] = useState("black");
+  const [color, setColor] = useState("#000000");
 
   const startDrawing = ({ nativeEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
