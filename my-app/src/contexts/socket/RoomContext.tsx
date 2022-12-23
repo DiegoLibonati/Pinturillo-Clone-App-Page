@@ -128,6 +128,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   useEffect(() => {
     ws.on("final-round", setNewRound);
   }, []);
+
   return (
     <RoomContext.Provider
       value={{ ws, canvasImage, createRoom, joinRoom, startGame }}

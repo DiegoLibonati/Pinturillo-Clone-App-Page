@@ -15,7 +15,7 @@ export const GamePage = () => {
   const [message, setMessage] = useState("");
 
   const { ws } = useContext(RoomContext);
-  const { countdown, setCountdown, setLastPainter } = useCountdown(90);
+  const { countdown } = useCountdown(90);
 
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ export const GamePage = () => {
   const [misteryWordToSolved, setMisteryWordToSolved] = useState("");
   const [misteryWord, setMisteryWord] = useState("");
 
-  const { users, user, usersGuessed } = useAppSelector((state) => state.user);
+  const { users, user } = useAppSelector((state) => state.user);
   const { messages, round, limitRound } = useAppSelector((state) => state.game);
 
   useEffect(() => {
@@ -80,15 +80,6 @@ export const GamePage = () => {
   useEffect(() => {
     ws.emit("update-score-user", roomId, user);
   }, [user.score]);
-
-  useEffect(() => {
-    if (countdown === 0 || usersGuessed.length === users.length) {
-      const userPainter = users.filter((user) => user.isPainting === true)[0]
-        .userId;
-      setCountdown(90);
-      setLastPainter(userPainter);
-    }
-  }, [countdown, usersGuessed]);
 
   useEffect(() => {
     if (round === limitRound) navigate("/");

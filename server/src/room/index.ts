@@ -168,6 +168,33 @@ export const roomHandler = (socket: Socket) => {
     }
   };
 
+  const getCountdown = (roomId) => {
+    let countdown = 90;
+    const interval = setInterval(
+      () => {
+        countdown -= 1;
+
+        if (countdown === 0) {
+          socket.to(roomId).emit("countdown-event", { countdown: 0 });
+          socket.to(roomId).emit("countdown-event", { countdown: 90 });
+          clearInterval(interval);
+        }
+
+        if (countdown > 0 && countdown < 89) {
+          socket.to(roomId).emit("countdown-event", { countdown });
+        }
+      },
+      1000,
+      countdown
+    );
+
+    socket.on("all-users-guess", () => {
+      socket.to(roomId).emit("countdown-event", { countdown: 0 });
+      socket.to(roomId).emit("countdown-event", { countdown: 90 });
+      clearInterval(interval);
+    });
+  };
+
   socket.on("create-room", (roomId) => createRoom(roomId));
 
   socket.on("join-room", (roomId) => joinRoom(roomId));
@@ -181,4 +208,6 @@ export const roomHandler = (socket: Socket) => {
   socket.on("update-score-user", getNewScore);
 
   socket.on("new-painter", getNewPainter);
+
+  socket.on("countdown-event", getCountdown);
 };
