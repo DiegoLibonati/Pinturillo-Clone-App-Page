@@ -25,7 +25,7 @@ interface payloadMessages {
 
 // Define the initial state using that type
 const initialState: gameState = {
-  messages: [{ author: "pepe", message: "jirafa" }],
+  messages: [{ author: "ROOM", message: "Welcome guys, have fun!" }],
   round: 0,
   limitRound: 1,
 };
@@ -42,7 +42,7 @@ export const gameSlice = createSlice({
       state.round = state.round + 1;
     },
     setCleanChat: (state) => {
-      state.messages = [];
+      state.messages = [{ author: "ROOM", message: "Welcome guys, have fun!" }];
     },
   },
 });
