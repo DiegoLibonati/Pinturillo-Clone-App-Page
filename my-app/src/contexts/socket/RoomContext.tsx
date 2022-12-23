@@ -37,7 +37,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   const dispatch = useAppDispatch();
 
   const createRoom = ({ roomId }) => {
-    ws.emit("create-room", { roomId: roomId });
+    ws.emit("create-room", roomId);
 
     navigate(`pinturillo/lobby/${roomId}`);
   };
@@ -47,7 +47,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   };
 
   const joinRoom = ({ roomId, user }) => {
-    ws.emit("join-room", { roomId: roomId, user: user });
+    ws.emit("join-room", roomId, user);
   };
 
   const getUsers = ({ participants }) => {
