@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
 
-const rooms: Record<string, UserParams[]> = {};
+const rooms: Record<string, { participants: UserParams[]; countdown: number }> =
+  {};
 
 interface UserParams {
   userId: String;
@@ -30,27 +31,30 @@ interface IRoomParams {
 export const roomHandler = (socket: Socket) => {
   const createRoom = ({ roomId }) => {
     if (!rooms[roomId]) {
-      rooms[roomId] = [];
+      rooms[roomId] = {
+        participants: [],
+        countdown: 90,
+      };
       socket.emit("room-created", { roomId });
       console.log(`ROOM CREATED: ${roomId}`);
     }
   };
 
   const joinRoom = ({ roomId, user }: IRoomParams) => {
-    const userInRoom = rooms[roomId].filter(
+    const userInRoom = rooms[roomId].participants.filter(
       (room) => room.userId === user.userId
     );
     if (rooms[roomId] && userInRoom.length === 0) {
-      if (rooms[roomId].length === 0) {
-        rooms[roomId].push({ ...user, isOwner: true });
+      if (rooms[roomId].participants.length === 0) {
+        rooms[roomId].participants.push({ ...user, isOwner: true });
       } else {
-        rooms[roomId].push(user);
+        rooms[roomId].participants.push(user);
       }
 
       socket.join(roomId);
       socket.emit("get-users", {
         roomId: roomId,
-        participants: rooms[roomId],
+        participants: rooms[roomId].participants,
       });
       socket.to(roomId).emit("user-joined", { user });
       console.log(`user joined the room: ${roomId} - ${user.userId}`);
@@ -66,22 +70,24 @@ export const roomHandler = (socket: Socket) => {
     if (rooms[roomId]) {
       const userId = user.userId;
 
-      rooms[roomId] = rooms[roomId].filter((room) => room.userId !== userId);
+      rooms[roomId].participants = rooms[roomId].participants.filter(
+        (room) => room.userId !== userId
+      );
 
       if (user.isOwner && rooms[roomId][0]) {
-        rooms[roomId][0]["isOwner"] = true;
+        rooms[roomId].participants[0]["isOwner"] = true;
       }
 
       socket.to(roomId).emit("user-disconnect", { user });
 
-      if (rooms[roomId].length === 0) {
+      if (rooms[roomId].participants.length === 0) {
         delete rooms[roomId];
       }
     }
   };
 
   const startGameRoom = (roomId) => {
-    if (rooms[roomId]) {
+    if (rooms[roomId].participants) {
       socket.to(roomId).emit("start-game-room", roomId);
     }
   };
@@ -102,12 +108,12 @@ export const roomHandler = (socket: Socket) => {
   };
 
   const getNewScore = (roomId, user) => {
-    if (rooms[roomId]) {
+    if (rooms[roomId].participants) {
       const userId = user.userId;
       const userScore = user.score;
 
       if (userId && userScore) {
-        const usersUpdate = rooms[roomId].map((user) => {
+        const usersUpdate = rooms[roomId].participants.map((user) => {
           if (user.userId === userId) {
             user.score = userScore;
             user.guessTheWord = true;
@@ -116,9 +122,11 @@ export const roomHandler = (socket: Socket) => {
           return user;
         });
 
-        rooms[roomId] = usersUpdate;
+        rooms[roomId].participants = usersUpdate;
 
-        socket.to(roomId).emit("update-score-user", rooms[roomId], user);
+        socket
+          .to(roomId)
+          .emit("update-score-user", rooms[roomId].participants, user);
       }
     }
   };
@@ -129,7 +137,7 @@ export const roomHandler = (socket: Socket) => {
     let userWasAPainter = null;
 
     if (userWasPainter) {
-      const usersUpdate = rooms[roomId].map((user) => {
+      const usersUpdate = rooms[roomId].participants.map((user) => {
         if (user.userId === userWasPainter) {
           userWasAPainter = user;
           user.wasPainter = true;
@@ -141,10 +149,10 @@ export const roomHandler = (socket: Socket) => {
         return user;
       });
 
-      rooms[roomId] = usersUpdate;
+      rooms[roomId].participants = usersUpdate;
     }
 
-    const usersUpdate = rooms[roomId].map((user) => {
+    const usersUpdate = rooms[roomId].participants.map((user) => {
       if (!user.wasPainter && !newPainterSetted) {
         user.isPainting = true;
         newPainterSetted = true;
@@ -157,19 +165,24 @@ export const roomHandler = (socket: Socket) => {
       return user;
     });
 
-    rooms[roomId] = usersUpdate;
+    rooms[roomId].participants = usersUpdate;
 
     if (newPainterSetted) {
       socket
         .to(roomId)
-        .emit("new-painter", rooms[roomId], userPainting, userWasAPainter);
+        .emit(
+          "new-painter",
+          rooms[roomId].participants,
+          userPainting,
+          userWasAPainter
+        );
     } else {
-      socket.to(roomId).emit("final-round", rooms[roomId]);
+      socket.to(roomId).emit("final-round", rooms[roomId].participants);
     }
   };
 
   const getCountdown = (roomId) => {
-    let countdown = 90;
+    let countdown = rooms[roomId].countdown;
     const interval = setInterval(
       () => {
         countdown -= 1;
