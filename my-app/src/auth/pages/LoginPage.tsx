@@ -1,25 +1,12 @@
 import Swal from "sweetalert2";
-import "./LoginPage.css";
 import { useForm } from "../../hooks/useForm";
 import { logo4 } from "../../assets/exports";
 import { NavBar } from "../../ui/components/NavBar";
 import { useAppDispatch } from "../../hooks/ReduxToolkitHooks";
 import { setLoginUser } from "../../store/user/userSlice";
+import { formData, formValidations } from "../utils/utilForm";
 import uuid from "react-uuid";
-
-const formData = {
-  username: "",
-  usernameValid: false,
-};
-
-const formValidations = {
-  username: [
-    [
-      (value: String) => value.length >= 3,
-      "The username must have at least 3 characters",
-    ],
-  ],
-};
+import "./LoginPage.css";
 
 export const LoginPage = () => {
   const { username, usernameValid, onInputChange, isFormValid } = useForm(
