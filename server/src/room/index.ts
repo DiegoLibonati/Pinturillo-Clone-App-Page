@@ -10,7 +10,13 @@ import { startGameRoom } from "./helpers/startGameRoom";
 
 export const rooms: Record<
   string,
-  { participants: UserParams[]; countdown: number }
+  {
+    participants: UserParams[];
+    countdown: number;
+    newPainterSetted: boolean;
+    userPainting: UserParams;
+    userWasAPainter: UserParams;
+  }
 > = {};
 
 interface UserParams {

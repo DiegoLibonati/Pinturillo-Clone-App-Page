@@ -6,6 +6,9 @@ export const createRoom = (roomId, socket) => {
     rooms[roomId] = {
       participants: [],
       countdown: 90,
+      newPainterSetted: false,
+      userPainting: null,
+      userWasAPainter: null,
     };
     socket.emit("room-created", { roomId });
     console.log(`ROOM CREATED: ${roomId}`);

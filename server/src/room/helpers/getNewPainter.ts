@@ -1,9 +1,9 @@
 import { rooms } from "..";
 
 export const getNewPainter = (roomId, userWasPainter = null, socket) => {
-  let newPainterSetted = false;
-  let userPainting = null;
-  let userWasAPainter = null;
+  let newPainterSetted = rooms[roomId].newPainterSetted;
+  let userPainting = rooms[roomId].userPainting;
+  let userWasAPainter = rooms[roomId].userWasAPainter;
 
   if (userWasPainter) {
     const usersUpdate = rooms[roomId].participants.map((user) => {
