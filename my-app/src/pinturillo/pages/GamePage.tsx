@@ -42,11 +42,6 @@ export const GamePage = () => {
   const { users, user } = useAppSelector((state) => state.user);
   const { messages, round, limitRound } = useAppSelector((state) => state.game);
 
-  useEffect(() => {
-    setMisteryWordToSolved(() => getIncognito("JIRAFA"));
-    setMisteryWord("JIRAFA");
-  }, []);
-
   const newArray = [...users].sort(getSortMayorToMinor);
 
   const sendMessage = (e) => {
@@ -80,6 +75,17 @@ export const GamePage = () => {
   useEffect(() => {
     ws.emit("update-score-user", roomId, user);
   }, [user.score]);
+
+  useEffect(() => {
+    if (countdown === 90) {
+      const userPainting = users.filter((user) => user.isPainting === true)[0];
+
+      if (userPainting) {
+        setMisteryWordToSolved(() => getIncognito(userPainting?.word));
+        setMisteryWord(userPainting?.word);
+      }
+    }
+  }, [countdown, users]);
 
   return (
     <>

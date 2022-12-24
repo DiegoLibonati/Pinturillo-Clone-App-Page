@@ -33,6 +33,7 @@ export const LoginPage = () => {
         username: username,
         isAuth: true,
         score: 0,
+        word: "",
       })
     );
   };

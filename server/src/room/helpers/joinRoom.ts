@@ -1,5 +1,6 @@
 import { rooms } from "..";
 import { leaveRoom } from "./leaveRoom";
+import randomWords from "ramdom-spanish-words";
 
 export const joinRoom = (roomId, user, socket) => {
   const userInRoom = rooms[roomId].participants.filter(
@@ -9,9 +10,13 @@ export const joinRoom = (roomId, user, socket) => {
   const roomParticipants = rooms[roomId].participants;
   if (room && userInRoom.length === 0) {
     if (roomParticipants.length === 0) {
-      roomParticipants.push({ ...user, isOwner: true });
+      roomParticipants.push({
+        ...user,
+        isOwner: true,
+        word: randomWords(1)[0],
+      });
     } else {
-      roomParticipants.push(user);
+      roomParticipants.push({ ...user, word: randomWords(1)[0] });
     }
 
     socket.join(roomId);

@@ -12,6 +12,7 @@ interface userState {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
+    word: string;
   }>;
   usersGuessed: Array<payloadUserState>;
 }
@@ -25,6 +26,7 @@ interface payloadUserState {
   isPainting?: boolean;
   wasPainter?: boolean;
   guessTheWord?: boolean;
+  word: string;
 }
 
 interface payloadUsersState {
@@ -37,6 +39,7 @@ interface payloadUsersState {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
+    word: string;
   }>;
 }
 
@@ -50,6 +53,7 @@ interface payloadUpdateUserScore {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
+    word: string;
   }>;
   user: {
     userId: string;
@@ -60,6 +64,7 @@ interface payloadUpdateUserScore {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
+    word: string;
   };
 }
 
@@ -73,6 +78,7 @@ interface payloadUpdatePainters {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
+    word: string;
   }>;
   user: {
     userId: string;
@@ -83,6 +89,7 @@ interface payloadUpdatePainters {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
+    word: string;
   };
   userWasPainter: {
     userId: string;
@@ -93,6 +100,7 @@ interface payloadUpdatePainters {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
+    word: string;
   };
 }
 
@@ -111,6 +119,7 @@ const initialState: userState = {
     isPainting: false,
     wasPainter: false,
     guessTheWord: false,
+    word: "",
   },
   users: [],
   usersGuessed: [],
