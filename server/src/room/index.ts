@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
 import { clearCanvas } from "./helpers/clearCanvas";
 import { createRoom } from "./helpers/createRoom";
+import { deleteRoom } from "./helpers/deleteRoom";
 import { getCanvasData } from "./helpers/getCanvasData";
 import { getCountdown } from "./helpers/getCountdown";
 import { getMessage } from "./helpers/getMessage";
@@ -69,4 +70,6 @@ export const roomHandler = (socket: Socket) => {
   socket.on("countdown-event", (roomId) => getCountdown(roomId, socket));
 
   socket.on("clear-canvas", (roomId) => clearCanvas(roomId, socket));
+
+  socket.on("delete-room", (roomId) => deleteRoom(roomId));
 };

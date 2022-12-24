@@ -200,6 +200,18 @@ export const userSlice = createSlice({
         state.user.wasPainter = true;
       }
     },
+    resetUser: (state) => {
+      state.user.userId = "";
+      state.user.username = "";
+      state.user.isAuth = false;
+      state.user.isOwner = false;
+      state.user.score = 0;
+      state.user.isPainting = false;
+      state.user.wasPainter = false;
+      state.user.guessTheWord = false;
+      state.users = [];
+      state.usersGuessed = [];
+    },
   },
 });
 
@@ -213,6 +225,7 @@ export const {
   updateScoreToAllUsers,
   usersUpdatePainter,
   updateUsersFinalRound,
+  resetUser,
 } = userSlice.actions;
 
 export default userSlice.reducer;

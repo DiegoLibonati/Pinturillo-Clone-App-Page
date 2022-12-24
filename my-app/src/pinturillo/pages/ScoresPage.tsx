@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
+import { Link, useParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { NavBar } from "../../ui/components/NavBar";
 import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
 import "./ScoresPage.css";
+import { RoomContext } from "../../contexts/socket/RoomContext";
+import { resetUser } from "../../store/user/userSlice";
 
 export const ScoresPage = () => {
   const { users } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const [scores, setScores] = useState<
     {
       userId: string;
@@ -23,6 +26,14 @@ export const ScoresPage = () => {
   useEffect(() => {
     setScores([...users].sort(getSortMayorToMinor));
   }, [users]);
+
+  const { ws } = useContext(RoomContext);
+  const { roomId } = useParams();
+
+  const deleteRoom = () => {
+    ws.emit("delete-room", roomId);
+    dispatch(resetUser());
+  };
   return (
     <>
       <NavBar></NavBar>
@@ -54,7 +65,9 @@ export const ScoresPage = () => {
           )}
         </section>
 
-        <Link to="/">HOME</Link>
+        <Link to="/" onClick={deleteRoom}>
+          HOME
+        </Link>
       </main>
     </>
   );
