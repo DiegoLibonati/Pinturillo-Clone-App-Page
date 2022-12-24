@@ -84,7 +84,7 @@ export const GamePage = () => {
   }, [user.score]);
 
   useEffect(() => {
-    if (round === limitRound) navigate("/");
+    if (round === limitRound) navigate(`/pinturillo/scores/${roomId}`);
   }, [round]);
 
   return (
