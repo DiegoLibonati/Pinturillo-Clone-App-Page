@@ -86,9 +86,9 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     }
   };
 
-  const setNewRound = (users) => {
-    dispatch(updateUsersFinalRound({ users }));
+  const setNewRound = (roomId) => {
     dispatch(setNewRoundGame());
+    navigate(`/pinturillo/scores/${roomId}`);
   };
 
   useEffect(() => {

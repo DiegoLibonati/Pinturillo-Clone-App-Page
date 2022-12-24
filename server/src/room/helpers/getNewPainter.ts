@@ -47,6 +47,6 @@ export const getNewPainter = (roomId, userWasPainter = null, socket) => {
         userWasAPainter
       );
   } else {
-    socket.to(roomId).emit("final-round", rooms[roomId].participants);
+    socket.to(roomId).emit("final-round", roomId);
   }
 };

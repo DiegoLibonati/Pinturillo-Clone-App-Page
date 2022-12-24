@@ -2,8 +2,8 @@ import { useState, useEffect, useContext } from "react";
 import { getIncognito } from "../helpers/getIncognito";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { useCanvas } from "../hooks/useCanvas";
-import { useNavigate, useParams } from "react-router-dom";
-import { estrella, loader, pincel } from "../../assets/exports";
+import { useParams } from "react-router-dom";
+import { estrella, pincel } from "../../assets/exports";
 import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
 import { RoomContext } from "../../contexts/socket/RoomContext";
 import { setNewMessage } from "../../store/game/gameSlice";
@@ -18,8 +18,6 @@ export const GamePage = () => {
 
   const { ws } = useContext(RoomContext);
   const { countdown } = useCountdown(90);
-
-  const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
 
@@ -82,10 +80,6 @@ export const GamePage = () => {
   useEffect(() => {
     ws.emit("update-score-user", roomId, user);
   }, [user.score]);
-
-  useEffect(() => {
-    if (round === limitRound) navigate(`/pinturillo/scores/${roomId}`);
-  }, [round]);
 
   return (
     <>

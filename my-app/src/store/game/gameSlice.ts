@@ -44,10 +44,14 @@ export const gameSlice = createSlice({
     setCleanChat: (state) => {
       state.messages = [{ author: "ROOM", message: "Welcome guys, have fun!" }];
     },
+    resetGame: (state) => {
+      state.messages = [{ author: "ROOM", message: "Welcome guys, have fun!" }];
+      state.round = 0;
+    },
   },
 });
 
-export const { setNewMessage, setNewRoundGame, setCleanChat } =
+export const { setNewMessage, setNewRoundGame, setCleanChat, resetGame } =
   gameSlice.actions;
 
 export default gameSlice.reducer;
