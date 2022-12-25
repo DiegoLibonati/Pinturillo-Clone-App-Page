@@ -46,6 +46,8 @@ export const GamePage = () => {
 
   const sendMessage = (e) => {
     e.preventDefault();
+    const messageWordToLowerCase = message.toLowerCase();
+    const misteryWordToLowerCase = misteryWord.toLowerCase();
 
     const data = {
       userId: user.userId,
@@ -54,12 +56,10 @@ export const GamePage = () => {
       roomId: roomId,
     };
 
-    ws.emit("new-message", data);
+    if (messageWordToLowerCase !== misteryWordToLowerCase)
+      ws.emit("new-message", data);
 
     dispatch(setNewMessage({ author: user.username, message: message }));
-
-    const messageWordToLowerCase = message.toLowerCase();
-    const misteryWordToLowerCase = misteryWord.toLowerCase();
 
     if (messageWordToLowerCase === misteryWordToLowerCase) {
       const sumPoints = countdown * 0.5;
