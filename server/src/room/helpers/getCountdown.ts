@@ -8,16 +8,16 @@ export const getCountdown = (roomId, socket) => {
       countdown -= 1;
 
       if (countdown === 0) {
-        resetCountdown(interval, roomId, socket);
+        resetCountdown(interval, socket);
       }
 
       if (countdown > 0 && countdown < 89) {
-        socket.to(roomId).emit("countdown-event", { countdown });
+        socket.emit("countdown-event", { countdown });
       }
     },
     1000,
     countdown
   );
 
-  socket.on("all-users-guess", () => resetCountdown(interval, roomId, socket));
+  socket.on("all-users-guess", () => resetCountdown(interval, socket));
 };

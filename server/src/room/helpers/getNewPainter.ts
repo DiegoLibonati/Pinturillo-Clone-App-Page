@@ -37,16 +37,14 @@ export const getNewPainter = (roomId, userWasPainter = null, socket) => {
   rooms[roomId].participants = usersUpdate;
 
   if (newPainterSetted) {
-    socket
-      .to(roomId)
-      .emit(
-        "new-painter",
-        roomId,
-        rooms[roomId].participants,
-        userPainting,
-        userWasAPainter
-      );
+    socket.emit(
+      "new-painter",
+      roomId,
+      rooms[roomId].participants,
+      userPainting,
+      userWasAPainter
+    );
   } else {
-    socket.to(roomId).emit("final-round");
+    socket.emit("final-round", roomId);
   }
 };
