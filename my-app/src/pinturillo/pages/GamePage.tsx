@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { getIncognito } from "../helpers/getIncognito";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { useCanvas } from "../hooks/useCanvas";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { estrella, pincel } from "../../assets/exports";
 import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
 import { RoomContext } from "../../contexts/socket/RoomContext";
