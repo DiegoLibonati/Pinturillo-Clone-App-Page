@@ -81,9 +81,17 @@ export const GamePage = () => {
       const userPainting = users.filter((user) => user.isPainting === true)[0];
 
       if (userPainting) {
-        setMisteryWordToSolved(() => getIncognito(userPainting?.word));
+        setMisteryWordToSolved(() => getIncognito(misteryWord, countdown));
         setMisteryWord(userPainting?.word);
       }
+    }
+
+    if (countdown === 88) {
+      setMisteryWordToSolved(() => getIncognito(misteryWord, countdown));
+    }
+
+    if (countdown === 50) {
+      setMisteryWordToSolved(() => getIncognito(misteryWord, countdown));
     }
   }, [countdown, users]);
 
@@ -123,7 +131,11 @@ export const GamePage = () => {
                 Round {round}/{limitRound}
               </h3>
             </div>
-            <h1>{user.isPainting ? misteryWord : misteryWordToSolved}</h1>
+            <h1>
+              {user.isPainting || user.guessTheWord
+                ? misteryWord
+                : misteryWordToSolved}
+            </h1>
           </article>
           <article className="canvas_container_toolbox">
             {user.isPainting ? (
