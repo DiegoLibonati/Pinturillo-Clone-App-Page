@@ -8,6 +8,7 @@ import { getMessage } from "./helpers/getMessage";
 import { getNewPainter } from "./helpers/getNewPainter";
 import { joinRoom } from "./helpers/joinRoom";
 import { startGameRoom } from "./helpers/startGameRoom";
+import { userGuessWord } from "./helpers/userGuessWord";
 
 export const rooms: Record<
   string,
@@ -68,30 +69,7 @@ export const roomHandler = (socket: Socket) => {
 
   socket.on("delete-room", (roomId) => deleteRoom(roomId));
 
-  socket.on(
-    "user-guess-word",
-    (roomId, data, misteryWordToLowerCase, score) => {
-      const { userId, message } = data;
-
-      if (misteryWordToLowerCase === message.toLowerCase()) {
-        rooms[roomId].participants = rooms[roomId].participants.map((user) => {
-          if (user.userId === userId) {
-            user.score = score;
-            user.guessTheWord = true;
-            return user;
-          }
-
-          if (user.isPainting) {
-            user.score += 10;
-            return user;
-          }
-          return user;
-        });
-
-        socket
-          .to(roomId)
-          .emit("user-guess-word", rooms[roomId].participants, userId, score);
-      }
-    }
+  socket.on("user-guess-word", (roomId, data, misteryWordToLowerCase, score) =>
+    userGuessWord(roomId, data, misteryWordToLowerCase, score, socket)
   );
 };
