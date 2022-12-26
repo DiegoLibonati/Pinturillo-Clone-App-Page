@@ -6,7 +6,6 @@ import { getCanvasData } from "./helpers/getCanvasData";
 import { getCountdown } from "./helpers/getCountdown";
 import { getMessage } from "./helpers/getMessage";
 import { getNewPainter } from "./helpers/getNewPainter";
-import { getNewScore } from "./helpers/getNewScore";
 import { joinRoom } from "./helpers/joinRoom";
 import { startGameRoom } from "./helpers/startGameRoom";
 
@@ -59,10 +58,6 @@ export const roomHandler = (socket: Socket) => {
 
   socket.on("new-message", (data) => getMessage(data, socket));
 
-  socket.on("update-score-user", (roomId, user) =>
-    getNewScore(roomId, user, socket)
-  );
-
   socket.on("new-painter", (roomId, userWasPainter) =>
     getNewPainter(roomId, userWasPainter, socket)
   );
@@ -72,4 +67,31 @@ export const roomHandler = (socket: Socket) => {
   socket.on("clear-canvas", (roomId) => clearCanvas(roomId, socket));
 
   socket.on("delete-room", (roomId) => deleteRoom(roomId));
+
+  socket.on(
+    "user-guess-word",
+    (roomId, data, misteryWordToLowerCase, score) => {
+      const { userId, message } = data;
+
+      if (misteryWordToLowerCase === message.toLowerCase()) {
+        rooms[roomId].participants = rooms[roomId].participants.map((user) => {
+          if (user.userId === userId) {
+            user.score = score;
+            user.guessTheWord = true;
+            return user;
+          }
+
+          if (user.isPainting) {
+            user.score += 10;
+            return user;
+          }
+          return user;
+        });
+
+        socket
+          .to(roomId)
+          .emit("user-guess-word", rooms[roomId].participants, userId, score);
+      }
+    }
+  );
 };

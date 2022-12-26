@@ -55,17 +55,8 @@ interface payloadUpdateUserScore {
     guessTheWord?: boolean;
     word: string;
   }>;
-  user: {
-    userId: string;
-    username: string;
-    isAuth: boolean;
-    isOwner?: boolean;
-    score: number;
-    isPainting?: boolean;
-    wasPainter?: boolean;
-    guessTheWord?: boolean;
-    word: string;
-  };
+  userId: string;
+  score: number;
 }
 
 interface payloadUpdatePainters {
@@ -171,13 +162,6 @@ export const userSlice = createSlice({
         return user;
       });
     },
-    updateScoreToAllUsers: (
-      state,
-      action: PayloadAction<payloadUpdateUserScore>
-    ) => {
-      state.users = action.payload.users;
-      state.usersGuessed.push(action.payload.user);
-    },
     usersUpdatePainter: (
       state,
       action: PayloadAction<payloadUpdatePainters>
@@ -221,6 +205,22 @@ export const userSlice = createSlice({
       state.users = [];
       state.usersGuessed = [];
     },
+    updateScores: (state, action: PayloadAction<payloadUpdateUserScore>) => {
+      state.users = action.payload.users;
+      const userFilter = state.users.filter(
+        (user) => user.userId === action.payload.userId
+      )[0];
+
+      if (state.user.isPainting) {
+        state.user.score += 10;
+      }
+
+      if (state.user.userId === action.payload.userId) {
+        state.user.score = action.payload.score;
+        state.user.guessTheWord = true;
+      }
+      state.usersGuessed.push(userFilter);
+    },
   },
 });
 
@@ -231,10 +231,10 @@ export const {
   setNewUser,
   setDisconnectUser,
   setNewPoints,
-  updateScoreToAllUsers,
   usersUpdatePainter,
   updateUsersFinalRound,
   resetUser,
+  updateScores,
 } = userSlice.actions;
 
 export default userSlice.reducer;

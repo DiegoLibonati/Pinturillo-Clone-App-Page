@@ -2,16 +2,16 @@ import { useState, useEffect, useContext } from "react";
 import { getIncognito } from "../helpers/getIncognito";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { useCanvas } from "../hooks/useCanvas";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { estrella, pincel } from "../../assets/exports";
 import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
 import { RoomContext } from "../../contexts/socket/RoomContext";
 import { setNewMessage } from "../../store/game/gameSlice";
 import { useCountdown } from "../hooks/useCountdown";
-import { setNewPoints } from "../../store/user/userSlice";
 import uuid from "react-uuid";
 import "./GamePage.css";
 import { Loader } from "../../ui/components/Loader";
+import { updateScores } from "../../store/user/userSlice";
 
 export const GamePage = () => {
   const [message, setMessage] = useState("");
@@ -66,15 +66,39 @@ export const GamePage = () => {
 
       const newPoints = user?.score + sumPoints;
 
-      dispatch(setNewPoints({ newPoints }));
+      ws.emit("update-painter-score", roomId);
+      ws.emit(
+        "user-guess-word",
+        roomId,
+        data,
+        misteryWordToLowerCase,
+        newPoints
+      );
+
+      const newUsersArray = users.map((user) => {
+        if (user.userId === data.userId) {
+          user = { ...user, score: newPoints, guessTheWord: true };
+          return user;
+        }
+
+        if (user.isPainting) {
+          user = { ...user, score: user.score + 10 };
+          return user;
+        }
+        return user;
+      });
+
+      dispatch(
+        updateScores({
+          users: newUsersArray,
+          userId: data.userId,
+          score: newPoints,
+        })
+      );
     }
 
     setMessage("");
   };
-
-  useEffect(() => {
-    ws.emit("update-score-user", roomId, user);
-  }, [user.score]);
 
   useEffect(() => {
     if (countdown === 90) {
@@ -110,7 +134,7 @@ export const GamePage = () => {
                 {(user.wasPainter || user.isPainting) && (
                   <img className="pincel_guess" src={pincel} alt="pincel"></img>
                 )}
-                {user.guessTheWord && (
+                {user.guessTheWord && !user.isPainting && (
                   <img
                     className="image_guess"
                     src={estrella}

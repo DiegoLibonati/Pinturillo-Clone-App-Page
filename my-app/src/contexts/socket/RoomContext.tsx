@@ -7,16 +7,11 @@ import {
   setNewUser,
   setOwnerUser,
   setUsers,
-  updateScoreToAllUsers,
-  updateUsersFinalRound,
+  updateScores,
   usersUpdatePainter,
 } from "../../store/user/userSlice";
 import { useState } from "react";
-import {
-  setCleanChat,
-  setNewMessage,
-  setNewRoundGame,
-} from "../../store/game/gameSlice";
+import { setCleanChat, setNewMessage } from "../../store/game/gameSlice";
 
 interface RoomContextProps {
   children: React.ReactNode;
@@ -74,10 +69,6 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     dispatch(setNewMessage(newData));
   };
 
-  const setUpdateUsersScore = (users, user) => {
-    dispatch(updateScoreToAllUsers({ users, user }));
-  };
-
   const setNewPainter = (roomId, users, user, userWasPainter) => {
     if (round < limitRound) {
       ws.emit("clear-canvas", roomId);
@@ -90,6 +81,10 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     navigate(`/pinturillo/scores/${roomId}`);
   };
 
+  const setScores = (users, userId, score) => {
+    dispatch(updateScores({ users, userId, score }));
+  };
+
   useEffect(() => {
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
@@ -100,7 +95,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     ws.on("new-message", getNewMessage);
     ws.on("final-round", setNewRound);
     ws.on("new-painter", setNewPainter);
-    ws.on("update-score-user", setUpdateUsersScore);
+    ws.on("user-guess-word", setScores);
 
     return () => {
       ws.off("room-created");
@@ -112,7 +107,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
       ws.off("new-message");
       ws.off("final-round");
       ws.off("new-painter");
-      ws.off("update-score-user");
+      ws.off("user-guess-word");
     };
   }, []);
 
