@@ -44,7 +44,9 @@ export const useCountdown = (time: number) => {
   useEffect(() => {
     ws.on("countdown-event", getCountdown);
 
-    return () => ws.off("countdown-event");
+    return () => {
+      ws.off("countdown-event");
+    };
   }, []);
 
   return { countdown, setCountdown, setLastPainter };

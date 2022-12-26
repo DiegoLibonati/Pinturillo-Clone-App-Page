@@ -6,10 +6,12 @@ import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
 import "./ScoresPage.css";
 import { RoomContext } from "../../contexts/socket/RoomContext";
 import { resetUser } from "../../store/user/userSlice";
+import { useCountdown } from "../hooks/useCountdown";
 
 export const ScoresPage = () => {
   const { users } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const { setCountdown } = useCountdown(90);
   const [scores, setScores] = useState<
     {
       userId: string;
@@ -32,6 +34,7 @@ export const ScoresPage = () => {
 
   const deleteRoom = () => {
     ws.emit("delete-room", roomId);
+    setCountdown(90);
     dispatch(resetUser());
   };
   return (
