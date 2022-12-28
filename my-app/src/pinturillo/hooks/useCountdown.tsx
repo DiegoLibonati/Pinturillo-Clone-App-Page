@@ -12,7 +12,7 @@ export const useCountdown = (time: number) => {
   const { roomId } = useParams();
   const { ws } = useContext(RoomContext);
   const { round, limitRound } = useAppSelector((state) => state.game);
-  const { usersGuessed, users, user } = useAppSelector((state) => state.user);
+  const { usersGuessed, users } = useAppSelector((state) => state.user);
 
   useEffect(() => {
     if (round === limitRound) return navigate(`/pinturillo/scores/${roomId}`);
@@ -25,29 +25,29 @@ export const useCountdown = (time: number) => {
       }
     }
 
-    if (countdown === 90 && round < limitRound) {
-      const allUsersWasPainters = users.filter(
-        (user) => user.wasPainter === true || user.isPainting === true
-      );
+    const allUsersWasPainters = users.filter(
+      (user) => user.wasPainter === true || user.isPainting === true
+    );
 
-      if (allUsersWasPainters.length === users.length) {
-        dispatch(setNewRoundGame());
-        dispatch(resetUsersRound());
-        ws.emit("reset-users-round", roomId);
-        const timeoutCountdown = setTimeout(() => {
-          ws.emit("new-painter", roomId);
-          ws.emit("countdown-event", roomId);
-        }, 5000);
-        return () => clearTimeout(timeoutCountdown);
-      } else {
-        const timeoutCountdown = setTimeout(() => {
-          ws.emit("new-painter", roomId);
-          ws.emit("countdown-event", roomId);
-        }, 5000);
-        return () => clearTimeout(timeoutCountdown);
-      }
+    if (countdown === 90 && allUsersWasPainters.length === users.length) {
+      dispatch(setNewRoundGame());
+      dispatch(resetUsersRound());
+      ws.emit("reset-users-round", roomId);
+      const timeoutCountdown = setTimeout(() => {
+        ws.emit("new-painter", roomId);
+        ws.emit("countdown-event", roomId);
+      }, 5000);
+      return () => clearTimeout(timeoutCountdown);
     }
-  }, [countdown]);
+
+    if (countdown === 90 && round < limitRound) {
+      const timeoutCountdown = setTimeout(() => {
+        ws.emit("new-painter", roomId);
+        ws.emit("countdown-event", roomId);
+      }, 5000);
+      return () => clearTimeout(timeoutCountdown);
+    }
+  }, [countdown, round]);
 
   useEffect(() => {
     if (usersGuessed.length === users.length) {
