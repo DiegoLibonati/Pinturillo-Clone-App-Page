@@ -7,6 +7,7 @@ import "./ScoresPage.css";
 import { RoomContext } from "../../contexts/socket/RoomContext";
 import { resetUser } from "../../store/user/userSlice";
 import { useCountdown } from "../hooks/useCountdown";
+import { resetGame } from "../../store/game/gameSlice";
 
 export const ScoresPage = () => {
   const { users } = useAppSelector((state) => state.user);
@@ -36,6 +37,7 @@ export const ScoresPage = () => {
     ws.emit("delete-room", roomId);
     setCountdown(90);
     dispatch(resetUser());
+    dispatch(resetGame());
   };
   return (
     <>

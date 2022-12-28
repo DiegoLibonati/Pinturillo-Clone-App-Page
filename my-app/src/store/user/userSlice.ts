@@ -12,7 +12,8 @@ interface userState {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
-    word: string;
+    wordRoundZero: string;
+    wordRoundOne: string;
   }>;
   usersGuessed: Array<payloadUserState>;
 }
@@ -26,7 +27,8 @@ interface payloadUserState {
   isPainting?: boolean;
   wasPainter?: boolean;
   guessTheWord?: boolean;
-  word: string;
+  wordRoundZero: string;
+  wordRoundOne: string;
 }
 
 interface payloadUsersState {
@@ -39,7 +41,8 @@ interface payloadUsersState {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
-    word: string;
+    wordRoundZero: string;
+    wordRoundOne: string;
   }>;
 }
 
@@ -53,7 +56,8 @@ interface payloadUpdateUserScore {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
-    word: string;
+    wordRoundZero: string;
+    wordRoundOne: string;
   }>;
   userId: string;
   score: number;
@@ -69,7 +73,8 @@ interface payloadUpdatePainters {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
-    word: string;
+    wordRoundZero: string;
+    wordRoundOne: string;
   }>;
   user: {
     userId: string;
@@ -80,7 +85,8 @@ interface payloadUpdatePainters {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
-    word: string;
+    wordRoundZero: string;
+    wordRoundOne: string;
   };
   userWasPainter: {
     userId: string;
@@ -91,7 +97,8 @@ interface payloadUpdatePainters {
     isPainting?: boolean;
     wasPainter?: boolean;
     guessTheWord?: boolean;
-    word: string;
+    wordRoundZero: string;
+    wordRoundOne: string;
   };
 }
 
@@ -110,7 +117,8 @@ const initialState: userState = {
     isPainting: false,
     wasPainter: false,
     guessTheWord: false,
-    word: "",
+    wordRoundZero: "",
+    wordRoundOne: "",
   },
   users: [],
   usersGuessed: [],
@@ -221,6 +229,20 @@ export const userSlice = createSlice({
       }
       state.usersGuessed.push(userFilter);
     },
+    resetUsersRound: (state) => {
+      state.user.guessTheWord = false;
+      state.user.isPainting = false;
+      state.user.wasPainter = false;
+
+      state.usersGuessed = [];
+
+      state.users = state.users.map((user) => {
+        user.guessTheWord = false;
+        user.isPainting = false;
+        user.wasPainter = false;
+        return user;
+      });
+    },
   },
 });
 
@@ -235,6 +257,7 @@ export const {
   updateUsersFinalRound,
   resetUser,
   updateScores,
+  resetUsersRound,
 } = userSlice.actions;
 
 export default userSlice.reducer;

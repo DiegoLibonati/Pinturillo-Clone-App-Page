@@ -8,6 +8,7 @@ export const createRoom = (roomId, socket) => {
       countdown: 90,
       newPainterSetted: false,
       userPainting: null,
+      userWasPainterId: null,
       userWasAPainter: null,
     };
     socket.emit("room-created", { roomId });

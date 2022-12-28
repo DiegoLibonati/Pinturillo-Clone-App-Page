@@ -13,10 +13,15 @@ export const joinRoom = (roomId, user, socket) => {
       roomParticipants.push({
         ...user,
         isOwner: true,
-        word: randomWords(1)[0],
+        wordRoundZero: randomWords(1)[0],
+        wordRoundOne: randomWords(1)[0],
       });
     } else {
-      roomParticipants.push({ ...user, word: randomWords(1)[0] });
+      roomParticipants.push({
+        ...user,
+        wordRoundZero: randomWords(1)[0],
+        wordRoundOne: randomWords(1)[0],
+      });
     }
 
     socket.join(roomId);

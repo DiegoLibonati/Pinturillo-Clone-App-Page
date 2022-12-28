@@ -106,7 +106,9 @@ export const GamePage = () => {
 
       if (userPainting) {
         setMisteryWordToSolved(() => getIncognito(misteryWord, countdown));
-        setMisteryWord(userPainting?.word);
+        setMisteryWord(
+          round === 0 ? userPainting?.wordRoundZero : userPainting?.wordRoundOne
+        );
       }
     }
 
@@ -117,7 +119,7 @@ export const GamePage = () => {
     if (countdown === 50) {
       setMisteryWordToSolved(() => getIncognito(misteryWord, countdown));
     }
-  }, [countdown, users]);
+  }, [countdown, users, round]);
 
   return (
     <>

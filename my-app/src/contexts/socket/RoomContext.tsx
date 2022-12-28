@@ -77,10 +77,6 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     }
   };
 
-  const setNewRound = (roomId) => {
-    navigate(`/pinturillo/scores/${roomId}`);
-  };
-
   const setScores = (users, userId, score) => {
     dispatch(updateScores({ users, userId, score }));
   };
@@ -93,7 +89,6 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     ws.on("start-game-room", startGameRoom);
     ws.on("canvas-data", (data) => setCanvasImage(data));
     ws.on("new-message", getNewMessage);
-    ws.on("final-round", setNewRound);
     ws.on("new-painter", setNewPainter);
     ws.on("user-guess-word", setScores);
 
@@ -105,7 +100,6 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
       ws.off("start-game-room");
       ws.off("canvas-data");
       ws.off("new-message");
-      ws.off("final-round");
       ws.off("new-painter");
       ws.off("user-guess-word");
     };

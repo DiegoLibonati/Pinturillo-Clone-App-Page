@@ -7,6 +7,7 @@ import { getCountdown } from "./helpers/getCountdown";
 import { getMessage } from "./helpers/getMessage";
 import { getNewPainter } from "./helpers/getNewPainter";
 import { joinRoom } from "./helpers/joinRoom";
+import { resetUsersRound } from "./helpers/resetUsersRound";
 import { startGameRoom } from "./helpers/startGameRoom";
 import { userGuessWord } from "./helpers/userGuessWord";
 
@@ -18,11 +19,12 @@ export const rooms: Record<
     newPainterSetted: boolean;
     userPainting: UserParams;
     userWasAPainter: UserParams;
+    userWasPainterId: string;
   }
 > = {};
 
 interface UserParams {
-  userId: String;
+  userId: string;
   username: String;
   isAuth: Boolean;
   isOwner?: Boolean;
@@ -59,9 +61,7 @@ export const roomHandler = (socket: Socket) => {
 
   socket.on("new-message", (data) => getMessage(data, socket));
 
-  socket.on("new-painter", (roomId, userWasPainter) =>
-    getNewPainter(roomId, userWasPainter, socket)
-  );
+  socket.on("new-painter", (roomId) => getNewPainter(roomId, socket));
 
   socket.on("countdown-event", (roomId) => getCountdown(roomId, socket));
 
@@ -72,4 +72,6 @@ export const roomHandler = (socket: Socket) => {
   socket.on("user-guess-word", (roomId, data, misteryWordToLowerCase, score) =>
     userGuessWord(roomId, data, misteryWordToLowerCase, score, socket)
   );
+
+  socket.on("reset-users-round", (roomId) => resetUsersRound(roomId));
 };

@@ -27,7 +27,7 @@ interface payloadMessages {
 const initialState: gameState = {
   messages: [{ author: "ROOM", message: "Welcome guys, have fun!" }],
   round: 0,
-  limitRound: 1,
+  limitRound: 2,
 };
 
 export const gameSlice = createSlice({

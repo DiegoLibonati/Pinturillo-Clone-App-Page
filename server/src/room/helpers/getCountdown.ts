@@ -3,12 +3,13 @@ import { resetCountdown } from "./resetCountdown";
 
 export const getCountdown = (roomId, socket) => {
   let countdown = rooms[roomId].countdown;
+
   const interval = setInterval(
     () => {
       countdown -= 1;
 
       if (countdown === 0) {
-        resetCountdown(interval, socket);
+        resetCountdown(interval, roomId, socket);
       }
 
       if (countdown > 0 && countdown < 89) {
@@ -19,5 +20,5 @@ export const getCountdown = (roomId, socket) => {
     countdown
   );
 
-  socket.on("all-users-guess", () => resetCountdown(interval, socket));
+  socket.on("all-users-guess", () => resetCountdown(interval, roomId, socket));
 };
