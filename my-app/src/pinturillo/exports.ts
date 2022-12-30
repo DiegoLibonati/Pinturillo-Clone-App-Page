@@ -1,8 +1,8 @@
-export * from "./helpers/getIncognito";
 export * from "./helpers/getSortMayorToMinor";
 
 export * from "./hooks/useCanvas";
 export * from "./hooks/useCountdown";
+export * from "./hooks/useIncognito";
 
 export * from "./pages/ChooseLobbyPage";
 export * from "./pages/GamePage";

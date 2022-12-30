@@ -9,6 +9,10 @@ interface gameState {
   }>;
   round: number;
   limitRound: number;
+  word: {
+    wordToGuess: string;
+    uniqueLettersFromWord: Array<string>;
+  };
 }
 
 interface payloadMessage {
@@ -23,11 +27,20 @@ interface payloadMessages {
   }>;
 }
 
+interface payloadWord {
+  wordToGuess?: string;
+  uniqueLettersFromWord?: Array<string>;
+}
+
 // Define the initial state using that type
 const initialState: gameState = {
   messages: [{ author: "ROOM", message: "Welcome guys, have fun!" }],
   round: 0,
   limitRound: 2,
+  word: {
+    wordToGuess: "",
+    uniqueLettersFromWord: [],
+  },
 };
 
 export const gameSlice = createSlice({
@@ -48,10 +61,24 @@ export const gameSlice = createSlice({
       state.messages = [{ author: "ROOM", message: "Welcome guys, have fun!" }];
       state.round = 0;
     },
+    setWord: (state, action: PayloadAction<payloadWord>) => {
+      if (action.payload.uniqueLettersFromWord) {
+        state.word.uniqueLettersFromWord = action.payload.uniqueLettersFromWord;
+      }
+
+      if (action.payload.wordToGuess) {
+        state.word.wordToGuess = action.payload.wordToGuess;
+      }
+    },
   },
 });
 
-export const { setNewMessage, setNewRoundGame, setCleanChat, resetGame } =
-  gameSlice.actions;
+export const {
+  setNewMessage,
+  setNewRoundGame,
+  setCleanChat,
+  resetGame,
+  setWord,
+} = gameSlice.actions;
 
 export default gameSlice.reducer;

@@ -3,10 +3,10 @@ import { useParams } from "react-router-dom";
 import { estrella, pincel } from "../../assets/exports";
 import { RoomContext } from "../../contexts/exports";
 import {
-  getIncognito,
   getSortMayorToMinor,
   useCanvas,
   useCountdown,
+  useIncognito,
 } from "../exports";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { setNewMessage, updateScores } from "../../store/exports";
@@ -37,8 +37,8 @@ export const GamePage = () => {
 
   const { roomId } = useParams();
 
-  const [misteryWordToSolved, setMisteryWordToSolved] = useState("");
   const [misteryWord, setMisteryWord] = useState("");
+  const { wordToGuess } = useIncognito(misteryWord, countdown);
 
   const { users, user } = useAppSelector((state) => state.user);
   const { messages, round, limitRound } = useAppSelector((state) => state.game);
@@ -106,19 +106,10 @@ export const GamePage = () => {
       const userPainting = users.filter((user) => user.isPainting === true)[0];
 
       if (userPainting) {
-        setMisteryWordToSolved(() => getIncognito(misteryWord, countdown));
         setMisteryWord(
           round === 0 ? userPainting?.wordRoundZero : userPainting?.wordRoundOne
         );
       }
-    }
-
-    if (countdown === 88) {
-      setMisteryWordToSolved(() => getIncognito(misteryWord, countdown));
-    }
-
-    if (countdown === 50) {
-      setMisteryWordToSolved(() => getIncognito(misteryWord, countdown));
     }
   }, [countdown, users, round]);
 
@@ -159,9 +150,7 @@ export const GamePage = () => {
               </h3>
             </div>
             <h1>
-              {user.isPainting || user.guessTheWord
-                ? misteryWord
-                : misteryWordToSolved}
+              {user.isPainting || user.guessTheWord ? misteryWord : wordToGuess}
             </h1>
           </article>
           <article className="canvas_container_toolbox">
