@@ -1,8 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { ChooseLobbyPage } from "../pages/ChooseLobbyPage";
-import { GamePage } from "../pages/GamePage";
-import { LobbyPage } from "../pages/LobbyPage";
-import { ScoresPage } from "../pages/ScoresPage";
+import { ChooseLobbyPage, GamePage, LobbyPage, ScoresPage } from "../exports";
 
 export const PinturilloRoutes = () => {
   return (

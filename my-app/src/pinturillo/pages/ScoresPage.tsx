@@ -1,13 +1,11 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
-import { NavBar } from "../../ui/components/NavBar";
-import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
+import { getSortMayorToMinor, useCountdown } from "../exports";
+import { RoomContext } from "../../contexts/exports";
+import { resetGame, resetUser } from "../../store/exports";
+import { NavBar } from "../../ui/exports";
 import "./ScoresPage.css";
-import { RoomContext } from "../../contexts/socket/RoomContext";
-import { resetUser } from "../../store/user/userSlice";
-import { useCountdown } from "../hooks/useCountdown";
-import { resetGame } from "../../store/game/gameSlice";
 
 export const ScoresPage = () => {
   const { users } = useAppSelector((state) => state.user);

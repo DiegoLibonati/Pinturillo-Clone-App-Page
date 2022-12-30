@@ -1,9 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { RoomContext } from "../../contexts/socket/RoomContext";
+import { RoomContext } from "../../contexts/exports";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
-import { setNewRoundGame } from "../../store/game/gameSlice";
-import { resetUsersRound } from "../../store/user/userSlice";
+import { resetUsersRound, setNewRoundGame } from "../../store/exports";
 
 export const useCountdown = (time: number) => {
   const [countdown, setCountdown] = useState(time);

@@ -1,5 +1,5 @@
 import { AppleStore, GooglePlay, logo4 } from "../assets/exports";
-import { NavBar } from "../ui/components/NavBar";
+import { NavBar } from "../ui/exports";
 import "./MobileView.css";
 
 export const MobileView = () => {

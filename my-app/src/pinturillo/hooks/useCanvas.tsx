@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { RoomContext } from "../../contexts/socket/RoomContext";
+import { RoomContext } from "../../contexts/exports";
 
 export const useCanvas = () => {
   const { ws, canvasImage } = useContext(RoomContext);

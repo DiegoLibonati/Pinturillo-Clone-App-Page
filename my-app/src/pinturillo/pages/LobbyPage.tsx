@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { owner } from "../../assets/exports";
-import { RoomContext } from "../../contexts/socket/RoomContext";
+import { RoomContext } from "../../contexts/exports";
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
-import { NavBar } from "../../ui/components/NavBar";
+import { NavBar } from "../../ui/exports";
 import uuid from "react-uuid";
 import "./LobbyPage.css";
 

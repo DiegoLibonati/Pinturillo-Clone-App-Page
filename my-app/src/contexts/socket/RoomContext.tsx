@@ -1,17 +1,17 @@
-import { createContext, useEffect } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import socketIOClient from "socket.io-client";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import {
+  setCleanChat,
   setDisconnectUser,
+  setNewMessage,
   setNewUser,
   setOwnerUser,
   setUsers,
   updateScores,
   usersUpdatePainter,
-} from "../../store/user/userSlice";
-import { useState } from "react";
-import { setCleanChat, setNewMessage } from "../../store/game/gameSlice";
+} from "../../store/exports";
 
 interface RoomContextProps {
   children: React.ReactNode;

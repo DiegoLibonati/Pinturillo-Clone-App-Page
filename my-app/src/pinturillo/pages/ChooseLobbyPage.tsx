@@ -1,11 +1,12 @@
 import Swal from "sweetalert2";
-import { logo4 } from "../../assets/exports";
-import { RoomContext } from "../../contexts/socket/RoomContext";
-import { useForm } from "../../hooks/useForm";
-import { NavBar } from "../../ui/components/NavBar";
 import { useContext } from "react";
-import { formData, formValidations } from "../utils/utilForm";
+import { RoomContext } from "../../contexts/exports";
+import { useForm } from "../../hooks/exports";
+import { formData, formValidations } from "../exports";
+
 import "./ChooseLobbyPage.css";
+import { NavBar } from "../../ui/exports";
+import { logo4 } from "../../assets/exports";
 
 export const ChooseLobbyPage = () => {
   const { roomId, roomIdValid, onInputChange, isFormValid } = useForm(

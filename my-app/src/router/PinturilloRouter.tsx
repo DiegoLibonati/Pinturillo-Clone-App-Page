@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AuthRoutes } from "../auth/routes/AuthRoutes";
+import { AuthRoutes } from "../auth/exports";
 import { useAuth, useMediaMatch } from "../hooks/exports";
-import { PinturilloRoutes } from "../pinturillo/routes/PinturilloRoutes";
-import { MobileView } from "../views/MobileView";
+import { PinturilloRoutes } from "../pinturillo/exports";
+import { MobileView } from "../views/exports";
 
 export const PinturilloRouter = () => {
   const { auth } = useAuth();

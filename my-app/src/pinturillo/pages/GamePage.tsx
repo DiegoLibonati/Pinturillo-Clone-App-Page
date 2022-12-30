@@ -1,17 +1,18 @@
 import { useState, useEffect, useContext } from "react";
-import { getIncognito } from "../helpers/getIncognito";
-import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
-import { useCanvas } from "../hooks/useCanvas";
 import { useParams } from "react-router-dom";
 import { estrella, pincel } from "../../assets/exports";
-import { getSortMayorToMinor } from "../helpers/getSortMayorToMinor";
-import { RoomContext } from "../../contexts/socket/RoomContext";
-import { setNewMessage } from "../../store/game/gameSlice";
-import { useCountdown } from "../hooks/useCountdown";
+import { RoomContext } from "../../contexts/exports";
+import {
+  getIncognito,
+  getSortMayorToMinor,
+  useCanvas,
+  useCountdown,
+} from "../exports";
+import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
+import { setNewMessage, updateScores } from "../../store/exports";
 import uuid from "react-uuid";
 import "./GamePage.css";
-import { Loader } from "../../ui/components/Loader";
-import { updateScores } from "../../store/user/userSlice";
+import { Loader } from "../../ui/exports";
 
 export const GamePage = () => {
   const [message, setMessage] = useState("");
