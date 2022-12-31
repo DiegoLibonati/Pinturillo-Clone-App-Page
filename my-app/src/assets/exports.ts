@@ -12,6 +12,8 @@ import pincel from "./pincel.png";
 import estrella from "./estrella.png";
 import loader from "./loader.gif";
 
+import logo_blanco_y_negro from "./dierillo-logos_white.png";
+
 export {
   logo,
   logo2,
@@ -23,4 +25,5 @@ export {
   pincel,
   estrella,
   loader,
+  logo_blanco_y_negro,
 };

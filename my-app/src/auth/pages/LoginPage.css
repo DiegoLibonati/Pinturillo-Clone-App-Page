@@ -10,8 +10,8 @@
 
 .main_login_container img {
   width: 300px;
-  height: auto;
-  object-fit: cover;
+  height: 300px;
+  object-fit: contain;
 }
 
 .section_container_login {

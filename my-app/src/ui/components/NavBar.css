@@ -11,7 +11,7 @@
 
 .header_container_logo {
   width: auto;
-  height: 60px;
+  height: 100px;
   transform: rotate(-7deg);
   object-fit: cover;
   transition: transform 1s;

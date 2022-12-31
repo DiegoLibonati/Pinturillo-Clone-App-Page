@@ -1,7 +1,7 @@
 import { useAppDispatch, useForm } from "../../hooks/exports";
 import { formData, formValidations, onSubmitForm } from "../exports";
 import { NavBar } from "../../ui/exports";
-import { logo4 } from "../../assets/exports";
+import { logo_blanco_y_negro } from "../../assets/exports";
 import "./LoginPage.css";
 
 export const LoginPage = () => {
@@ -16,7 +16,7 @@ export const LoginPage = () => {
     <>
       <NavBar></NavBar>
       <main className="main_login_container">
-        <img src={logo4} alt="logo"></img>
+        <img src={logo_blanco_y_negro} alt="logo"></img>
 
         <section className="section_container_login">
           <form
