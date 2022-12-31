@@ -1,8 +1,5 @@
-import Swal from "sweetalert2";
-import uuid from "react-uuid";
 import { useAppDispatch, useForm } from "../../hooks/exports";
-import { formData, formValidations } from "../exports";
-import { setLoginUser } from "../../store/exports";
+import { formData, formValidations, onSubmitForm } from "../exports";
 import { NavBar } from "../../ui/exports";
 import { logo4 } from "../../assets/exports";
 import "./LoginPage.css";
@@ -15,29 +12,6 @@ export const LoginPage = () => {
 
   const dispatch = useAppDispatch();
 
-  const onSubmitForm = (e) => {
-    e.preventDefault();
-
-    if (!isFormValid) {
-      return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: usernameValid,
-      });
-    }
-
-    dispatch(
-      setLoginUser({
-        userId: uuid(),
-        username: username,
-        isAuth: true,
-        score: 0,
-        wordRoundZero: "",
-        wordRoundOne: "",
-      })
-    );
-  };
-
   return (
     <>
       <NavBar></NavBar>
@@ -47,7 +21,9 @@ export const LoginPage = () => {
         <section className="section_container_login">
           <form
             className="section_container_login_form"
-            onSubmit={onSubmitForm}
+            onSubmit={(e) =>
+              onSubmitForm(e, isFormValid, username, usernameValid, dispatch)
+            }
           >
             <label htmlFor="nick">Nick:</label>
             <input
