@@ -1,4 +1,5 @@
 export * from "./helpers/getSortMayorToMinor";
+export * from "./helpers/onSubmitForm";
 
 export * from "./hooks/useCanvas";
 export * from "./hooks/useCountdown";

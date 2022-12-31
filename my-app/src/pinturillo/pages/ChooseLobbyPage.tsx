@@ -1,12 +1,10 @@
-import Swal from "sweetalert2";
 import { useContext } from "react";
 import { RoomContext } from "../../contexts/exports";
 import { useForm } from "../../hooks/exports";
-import { formData, formValidations } from "../exports";
-
-import "./ChooseLobbyPage.css";
+import { formData, formValidations, onSubmitForm } from "../exports";
 import { NavBar } from "../../ui/exports";
 import { logo4 } from "../../assets/exports";
+import "./ChooseLobbyPage.css";
 
 export const ChooseLobbyPage = () => {
   const { roomId, roomIdValid, onInputChange, isFormValid } = useForm(
@@ -15,20 +13,6 @@ export const ChooseLobbyPage = () => {
   );
 
   const { createRoom } = useContext(RoomContext);
-
-  const onSubmitForm = (e) => {
-    e.preventDefault();
-
-    if (!isFormValid) {
-      return Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: roomIdValid,
-      });
-    }
-
-    createRoom({ roomId: roomId });
-  };
 
   return (
     <>
@@ -40,7 +24,9 @@ export const ChooseLobbyPage = () => {
         <section className="section_container_chooselobby">
           <form
             className="section_container_chooselobby_form"
-            onSubmit={onSubmitForm}
+            onSubmit={(e) =>
+              onSubmitForm(e, isFormValid, roomIdValid, createRoom, roomId)
+            }
           >
             <label htmlFor="name">Room Name:</label>
             <input
