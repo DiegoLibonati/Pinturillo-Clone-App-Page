@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
-import { getSortMayorToMinor, useCountdown } from "../exports";
+import { getSortMayorToMinor } from "../exports";
 import { RoomContext } from "../../contexts/exports";
 import { resetGame, resetUser } from "../../store/exports";
 import { NavBar } from "../../ui/exports";

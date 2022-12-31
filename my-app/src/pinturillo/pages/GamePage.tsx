@@ -1,8 +1,6 @@
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { Loader } from "../../ui/exports";
-import { PlayerScores } from "../components/PlayerScores";
-import { Canvas } from "../components/Canvas";
-import { ChatGame } from "../components/ChatGame";
+import { Canvas, ChatGame, PlayerScores } from "../exports";
 import "./GamePage.css";
 
 export const GamePage = () => {

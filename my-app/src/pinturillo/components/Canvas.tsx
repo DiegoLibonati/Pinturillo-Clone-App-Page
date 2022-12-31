@@ -1,7 +1,4 @@
-import { useCanvas } from "../exports";
-import { CanvasBoard } from "./CanvasBoard";
-import { CanvasTitle } from "./CanvasTitle";
-import { CanvasToolbox } from "./CanvasToolbox";
+import { useCanvas, CanvasBoard, CanvasTitle, CanvasToolbox } from "../exports";
 
 export const Canvas = () => {
   const {
