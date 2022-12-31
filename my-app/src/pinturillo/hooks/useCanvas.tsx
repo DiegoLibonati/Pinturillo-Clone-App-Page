@@ -61,7 +61,7 @@ export const useCanvas = () => {
 
   const clearCanvas = (e) => {
     const canvas = canvasRef.current;
-
+    console.log(canvas);
     if (canvas) {
       const context = canvas.getContext("2d");
 

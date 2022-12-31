@@ -1,11 +1,15 @@
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
-import { useCanvas } from "../exports";
 
-export const CanvasToolbox = () => {
+export const CanvasToolbox = ({
+  increaseSize,
+  size,
+  decreaseSize,
+  color,
+  changeColor,
+  clearCanvas,
+}) => {
   const { user, users } = useAppSelector((state) => state.user);
 
-  const { color, size, increaseSize, decreaseSize, changeColor, clearCanvas } =
-    useCanvas();
   return (
     <article className="canvas_container_toolbox">
       {user.isPainting ? (
