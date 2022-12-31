@@ -1,18 +1,13 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { estrella, pincel } from "../../assets/exports";
 import { RoomContext } from "../../contexts/exports";
-import {
-  getSortMayorToMinor,
-  useCanvas,
-  useCountdown,
-  useIncognito,
-} from "../exports";
+import { useCanvas, useCountdown, useIncognito } from "../exports";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { setNewMessage, updateScores } from "../../store/exports";
 import uuid from "react-uuid";
-import "./GamePage.css";
 import { Loader } from "../../ui/exports";
+import { PlayerScores } from "../components/PlayerScores";
+import "./GamePage.css";
 
 export const GamePage = () => {
   const [message, setMessage] = useState("");
@@ -42,8 +37,6 @@ export const GamePage = () => {
 
   const { users, user } = useAppSelector((state) => state.user);
   const { messages, round, limitRound } = useAppSelector((state) => state.game);
-
-  const newArray = [...users].sort(getSortMayorToMinor);
 
   const sendMessage = (e) => {
     e.preventDefault();
@@ -117,28 +110,7 @@ export const GamePage = () => {
     <>
       {countdown === 90 && <Loader></Loader>}
       <main className="main_game_container">
-        <section className="players_score_container">
-          {newArray.map((user) => {
-            return (
-              <article key={uuid()} className="player_score_container">
-                <div className="player_score_container_information">
-                  <h2>{user.username}</h2>
-                  <h3>{user.score?.toString()}</h3>
-                </div>
-                {(user.wasPainter || user.isPainting) && (
-                  <img className="pincel_guess" src={pincel} alt="pincel"></img>
-                )}
-                {user.guessTheWord && !user.isPainting && (
-                  <img
-                    className="image_guess"
-                    src={estrella}
-                    alt="estrella"
-                  ></img>
-                )}
-              </article>
-            );
-          })}
-        </section>
+        <PlayerScores></PlayerScores>
 
         <section className="canvas_container">
           <article className="canvas_container_title">
