@@ -1,5 +1,13 @@
+export * from "./components/Canvas";
+export * from "./components/CanvasBoard";
+export * from "./components/CanvasTitle";
+export * from "./components/CanvasToolbox";
+export * from "./components/ChatGame";
+export * from "./components/PlayerScores";
+
 export * from "./helpers/getSortMayorToMinor";
 export * from "./helpers/onSubmitForm";
+export * from "./helpers/sendMessage";
 
 export * from "./hooks/useCanvas";
 export * from "./hooks/useCountdown";
