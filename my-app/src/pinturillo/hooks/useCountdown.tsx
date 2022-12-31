@@ -2,15 +2,20 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { RoomContext } from "../../contexts/exports";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
-import { resetUsersRound, setNewRoundGame } from "../../store/exports";
+import {
+  resetUsersRound,
+  setCountdown,
+  setNewRoundGame,
+} from "../../store/exports";
 
-export const useCountdown = (time: number) => {
-  const [countdown, setCountdown] = useState(time);
+export const useCountdown = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { roomId } = useParams();
   const { ws } = useContext(RoomContext);
-  const { round, limitRound } = useAppSelector((state) => state.game);
+  const { round, limitRound, countdown } = useAppSelector(
+    (state) => state.game
+  );
   const { usersGuessed, users } = useAppSelector((state) => state.user);
 
   useEffect(() => {
@@ -20,7 +25,7 @@ export const useCountdown = (time: number) => {
       const userPainter = users.filter((user) => user.isPainting === true)[0];
 
       if (userPainter) {
-        setCountdown(90);
+        dispatch(setCountdown({ countdown: 90 }));
       }
     }
 
@@ -33,6 +38,7 @@ export const useCountdown = (time: number) => {
       dispatch(resetUsersRound());
       ws.emit("reset-users-round", roomId);
       const timeoutCountdown = setTimeout(() => {
+        console.log("nuevo pintor");
         ws.emit("new-painter", roomId);
         ws.emit("countdown-event", roomId);
       }, 5000);
@@ -55,7 +61,7 @@ export const useCountdown = (time: number) => {
   }, [usersGuessed]);
 
   const getCountdown = (count) => {
-    setCountdown(count.countdown);
+    dispatch(setCountdown({ countdown: count.countdown }));
   };
 
   useEffect(() => {

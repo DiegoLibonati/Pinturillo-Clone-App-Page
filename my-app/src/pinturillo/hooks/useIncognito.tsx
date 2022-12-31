@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { setWord } from "../../store/exports";
 
-export const useIncognito = (misteryWord: string, countdown: number) => {
+export const useIncognito = (misteryWord: string = "") => {
   const dispatch = useAppDispatch();
-  const { word } = useAppSelector((state) => state.game);
+  const { word, countdown } = useAppSelector((state) => state.game);
   const { uniqueLettersFromWord, wordToGuess } = word;
 
   const getIncognito = () => {

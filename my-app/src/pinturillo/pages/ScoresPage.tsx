@@ -10,7 +10,6 @@ import "./ScoresPage.css";
 export const ScoresPage = () => {
   const { users } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const { setCountdown } = useCountdown(90);
   const [scores, setScores] = useState<
     {
       userId: string;
@@ -33,7 +32,6 @@ export const ScoresPage = () => {
 
   const deleteRoom = () => {
     ws.emit("delete-room", roomId);
-    setCountdown(90);
     dispatch(resetUser());
     dispatch(resetGame());
   };
