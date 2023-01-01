@@ -59,6 +59,7 @@ export const userSlice = createSlice({
       state.user.isOwner = true;
     },
     setUsers: (state, action: PayloadAction<payload["usersUpdate"]>) => {
+      console.log(action.payload);
       state.users = action.payload.participants;
     },
     setNewUser: (state, action: PayloadAction<User>) => {

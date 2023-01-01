@@ -1,8 +1,11 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { setWord } from "../../store/exports";
+import { replaceChar } from "../exports";
 
-export const useIncognito = (misteryWord: string = "") => {
+export const useIncognito = (
+  misteryWord: string = ""
+): { wordToGuess: string | undefined } => {
   const dispatch = useAppDispatch();
   const { word, countdown } = useAppSelector((state) => state.game);
   const { uniqueLettersFromWord, wordToGuess } = word;
@@ -59,12 +62,3 @@ export const useIncognito = (misteryWord: string = "") => {
 
   return { wordToGuess };
 };
-
-function replaceChar(origString, replaceChar, index) {
-  let firstPart = origString.substr(0, index);
-  let lastPart = origString.substr(index + 1);
-
-  let newString = firstPart + replaceChar + lastPart;
-
-  return newString;
-}

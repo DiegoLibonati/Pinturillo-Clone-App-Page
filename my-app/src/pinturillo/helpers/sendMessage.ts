@@ -1,17 +1,20 @@
+import { Dispatch } from "@reduxjs/toolkit";
+import { Socket } from "socket.io-client";
 import { setNewMessage, updateScores } from "../../store/exports";
+import { User } from "../../types/types";
 
 export const sendMessage = (
-  e,
-  message,
-  misteryWord,
-  user,
-  roomId,
-  ws,
-  dispatch,
-  countdown,
-  users,
-  setMessage
-) => {
+  e: React.FormEvent<HTMLFormElement>,
+  message: string,
+  misteryWord: string | undefined,
+  user: User,
+  roomId: string | undefined,
+  ws: Socket,
+  dispatch: Dispatch,
+  countdown: number,
+  users: Array<User>,
+  setMessage: React.Dispatch<React.SetStateAction<string>>
+): void => {
   e.preventDefault();
   const messageWordToLowerCase = message.toLowerCase();
   const misteryWordToLowerCase = misteryWord?.toLowerCase();

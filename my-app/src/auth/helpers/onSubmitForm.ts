@@ -1,13 +1,14 @@
+import { Dispatch } from "@reduxjs/toolkit";
 import uuid from "react-uuid";
 import Swal from "sweetalert2";
 import { setLoginUser } from "../../store/exports";
 
 export const onSubmitForm = (
-  e,
-  isFormValid,
-  username,
-  usernameValid,
-  dispatch
+  e: React.FormEvent<HTMLFormElement>,
+  isFormValid: boolean,
+  username: string,
+  usernameValid: string,
+  dispatch: Dispatch
 ) => {
   e.preventDefault();
 

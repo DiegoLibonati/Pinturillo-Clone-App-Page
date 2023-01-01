@@ -1,11 +1,11 @@
 import Swal from "sweetalert2";
 
 export const onSubmitForm = (
-  e,
-  isFormValid,
-  roomIdValid,
-  createRoom,
-  roomId
+  e: React.FormEvent<HTMLFormElement>,
+  isFormValid: boolean,
+  roomIdValid: string,
+  createRoom: ({ roomId }: { roomId: string }) => void,
+  roomId: string
 ) => {
   e.preventDefault();
 

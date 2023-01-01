@@ -1,8 +1,9 @@
 import { useRef, useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { RoomContext } from "../../contexts/exports";
+import { CanvasProps } from "../../types/types";
 
-export const useCanvas = () => {
+export const useCanvas = (): CanvasProps => {
   const { ws, canvasImage } = useContext(RoomContext);
   const { roomId } = useParams();
 
@@ -11,11 +12,11 @@ export const useCanvas = () => {
   const contextRef = useRef<CanvasRenderingContext2D | null>(null);
 
   // Canvas States
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [size, setSize] = useState(5);
-  const [color, setColor] = useState("#000000");
+  const [isDrawing, setIsDrawing] = useState<boolean>(false);
+  const [size, setSize] = useState<number>(5);
+  const [color, setColor] = useState<string>("#000000");
 
-  const startDrawing = ({ nativeEvent }) => {
+  const startDrawing = ({ nativeEvent }: { nativeEvent: MouseEvent }) => {
     const { offsetX, offsetY } = nativeEvent;
 
     contextRef?.current?.beginPath();
@@ -28,7 +29,7 @@ export const useCanvas = () => {
     setIsDrawing(false);
   };
 
-  const draw = ({ nativeEvent }) => {
+  const draw = ({ nativeEvent }: { nativeEvent: MouseEvent }) => {
     if (!isDrawing) {
       return;
     }
@@ -55,13 +56,13 @@ export const useCanvas = () => {
     return setSize(size - 1);
   };
 
-  const changeColor = (e) => {
+  const changeColor = (e: React.ChangeEvent<HTMLInputElement>) => {
     setColor(e.target.value);
   };
 
-  const clearCanvas = (e) => {
+  const clearCanvas = () => {
     const canvas = canvasRef.current;
-    console.log(canvas);
+
     if (canvas) {
       const context = canvas.getContext("2d");
 

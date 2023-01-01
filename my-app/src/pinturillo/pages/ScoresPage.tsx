@@ -6,22 +6,12 @@ import { RoomContext } from "../../contexts/exports";
 import { resetGame, resetUser } from "../../store/exports";
 import { NavBar } from "../../ui/exports";
 import "./ScoresPage.css";
+import { User } from "../../types/types";
 
 export const ScoresPage = () => {
   const { users } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  const [scores, setScores] = useState<
-    {
-      userId: string;
-      username: string;
-      isAuth: boolean;
-      isOwner?: boolean;
-      score: number;
-      isPainting?: boolean;
-      wasPainter?: boolean;
-      guessTheWord?: boolean;
-    }[]
-  >([]);
+  const [scores, setScores] = useState<Array<User>>([]);
 
   useEffect(() => {
     setScores([...users].sort(getSortMayorToMinor));

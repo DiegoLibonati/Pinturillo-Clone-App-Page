@@ -12,7 +12,7 @@ import {
   updateScores,
   usersUpdatePainter,
 } from "../../store/exports";
-import { User } from "../../types/types";
+import { Message, User } from "../../types/types";
 
 interface RoomContextProps {
   children: React.ReactNode;
@@ -32,45 +32,50 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const createRoom = ({ roomId }) => {
+  const createRoom = ({ roomId }: { roomId: number }) => {
     ws.emit("create-room", roomId);
 
     navigate(`pinturillo/lobby/${roomId}`);
   };
 
-  const enterRoom = ({ roomId }: { roomId: String }) => {
+  const enterRoom = () => {
     dispatch(setOwnerUser());
   };
 
-  const joinRoom = ({ roomId, user }) => {
+  const joinRoom = ({ roomId, user }: { roomId: number; user: User }) => {
     ws.emit("join-room", roomId, user);
   };
 
-  const getUsers = (users) => {
-    dispatch(setUsers(users));
+  const getUsers = ({ participants }: { participants: Array<User> }) => {
+    dispatch(setUsers({ participants }));
   };
 
-  const getNewUser = ({ user }) => {
+  const getNewUser = ({ user }: { user: User }) => {
     dispatch(setNewUser(user));
   };
 
-  const getUserDisconnect = ({ user }) => {
+  const getUserDisconnect = ({ user }: { user: User }) => {
     dispatch(setDisconnectUser(user));
   };
 
-  const startGame = (roomId) => {
+  const startGame = (roomId: string) => {
     ws.emit("start-game", roomId);
   };
 
-  const startGameRoom = (roomId) => {
+  const startGameRoom = (roomId: string) => {
     navigate(`/pinturillo/game/${roomId}`);
   };
 
-  const getNewMessage = (newData) => {
+  const getNewMessage = (newData: Message) => {
     dispatch(setNewMessage(newData));
   };
 
-  const setNewPainter = (roomId, users, user, userWasPainter) => {
+  const setNewPainter = (
+    roomId: string,
+    users: Array<User>,
+    user: User,
+    userWasPainter: User
+  ) => {
     if (round < limitRound) {
       ws.emit("clear-canvas", roomId);
       dispatch(usersUpdatePainter({ users, user, userWasPainter }));
@@ -78,7 +83,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     }
   };
 
-  const setScores = (users, userId, score) => {
+  const setScores = (users: Array<User>, userId: string, score: number) => {
     dispatch(updateScores({ users, userId, score }));
   };
 

@@ -1,4 +1,5 @@
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
+import { CanvasProps } from "../../types/types";
 
 export const CanvasToolbox = ({
   increaseSize,
@@ -7,7 +8,7 @@ export const CanvasToolbox = ({
   color,
   changeColor,
   clearCanvas,
-}) => {
+}: CanvasProps) => {
   const { user, users } = useAppSelector((state) => state.user);
 
   return (

@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 
-interface WindowMediaQuery {
-  matches: Boolean;
+interface MediaMatchHook {
+  matchMediaQuery: boolean;
 }
 
-export const useMediaMatch = () => {
+interface WindowMediaQuery {
+  matches: boolean;
+}
+
+export const useMediaMatch = (): MediaMatchHook => {
   const [mediaQuery, setMediaQuery] = useState<WindowMediaQuery>({
     matches: window.innerWidth >= 1024 ? true : false,
   });

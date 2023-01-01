@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-export const useForm = (initialForm, formValidations) => {
+export const useForm = (initialForm: any = {}, formValidations: any = {}) => {
   const [formState, setFormState] = useState(initialForm);
   const [formValidation, setFormValidation] = useState({});
 
@@ -23,6 +23,7 @@ export const useForm = (initialForm, formValidations) => {
 
   const isFormValid = useMemo(() => {
     for (const formValue of Object.keys(formValidation)) {
+      // @ts-ignore:next-line
       if (formValidation[formValue] !== null) {
         return false;
       }
@@ -36,7 +37,7 @@ export const useForm = (initialForm, formValidations) => {
     for (const formField of Object.keys(formValidations)) {
       for (const tupla in formValidations[formField]) {
         const [fn, errorMessage] = formValidations[formField][tupla];
-
+        // @ts-ignore:next-line
         formCheckedValues[`${formField}Valid`] = fn(formState[formField])
           ? null
           : errorMessage;

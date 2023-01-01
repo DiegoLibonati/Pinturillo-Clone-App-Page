@@ -8,6 +8,7 @@ export * from "./components/PlayerScores";
 export * from "./helpers/getSortMayorToMinor";
 export * from "./helpers/onSubmitForm";
 export * from "./helpers/sendMessage";
+export * from "./helpers/replaceChar";
 
 export * from "./hooks/useCanvas";
 export * from "./hooks/useCountdown";

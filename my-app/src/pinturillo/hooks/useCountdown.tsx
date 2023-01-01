@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { RoomContext } from "../../contexts/exports";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
@@ -7,8 +7,9 @@ import {
   setCountdown,
   setNewRoundGame,
 } from "../../store/exports";
+import { CountdownProps } from "../../types/types";
 
-export const useCountdown = () => {
+export const useCountdown = (): CountdownProps => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { roomId } = useParams();
@@ -60,7 +61,7 @@ export const useCountdown = () => {
     }
   }, [usersGuessed]);
 
-  const getCountdown = (count) => {
+  const getCountdown = (count: { countdown: number }) => {
     dispatch(setCountdown({ countdown: count.countdown }));
   };
 

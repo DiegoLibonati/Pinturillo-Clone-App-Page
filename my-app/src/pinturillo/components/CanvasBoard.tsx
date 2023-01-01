@@ -1,11 +1,12 @@
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
+import { CanvasProps } from "../../types/types";
 
 export const CanvasBoard = ({
   startDrawing,
   finishDrawing,
   draw,
   canvasRef,
-}) => {
+}: CanvasProps) => {
   const { user } = useAppSelector((state) => state.user);
 
   return (
