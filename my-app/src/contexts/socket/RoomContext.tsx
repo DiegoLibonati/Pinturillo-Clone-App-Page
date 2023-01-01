@@ -12,6 +12,7 @@ import {
   updateScores,
   usersUpdatePainter,
 } from "../../store/exports";
+import { User } from "../../types/types";
 
 interface RoomContextProps {
   children: React.ReactNode;
@@ -45,8 +46,8 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     ws.emit("join-room", roomId, user);
   };
 
-  const getUsers = ({ participants }) => {
-    dispatch(setUsers({ users: participants }));
+  const getUsers = (users) => {
+    dispatch(setUsers(users));
   };
 
   const getNewUser = ({ user }) => {
