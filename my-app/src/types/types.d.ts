@@ -10,3 +10,14 @@ export interface User {
   wordRoundZero: string;
   wordRoundOne: string;
 }
+
+export interface Message {
+  author: string;
+  message: string;
+}
+
+export interface WordGuess {
+  misteryWord?: string;
+  wordToGuess?: string;
+  uniqueLettersFromWord?: Array<string>;
+}

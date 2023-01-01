@@ -1,42 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { Message, WordGuess } from "../../types/types";
 
 // Define a type for the slice state
 interface gameState {
-  messages: Array<{
-    author: String;
-    message: String;
-  }>;
+  messages: Array<Message>;
   round: number;
   limitRound: number;
   countdown: number;
-  word: {
-    misteryWord?: string;
-    wordToGuess: string;
-    uniqueLettersFromWord: Array<string>;
-  };
+  word: WordGuess;
 }
 
-interface payloadMessage {
-  author: String;
-  message: String;
-}
-
-interface payloadMessages {
-  messages: Array<{
-    author: String;
-    message: String;
-  }>;
-}
-
-interface payloadWord {
-  misteryWord?: string;
-  wordToGuess?: string;
-  uniqueLettersFromWord?: Array<string>;
-}
-
-interface payloadCountdown {
-  countdown: number;
+interface payload {
+  message: Message;
+  word: WordGuess;
+  countdown: { countdown: number };
 }
 
 // Define the initial state using that type
@@ -57,7 +35,7 @@ export const gameSlice = createSlice({
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
-    setNewMessage: (state, action: PayloadAction<payloadMessage>) => {
+    setNewMessage: (state, action: PayloadAction<payload["message"]>) => {
       state.messages.push(action.payload);
     },
     setNewRoundGame: (state) => {
@@ -71,10 +49,10 @@ export const gameSlice = createSlice({
       state.round = 0;
       state.countdown = 90;
     },
-    setCountdown: (state, action: PayloadAction<payloadCountdown>) => {
+    setCountdown: (state, action: PayloadAction<payload["countdown"]>) => {
       state.countdown = action.payload.countdown;
     },
-    setWord: (state, action: PayloadAction<payloadWord>) => {
+    setWord: (state, action: PayloadAction<payload["word"]>) => {
       if (action.payload.uniqueLettersFromWord) {
         state.word.uniqueLettersFromWord = action.payload.uniqueLettersFromWord;
       }

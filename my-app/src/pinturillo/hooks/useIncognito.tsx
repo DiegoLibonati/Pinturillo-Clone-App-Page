@@ -9,8 +9,8 @@ export const useIncognito = (misteryWord: string = "") => {
 
   const getIncognito = () => {
     const getRandomLetter =
-      uniqueLettersFromWord[
-        Math.floor(Math.random() * uniqueLettersFromWord.length)
+      uniqueLettersFromWord![
+        Math.floor(Math.random() * uniqueLettersFromWord!.length)
       ];
 
     for (const [index, letter] of Array.from(misteryWord).entries()) {
@@ -24,7 +24,7 @@ export const useIncognito = (misteryWord: string = "") => {
 
     dispatch(
       setWord({
-        uniqueLettersFromWord: uniqueLettersFromWord.filter(
+        uniqueLettersFromWord: uniqueLettersFromWord?.filter(
           (letter) => letter !== getRandomLetter
         ),
       })
@@ -51,7 +51,7 @@ export const useIncognito = (misteryWord: string = "") => {
         countdown === 15 ||
         countdown === 10 ||
         countdown === 5) &&
-      uniqueLettersFromWord.length > 2
+      uniqueLettersFromWord!.length > 2
     ) {
       getIncognito();
     }
