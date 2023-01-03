@@ -4,7 +4,8 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "start": "nodemon"
+    "start": "nodemon",
+    "build": "cd src && tsc"
   },
   "dependencies": {
     "@types/express": "^4.17.14",

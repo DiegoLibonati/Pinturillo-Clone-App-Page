@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  backend:
+    container_name: dierillo_api
+    restart: unless-stopped
+    image: dierillo-api-prod:1.0.0
+    build:
+      context: server
+      target: production
+      dockerfile: Dockerfile
+    ports:
+      - 3001:3001
+    networks:
+      - shared-network
+
+  frontend:
+    container_name: dierillo_client
+    restart: unless-stopped
+    image: dierillo-client-prod:1.0.0
+    build:
+      context: my-app
+      target: production
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    networks:
+      - shared-network
+    depends_on:
+      - backend
+
+networks:
+  shared-network:

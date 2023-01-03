@@ -18,7 +18,7 @@ interface RoomContextProps {
   children: React.ReactNode;
 }
 
-const WS = "http://localhost:8080";
+const WS = "http://localhost:3001";
 
 export const RoomContext = createContext<null | any>(null);
 
