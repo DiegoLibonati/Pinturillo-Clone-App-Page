@@ -1,4 +1,6 @@
+import { Socket } from "socket.io";
 import { rooms } from "..";
+import { UserParams } from "../../types/types";
 import { leaveRoom } from "./leaveRoom";
 import { randomWords } from "./randomWords";
 
@@ -720,7 +722,11 @@ const listWords = [
   "Equipo Rocket,",
 ];
 
-export const joinRoom = (roomId, user, socket) => {
+export const joinRoom = (
+  roomId: string,
+  user: UserParams,
+  socket: Socket
+): void => {
   const userInRoom = rooms[roomId].participants.filter(
     (room) => room.userId === user.userId
   );

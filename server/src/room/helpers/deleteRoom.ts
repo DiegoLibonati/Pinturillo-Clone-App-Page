@@ -1,6 +1,6 @@
 import { rooms } from "..";
 
-export const deleteRoom = (roomId) => {
+export const deleteRoom = (roomId: string): void => {
   if (rooms[roomId]) {
     rooms[roomId] = {
       participants: [],

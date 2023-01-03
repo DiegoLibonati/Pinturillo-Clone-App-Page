@@ -1,6 +1,12 @@
+import { Socket } from "socket.io";
 import { rooms } from "..";
+import { UserParams } from "../../types/types";
 
-export const leaveRoom = (roomId, user, socket) => {
+export const leaveRoom = (
+  roomId: string,
+  user: UserParams,
+  socket: Socket
+): void => {
   const room = rooms[roomId];
   const roomParticipants = rooms[roomId].participants;
 

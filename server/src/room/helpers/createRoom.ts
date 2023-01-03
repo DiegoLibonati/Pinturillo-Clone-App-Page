@@ -1,5 +1,6 @@
+import { Socket } from "socket.io";
 import { rooms } from "..";
-export const createRoom = (roomId, socket) => {
+export const createRoom = (roomId: string, socket: Socket): void => {
   const room = rooms[roomId];
 
   if (!room) {

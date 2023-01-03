@@ -1,7 +1,8 @@
+import { Socket } from "socket.io";
 import { rooms } from "..";
 import { resetCountdown } from "./resetCountdown";
 
-export const getCountdown = (roomId, socket) => {
+export const getCountdown = (roomId: string, socket: Socket): void => {
   let countdown = rooms[roomId].countdown;
 
   const interval = setInterval(

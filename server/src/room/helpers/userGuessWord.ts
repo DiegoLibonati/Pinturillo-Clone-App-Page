@@ -1,12 +1,14 @@
+import { Socket } from "socket.io";
 import { rooms } from "..";
+import { MessageData } from "../../types/types";
 
 export const userGuessWord = (
-  roomId,
-  data,
-  misteryWordToLowerCase,
-  score,
-  socket
-) => {
+  roomId: string,
+  data: MessageData,
+  misteryWordToLowerCase: string,
+  score: number,
+  socket: Socket
+): void => {
   const { userId, message } = data;
 
   if (misteryWordToLowerCase === message.toLowerCase()) {

@@ -1,6 +1,6 @@
 import { rooms } from "..";
 
-export const resetUsersRound = (roomId) => {
+export const resetUsersRound = (roomId: string): void => {
   rooms[roomId].participants = rooms[roomId].participants.map((user) => {
     user.guessTheWord = false;
     user.isPainting = false;

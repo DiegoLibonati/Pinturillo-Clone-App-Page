@@ -1,6 +1,11 @@
+import { Socket } from "socket.io";
 import { rooms } from "..";
 
-export const resetCountdown = (interval, roomId, socket) => {
+export const resetCountdown = (
+  interval: number,
+  roomId: string,
+  socket: Socket
+): (() => void) => {
   clearInterval(interval);
 
   if (rooms[roomId].userWasPainterId) {
