@@ -53,12 +53,14 @@ export const useCountdown = (): CountdownProps => {
       }, 5000);
       return () => clearTimeout(timeoutCountdown);
     }
+    // eslint-disable-next-line
   }, [countdown, round]);
 
   useEffect(() => {
     if (usersGuessed.length === users.length) {
       ws.emit("all-users-guess");
     }
+    // eslint-disable-next-line
   }, [usersGuessed]);
 
   const getCountdown = (count: { countdown: number }) => {
@@ -71,6 +73,7 @@ export const useCountdown = (): CountdownProps => {
     return () => {
       ws.off("countdown-event");
     };
+    // eslint-disable-next-line
   }, []);
 
   return { countdown, setCountdown };

@@ -109,6 +109,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
       ws.off("new-painter");
       ws.off("user-guess-word");
     };
+    // eslint-disable-next-line
   }, []);
 
   return (

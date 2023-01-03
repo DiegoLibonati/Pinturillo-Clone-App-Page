@@ -30,6 +30,7 @@ export const CanvasTitle = () => {
         );
       }
     }
+    // eslint-disable-next-line
   }, [countdown, users, round]);
 
   return (

@@ -115,6 +115,7 @@ export const useCanvas = (): CanvasProps => {
     return () => {
       ws.off("clear-canvas");
     };
+    // eslint-disable-next-line
   }, []);
 
   return {

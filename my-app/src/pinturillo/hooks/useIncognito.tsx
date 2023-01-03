@@ -43,6 +43,7 @@ export const useIncognito = (
         })
       );
     }
+    // eslint-disable-next-line
   }, [misteryWord]);
 
   useEffect(() => {
@@ -58,6 +59,7 @@ export const useIncognito = (
     ) {
       getIncognito();
     }
+    // eslint-disable-next-line
   }, [countdown]);
 
   return { wordToGuess };
