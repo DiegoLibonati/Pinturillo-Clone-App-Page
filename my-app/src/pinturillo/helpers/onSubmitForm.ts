@@ -1,20 +1,16 @@
-import Swal from "sweetalert2";
-
 export const onSubmitForm = (
   e: React.FormEvent<HTMLFormElement>,
   isFormValid: boolean,
   roomIdValid: string,
   createRoom: ({ roomId }: { roomId: string }) => void,
-  roomId: string
+  roomId: string,
+  setModalOpen: (type: string, message: string) => void
 ) => {
   e.preventDefault();
 
   if (!isFormValid) {
-    return Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: roomIdValid,
-    });
+    setModalOpen("error", roomIdValid);
+    return;
   }
 
   createRoom({ roomId: roomId });

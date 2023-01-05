@@ -1,6 +1,5 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import uuid from "react-uuid";
-import Swal from "sweetalert2";
 import { setLoginUser } from "../../store/exports";
 
 export const onSubmitForm = (
@@ -8,16 +7,14 @@ export const onSubmitForm = (
   isFormValid: boolean,
   username: string,
   usernameValid: string,
-  dispatch: Dispatch
+  dispatch: Dispatch,
+  setModalOpen: (type: string, message: string) => void
 ) => {
   e.preventDefault();
 
   if (!isFormValid) {
-    return Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: usernameValid,
-    });
+    setModalOpen("error", usernameValid);
+    return;
   }
 
   dispatch(

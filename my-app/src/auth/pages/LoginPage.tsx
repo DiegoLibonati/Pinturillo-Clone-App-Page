@@ -1,7 +1,9 @@
+import { useContext } from "react";
 import { useAppDispatch, useForm } from "../../hooks/exports";
 import { formData, formValidations, onSubmitForm } from "../exports";
 import { NavBar } from "../../ui/exports";
 import { logo_blanco_y_negro } from "../../assets/exports";
+import { UIContext } from "../../contexts/exports";
 import "./LoginPage.css";
 
 export const LoginPage = () => {
@@ -11,6 +13,7 @@ export const LoginPage = () => {
   );
 
   const dispatch = useAppDispatch();
+  const { setModalOpen } = useContext(UIContext);
 
   return (
     <>
@@ -22,7 +25,14 @@ export const LoginPage = () => {
           <form
             className="section_container_login_form"
             onSubmit={(e) =>
-              onSubmitForm(e, isFormValid, username, usernameValid, dispatch)
+              onSubmitForm(
+                e,
+                isFormValid,
+                username,
+                usernameValid,
+                dispatch,
+                setModalOpen
+              )
             }
           >
             <label htmlFor="nick">Nick:</label>

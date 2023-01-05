@@ -11,6 +11,7 @@ import owner from "./owner.png";
 import pincel from "./pincel.png";
 import estrella from "./estrella.png";
 import loader from "./loader.gif";
+import error from "./error.png";
 
 import logo_blanco_y_negro from "./dierillo-logos_white.png";
 
@@ -26,4 +27,5 @@ export {
   estrella,
   loader,
   logo_blanco_y_negro,
+  error,
 };

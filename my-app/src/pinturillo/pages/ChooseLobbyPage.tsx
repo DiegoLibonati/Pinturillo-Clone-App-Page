@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { RoomContext } from "../../contexts/exports";
+import { RoomContext, UIContext } from "../../contexts/exports";
 import { useForm } from "../../hooks/exports";
 import { formData, formValidations, onSubmitForm } from "../exports";
 import { NavBar } from "../../ui/exports";
@@ -14,6 +14,8 @@ export const ChooseLobbyPage = () => {
 
   const { createRoom } = useContext(RoomContext);
 
+  const { setModalOpen } = useContext(UIContext);
+
   return (
     <>
       <NavBar></NavBar>
@@ -25,7 +27,14 @@ export const ChooseLobbyPage = () => {
           <form
             className="section_container_chooselobby_form"
             onSubmit={(e) =>
-              onSubmitForm(e, isFormValid, roomIdValid, createRoom, roomId)
+              onSubmitForm(
+                e,
+                isFormValid,
+                roomIdValid,
+                createRoom,
+                roomId,
+                setModalOpen
+              )
             }
           >
             <label htmlFor="name">Room Name:</label>
