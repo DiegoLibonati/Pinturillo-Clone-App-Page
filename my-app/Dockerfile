@@ -8,9 +8,10 @@ COPY package.json .
 COPY package-lock.json .
 
 RUN npm install
+RUN npm install -g serve
 
 COPY . .
 
 RUN npm run build
 
-CMD ["sh", "-c", "npm run start"]
+CMD ["sh", "-c", "serve -s build"]
