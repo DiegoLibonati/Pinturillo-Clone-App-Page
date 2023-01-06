@@ -1,16 +1,19 @@
 import { useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { owner } from "../../assets/exports";
-import { RoomContext } from "../../contexts/exports";
+import { RoomContext, UIContext } from "../../contexts/exports";
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { NavBar } from "../../ui/exports";
 import uuid from "react-uuid";
 import "./LobbyPage.css";
+import { useDispatch } from "react-redux";
+import { resetGame, resetUser } from "../../store/exports";
 
 export const LobbyPage = () => {
   const { roomId } = useParams();
 
-  const { joinRoom, startGame } = useContext(RoomContext);
+  const { joinRoom, startGame, ws } = useContext(RoomContext);
+  const { setModalOpen } = useContext(UIContext);
 
   const { user, users } = useAppSelector((state) => state.user);
 
@@ -21,6 +24,24 @@ export const LobbyPage = () => {
     // eslint-disable-next-line
   }, [roomId, user]);
 
+  const dispatch = useDispatch();
+
+  const setUserNotJoined = () => {
+    dispatch(resetUser());
+    dispatch(resetGame());
+    setModalOpen(
+      "error",
+      `Room: ${roomId} already started, try to join later or try to join to another room`
+    );
+  };
+
+  useEffect(() => {
+    ws.on("user-not-joined", setUserNotJoined);
+
+    return () => {
+      ws.off("user-not-joined");
+    };
+  }, []);
   return (
     <>
       <NavBar></NavBar>

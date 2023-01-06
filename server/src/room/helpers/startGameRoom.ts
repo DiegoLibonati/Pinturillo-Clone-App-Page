@@ -6,5 +6,7 @@ export const startGameRoom = (roomId: string, socket: Socket): void => {
 
   if (roomParticipants) {
     socket.to(roomId).emit("start-game-room", roomId);
+
+    if (!rooms[roomId].roomIsStarted) rooms[roomId].roomIsStarted = true;
   }
 };

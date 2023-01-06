@@ -726,12 +726,15 @@ export const joinRoom = (
   roomId: string,
   user: UserParams,
   socket: Socket
-): void => {
+): void | boolean => {
   const userInRoom = rooms[roomId].participants.filter(
     (room) => room.userId === user.userId
   );
   const room = rooms[roomId];
   const roomParticipants = rooms[roomId].participants;
+
+  if (room && room.roomIsStarted) return socket.emit("user-not-joined");
+
   if (room && userInRoom.length === 0) {
     if (roomParticipants.length === 0) {
       roomParticipants.push({

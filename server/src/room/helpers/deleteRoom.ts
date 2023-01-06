@@ -9,6 +9,7 @@ export const deleteRoom = (roomId: string): void => {
       userPainting: null,
       userWasAPainter: null,
       userWasPainterId: null,
+      roomIsStarted: false,
     };
     delete rooms[roomId];
   }

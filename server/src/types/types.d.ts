@@ -18,6 +18,7 @@ export interface RoomParams {
   userPainting: UserParams;
   userWasAPainter: UserParams;
   userWasPainterId: string;
+  roomIsStarted: boolean;
 }
 
 export interface MessageData {
