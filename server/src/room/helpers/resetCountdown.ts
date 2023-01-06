@@ -8,7 +8,7 @@ export const resetCountdown = (
 ): (() => void) => {
   clearInterval(interval);
 
-  if (rooms[roomId].userWasPainterId) {
+  if (rooms[roomId] && rooms[roomId].userWasPainterId) {
     const usersUpdate = rooms[roomId].participants.map((user) => {
       if (user.userId === rooms[roomId].userWasPainterId) {
         rooms[roomId].userWasAPainter = user;

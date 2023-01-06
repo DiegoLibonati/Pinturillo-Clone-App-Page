@@ -1,8 +1,10 @@
 import { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { RoomContext } from "../../contexts/exports";
+import { RoomContext, UIContext } from "../../contexts/exports";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import {
+  resetGame,
+  resetUser,
   resetUsersRound,
   setCountdown,
   setNewRoundGame,
@@ -14,6 +16,7 @@ export const useCountdown = (): CountdownProps => {
   const dispatch = useAppDispatch();
   const { roomId } = useParams();
   const { ws } = useContext(RoomContext);
+  const { setModalOpen } = useContext(UIContext);
   const { round, limitRound, countdown } = useAppSelector(
     (state) => state.game
   );
@@ -33,8 +36,12 @@ export const useCountdown = (): CountdownProps => {
     const allUsersWasPainters = users.filter(
       (user) => user.wasPainter === true || user.isPainting === true
     );
-
-    if (countdown === 90 && allUsersWasPainters.length === users.length) {
+    console.log(allUsersWasPainters, users.length);
+    if (
+      countdown === 90 &&
+      allUsersWasPainters.length === users.length &&
+      users.length > 1
+    ) {
       dispatch(setNewRoundGame());
       dispatch(resetUsersRound());
       ws.emit("reset-users-round", roomId);
@@ -75,6 +82,19 @@ export const useCountdown = (): CountdownProps => {
     };
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if (users.length === 1) {
+      dispatch(resetUser());
+      dispatch(resetGame());
+      setModalOpen(
+        "error",
+        `Room: ${roomId} was closed because there is only one user playing`
+      );
+      ws.emit("delete-room", roomId);
+    }
+    // eslint-disable-next-line
+  }, [users]);
 
   return { countdown, setCountdown };
 };
