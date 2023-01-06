@@ -41,6 +41,7 @@ export const LobbyPage = () => {
     return () => {
       ws.off("user-not-joined");
     };
+    // eslint-disable-next-line
   }, []);
   return (
     <>
@@ -60,7 +61,7 @@ export const LobbyPage = () => {
             })}
           </article>
 
-          {user.isOwner && (
+          {user.isOwner && users.length > 1 && (
             <Link
               to={`/pinturillo/game/${roomId}`}
               onClick={() => startGame(roomId)}
