@@ -1,4 +1,4 @@
-import { ActionCreatorWithPayload, Dispatch } from "@reduxjs/toolkit";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
 export interface User {
   userId: string;
@@ -9,8 +9,7 @@ export interface User {
   isPainting?: boolean;
   wasPainter?: boolean;
   guessTheWord?: boolean;
-  wordRoundZero: string;
-  wordRoundOne: string;
+  words: Array<string>;
 }
 
 export interface Message {
