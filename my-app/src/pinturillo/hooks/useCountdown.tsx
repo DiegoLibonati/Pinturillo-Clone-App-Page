@@ -91,7 +91,6 @@ export const useCountdown = (): CountdownProps => {
         "error",
         `Room: ${roomId} was closed because there is only one user playing`
       );
-      ws.emit("delete-room", roomId);
     }
     // eslint-disable-next-line
   }, [users]);
