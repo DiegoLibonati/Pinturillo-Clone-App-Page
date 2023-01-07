@@ -13,6 +13,14 @@ export const leaveRoom = (
 
   const userId = user.userId;
 
+  roomParticipants.map((participant) => {
+    if (participant.userId === user.userId && participant.isPainting) {
+      rooms[roomId].userPaintingLeft = true;
+      return;
+    }
+    return;
+  });
+
   rooms[roomId].participants = roomParticipants.filter(
     (room) => room.userId !== userId
   );

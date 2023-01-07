@@ -18,6 +18,7 @@ export interface RoomParams {
   userWasAPainter: UserParams;
   userWasPainterId: string;
   roomIsStarted: boolean;
+  userPaintingLeft: boolean;
   totalRounds: 3;
 }
 

@@ -11,6 +11,7 @@ export const deleteRoom = (roomId: string): void => {
     userWasAPainter: null,
     userWasPainterId: null,
     roomIsStarted: false,
+    userPaintingLeft: false,
     totalRounds: 3,
   };
   delete rooms[roomId];

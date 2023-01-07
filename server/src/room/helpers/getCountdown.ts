@@ -10,7 +10,12 @@ export const getCountdown = (roomId: string, socket: Socket): void => {
     () => {
       if (!rooms[roomId]) return clearInterval(interval);
 
+      if (rooms[roomId].userPaintingLeft) {
+        resetCountdown(interval, roomId, socket);
+      }
+
       countdown -= 1;
+
       if (countdown === 0) {
         resetCountdown(interval, roomId, socket);
       }

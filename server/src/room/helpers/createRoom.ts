@@ -11,6 +11,7 @@ export const createRoom = (roomId: string, socket: Socket): void => {
     userWasPainterId: null,
     userWasAPainter: null,
     roomIsStarted: false,
+    userPaintingLeft: false,
     totalRounds: 3,
   };
   socket.emit("room-created", { roomId });

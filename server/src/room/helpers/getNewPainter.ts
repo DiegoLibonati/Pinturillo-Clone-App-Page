@@ -32,5 +32,7 @@ export const getNewPainter = (roomId: string, socket: Socket): void => {
       userPainting,
       userWasAPainter
     );
+
+    if (rooms[roomId].userPaintingLeft) rooms[roomId].userPaintingLeft = false;
   }
 };
