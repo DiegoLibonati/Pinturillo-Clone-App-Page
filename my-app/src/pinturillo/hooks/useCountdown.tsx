@@ -23,7 +23,7 @@ export const useCountdown = (): CountdownProps => {
   const { usersGuessed, users } = useAppSelector((state) => state.user);
 
   useEffect(() => {
-    if (round === limitRound) return navigate(`/pinturillo/scores/${roomId}`);
+    if (round > limitRound) return navigate(`/pinturillo/scores/${roomId}`);
 
     if (countdown === 0) {
       const userPainter = users.filter((user) => user.isPainting === true)[0];
@@ -36,7 +36,7 @@ export const useCountdown = (): CountdownProps => {
     const allUsersWasPainters = users.filter(
       (user) => user.wasPainter === true || user.isPainting === true
     );
-    console.log(allUsersWasPainters, users.length);
+
     if (
       countdown === 90 &&
       allUsersWasPainters.length === users.length &&
@@ -53,7 +53,7 @@ export const useCountdown = (): CountdownProps => {
       return () => clearTimeout(timeoutCountdown);
     }
 
-    if (countdown === 90 && round < limitRound) {
+    if (countdown === 90 && round <= limitRound) {
       const timeoutCountdown = setTimeout(() => {
         ws.emit("new-painter", roomId);
         ws.emit("countdown-event", roomId);
