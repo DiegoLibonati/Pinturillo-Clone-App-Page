@@ -20,8 +20,8 @@ interface payload {
 // Define the initial state using that type
 const initialState: gameState = {
   messages: [{ author: "ROOM", message: "Welcome guys, have fun!" }],
-  round: 0,
-  limitRound: 2,
+  round: 1,
+  limitRound: 3,
   countdown: 90,
   word: {
     misteryWord: "",
@@ -46,8 +46,11 @@ export const gameSlice = createSlice({
     },
     resetGame: (state) => {
       state.messages = [{ author: "ROOM", message: "Welcome guys, have fun!" }];
-      state.round = 0;
+      state.round = 1;
       state.countdown = 90;
+      state.word.misteryWord = "";
+      state.word.uniqueLettersFromWord = [];
+      state.word.wordToGuess = "";
     },
     setCountdown: (state, action: PayloadAction<payload["countdown"]>) => {
       state.countdown = action.payload.countdown;
