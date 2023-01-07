@@ -22,10 +22,7 @@ export const CanvasTitle = () => {
       if (userPainting) {
         dispatch(
           setWord({
-            misteryWord:
-              round === 0
-                ? userPainting?.wordRoundZero
-                : userPainting?.wordRoundOne,
+            misteryWord: userPainting.words[round - 1],
           })
         );
       }
