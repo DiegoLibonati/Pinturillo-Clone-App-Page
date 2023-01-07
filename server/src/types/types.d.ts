@@ -7,18 +7,18 @@ export interface UserParams {
   isPainting?: Boolean;
   wasPainter?: Boolean;
   guessTheWord?: Boolean;
-  wordRoundZero?: string;
-  wordRoundOne?: string;
+  words?: Array<string>;
 }
 
 export interface RoomParams {
-  participants: UserParams[];
+  participants: Array<UserParams>;
   countdown: number;
   newPainterSetted: boolean;
   userPainting: UserParams;
   userWasAPainter: UserParams;
   userWasPainterId: string;
   roomIsStarted: boolean;
+  totalRounds: 3;
 }
 
 export interface MessageData {
