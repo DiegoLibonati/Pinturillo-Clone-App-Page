@@ -3,6 +3,8 @@ import { rooms } from "..";
 import { resetCountdown } from "./resetCountdown";
 
 export const getCountdown = (roomId: string, socket: Socket): void => {
+  if (!rooms[roomId]) return;
+
   let countdown = rooms[roomId].countdown;
 
   const interval = setInterval(
