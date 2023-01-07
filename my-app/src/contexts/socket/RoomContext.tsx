@@ -62,7 +62,9 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     ws.emit("start-game", roomId);
   };
 
-  const startGameRoom = (roomId: string) => {
+  const startGameRoom = (roomId: string, users: Array<User>) => {
+    const participants = users;
+    dispatch(setUsers({ participants }));
     navigate(`/pinturillo/game/${roomId}`);
   };
 
@@ -76,7 +78,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     user: User,
     userWasPainter: User
   ) => {
-    if (round < limitRound) {
+    if (round <= limitRound) {
       ws.emit("clear-canvas", roomId);
       dispatch(usersUpdatePainter({ users, user, userWasPainter }));
       dispatch(setCleanChat());
