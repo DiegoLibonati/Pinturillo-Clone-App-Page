@@ -38,8 +38,7 @@ const initialState: userState = {
     isPainting: false,
     wasPainter: false,
     guessTheWord: false,
-    wordRoundZero: "",
-    wordRoundOne: "",
+    words: [],
   },
   users: [],
   usersGuessed: [],
@@ -59,8 +58,19 @@ export const userSlice = createSlice({
       state.user.isOwner = true;
     },
     setUsers: (state, action: PayloadAction<payload["usersUpdate"]>) => {
-      console.log(action.payload);
       state.users = action.payload.participants;
+
+      state.users.map((user) => {
+        if (
+          user.userId === state.user.userId &&
+          state.user.words.length === 0 &&
+          user.words.length > 0
+        ) {
+          state.user.words = user.words;
+          return user;
+        }
+        return user;
+      });
     },
     setNewUser: (state, action: PayloadAction<User>) => {
       state.users.push(action.payload);
@@ -132,6 +142,7 @@ export const userSlice = createSlice({
       state.user.isPainting = false;
       state.user.wasPainter = false;
       state.user.guessTheWord = false;
+      state.user.words = [];
       state.users = [];
       state.usersGuessed = [];
     },
