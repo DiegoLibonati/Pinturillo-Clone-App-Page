@@ -23,8 +23,7 @@ export const onSubmitForm = (
       username: username,
       isAuth: true,
       score: 0,
-      wordRoundZero: "",
-      wordRoundOne: "",
+      words: [],
     })
   );
 };
