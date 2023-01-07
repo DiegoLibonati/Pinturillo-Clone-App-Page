@@ -4,13 +4,13 @@ import { resetCountdown } from "./resetCountdown";
 
 export const getCountdown = (roomId: string, socket: Socket): void => {
   if (!rooms[roomId]) return;
-
   let countdown = rooms[roomId].countdown;
 
   const interval = setInterval(
     () => {
-      countdown -= 1;
+      if (!rooms[roomId]) return clearInterval(interval);
 
+      countdown -= 1;
       if (countdown === 0) {
         resetCountdown(interval, roomId, socket);
       }
