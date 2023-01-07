@@ -6,9 +6,11 @@ export const resetCountdown = (
   roomId: string,
   socket: Socket
 ): (() => void) => {
+  if (!rooms[roomId]) return;
+
   clearInterval(interval);
 
-  if (rooms[roomId] && rooms[roomId].userWasPainterId) {
+  if (rooms[roomId].userWasPainterId) {
     const usersUpdate = rooms[roomId].participants.map((user) => {
       if (user.userId === rooms[roomId].userWasPainterId) {
         rooms[roomId].userWasAPainter = user;
