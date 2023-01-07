@@ -9,6 +9,8 @@ export const userGuessWord = (
   score: number,
   socket: Socket
 ): void => {
+  if (!rooms[roomId]) return;
+
   const { userId, message } = data;
 
   if (misteryWordToLowerCase === message.toLowerCase()) {
