@@ -2,6 +2,8 @@ import { Socket } from "socket.io";
 import { rooms } from "..";
 
 export const getNewPainter = (roomId: string, socket: Socket): void => {
+  if (!rooms[roomId]) return;
+
   let newPainterSetted = rooms[roomId].newPainterSetted;
   let userPainting = rooms[roomId].userPainting;
   let userWasAPainter = rooms[roomId].userWasAPainter;
