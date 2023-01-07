@@ -23,7 +23,7 @@ export const leaveRoom = (
 
   socket.to(roomId).emit("user-disconnect", { user });
 
-  if (roomParticipants.length === 0) {
+  if (rooms[roomId].participants.length === 1) {
     delete rooms[roomId];
   }
 };
