@@ -4,7 +4,7 @@ import { AuthRoutes } from "../auth/exports";
 import { UIContext } from "../contexts/exports";
 import { useAuth, useMediaMatch } from "../hooks/exports";
 import { PinturilloRoutes } from "../pinturillo/exports";
-import { Modal } from "../ui/exports";
+import { GuessWordModal, Modal } from "../ui/exports";
 import { MobileView } from "../views/exports";
 
 export const PinturilloRouter = () => {
@@ -12,12 +12,16 @@ export const PinturilloRouter = () => {
 
   const { matchMediaQuery } = useMediaMatch();
   const { modal } = useContext(UIContext);
+
   if (!matchMediaQuery) {
     return <MobileView></MobileView>;
   } else {
     return (
       <>
-        {modal.isOpen && <Modal></Modal>}
+        {modal.isOpen && modal.component === "modal" && <Modal></Modal>}
+        {modal.isOpen && modal.component === "guesswordmodal" && (
+          <GuessWordModal></GuessWordModal>
+        )}
         <Routes>
           {auth ? (
             <Route

@@ -1,7 +1,7 @@
 import uuid from "react-uuid";
 import { useAppDispatch, useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { useState, useContext } from "react";
-import { RoomContext } from "../../contexts/exports";
+import { RoomContext, UIContext } from "../../contexts/exports";
 import { useParams } from "react-router-dom";
 import { sendMessage } from "../exports";
 
@@ -9,6 +9,7 @@ export const ChatGame = () => {
   const [message, setMessage] = useState("");
 
   const { ws } = useContext(RoomContext);
+  const { setModalOpen } = useContext(UIContext);
 
   const dispatch = useAppDispatch();
 
@@ -44,7 +45,8 @@ export const ChatGame = () => {
               dispatch,
               countdown,
               users,
-              setMessage
+              setMessage,
+              setModalOpen
             )
           }
         >

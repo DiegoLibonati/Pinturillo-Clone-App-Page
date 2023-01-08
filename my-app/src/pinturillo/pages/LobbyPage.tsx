@@ -31,7 +31,8 @@ export const LobbyPage = () => {
     dispatch(resetGame());
     setModalOpen(
       "error",
-      `Room: ${roomId} already started, try to join later or try to join to another room`
+      `Room: ${roomId} already started, try to join later or try to join to another room`,
+      "modal"
     );
   };
 

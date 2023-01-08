@@ -8,12 +8,12 @@ export const onSubmitForm = (
   username: string,
   usernameValid: string,
   dispatch: Dispatch,
-  setModalOpen: (type: string, message: string) => void
+  setModalOpen: (type: string, message: string, component: string) => void
 ) => {
   e.preventDefault();
 
   if (!isFormValid) {
-    setModalOpen("error", usernameValid);
+    setModalOpen("error", usernameValid, "modal");
     return;
   }
 

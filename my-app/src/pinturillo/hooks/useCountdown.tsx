@@ -89,7 +89,8 @@ export const useCountdown = (): CountdownProps => {
       dispatch(resetGame());
       setModalOpen(
         "error",
-        `Room: ${roomId} was closed because there is only one user playing`
+        `Room: ${roomId} was closed because there is only one user playing`,
+        "modal"
       );
     }
     // eslint-disable-next-line

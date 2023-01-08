@@ -14,7 +14,8 @@ export const sendMessage = (
   dispatch: Dispatch,
   countdown: number,
   users: Array<User>,
-  setMessage: React.Dispatch<React.SetStateAction<string>>
+  setMessage: React.Dispatch<React.SetStateAction<string>>,
+  setModalOpen: (type: string, message: string, component: string) => void
 ): void => {
   e.preventDefault();
   const messageWordToLowerCase = message.toLowerCase();
@@ -33,11 +34,12 @@ export const sendMessage = (
   dispatch(setNewMessage({ author: user.username, message: message }));
 
   if (messageWordToLowerCase === misteryWordToLowerCase) {
-    const sumPoints = countdown * 0.5;
+    const sumPoints = Math.floor(countdown * 0.5);
 
     const newPoints = user?.score + sumPoints;
 
     new Audio(correct_sound).play();
+    setModalOpen("", sumPoints.toString(), "guesswordmodal");
 
     ws.emit("update-painter-score", roomId);
     ws.emit("user-guess-word", roomId, data, misteryWordToLowerCase, newPoints);
