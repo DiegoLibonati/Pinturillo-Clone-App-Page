@@ -1,5 +1,6 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import { Socket } from "socket.io-client";
+import { correct_sound } from "../../assets/exports";
 import { setNewMessage, updateScores } from "../../store/exports";
 import { User } from "../../types/types";
 
@@ -35,6 +36,8 @@ export const sendMessage = (
     const sumPoints = countdown * 0.5;
 
     const newPoints = user?.score + sumPoints;
+
+    new Audio(correct_sound).play();
 
     ws.emit("update-painter-score", roomId);
     ws.emit("user-guess-word", roomId, data, misteryWordToLowerCase, newPoints);

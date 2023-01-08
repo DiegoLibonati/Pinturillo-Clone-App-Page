@@ -15,6 +15,8 @@ import error from "./error.png";
 
 import logo_blanco_y_negro from "./dierillo-logos_white.png";
 
+import correct_sound from "./correct.mp3";
+
 export {
   logo,
   logo2,
@@ -28,4 +30,5 @@ export {
   loader,
   logo_blanco_y_negro,
   error,
+  correct_sound,
 };
