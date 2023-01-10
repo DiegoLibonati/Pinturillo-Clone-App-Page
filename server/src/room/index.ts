@@ -3,6 +3,7 @@ import { MessageData, RoomParams, UserParams } from "../types/types";
 import { clearCanvas } from "./helpers/clearCanvas";
 import { createRoom } from "./helpers/createRoom";
 import { deleteRoom } from "./helpers/deleteRoom";
+import { getAllUsers } from "./helpers/getAllUsers";
 import { getCanvasData } from "./helpers/getCanvasData";
 import { getCountdown } from "./helpers/getCountdown";
 import { getMessage } from "./helpers/getMessage";
@@ -50,4 +51,5 @@ export const roomHandler = (socket: Socket) => {
   );
 
   socket.on("reset-users-round", (roomId: string) => resetUsersRound(roomId));
+  socket.on("get-all-rooms", () => getAllUsers(socket));
 };

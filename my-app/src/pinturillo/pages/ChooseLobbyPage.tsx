@@ -1,7 +1,12 @@
 import { useContext } from "react";
 import { RoomContext, UIContext } from "../../contexts/exports";
 import { useForm } from "../../hooks/exports";
-import { formData, formValidations, onSubmitForm } from "../exports";
+import {
+  formData,
+  formValidations,
+  onSubmitForm,
+  getAnotherRooms,
+} from "../exports";
 import { NavBar } from "../../ui/exports";
 import { logo_blanco_y_negro } from "../../assets/exports";
 import "./ChooseLobbyPage.css";
@@ -13,7 +18,7 @@ export const ChooseLobbyPage = () => {
     formValidations
   );
 
-  const { createRoom } = useContext(RoomContext);
+  const { ws, createRoom } = useContext(RoomContext);
 
   const { setModalOpen } = useContext(UIContext);
 
@@ -47,7 +52,11 @@ export const ChooseLobbyPage = () => {
               onChange={(e) => onInputChange(e)}
             />
             <button type="submit">¡GO LOBBY!</button>
-            <Link to="" className="section_container_chooselobby_form_link">
+            <Link
+              to="/pinturillo/rooms"
+              className="section_container_chooselobby_form_link"
+              onClick={() => getAnotherRooms(ws)}
+            >
               ¡ANOTHER ROOMS!
             </Link>
           </form>

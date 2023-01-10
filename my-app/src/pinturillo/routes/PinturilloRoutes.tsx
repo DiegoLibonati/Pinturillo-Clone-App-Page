@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ChooseLobbyPage, GamePage, LobbyPage, ScoresPage } from "../exports";
+import { AnotherRooms } from "../pages/AnotherRooms";
 
 export const PinturilloRoutes = () => {
   return (
@@ -8,6 +9,11 @@ export const PinturilloRoutes = () => {
         <Route
           path="/pinturillo/index"
           element={<ChooseLobbyPage></ChooseLobbyPage>}
+        ></Route>
+
+        <Route
+          path="/pinturillo/rooms"
+          element={<AnotherRooms></AnotherRooms>}
         ></Route>
 
         <Route

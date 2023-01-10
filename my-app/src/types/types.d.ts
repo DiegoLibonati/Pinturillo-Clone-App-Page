@@ -1,6 +1,6 @@
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
 
-export interface User {
+export type User = {
   userId: string;
   username: string;
   isAuth: boolean;
@@ -10,20 +10,20 @@ export interface User {
   wasPainter?: boolean;
   guessTheWord?: boolean;
   words: Array<string>;
-}
+};
 
-export interface Message {
+export type Message = {
   author: string;
   message: string;
-}
+};
 
-export interface WordGuess {
+export type WordGuess = {
   misteryWord?: string;
   wordToGuess?: string;
   uniqueLettersFromWord?: Array<string>;
-}
+};
 
-export interface CanvasProps {
+export type CanvasProps = {
   color?: string;
   size?: number;
   canvasRef?: React.RefObject<HTMLCanvasElement>;
@@ -34,12 +34,17 @@ export interface CanvasProps {
   decreaseSize?: () => void;
   changeColor?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   clearCanvas?: () => void;
-}
+};
 
-export interface CountdownProps {
+export type CountdownProps = {
   countdown: number;
   setCountdown: ActionCreatorWithPayload<
     { countdown: number },
     "game/setCountdown"
   >;
-}
+};
+
+export type Rooms = {
+  roomId: string;
+  lengthParticipants: number;
+};

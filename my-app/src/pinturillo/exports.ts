@@ -9,6 +9,7 @@ export * from "./helpers/getSortMayorToMinor";
 export * from "./helpers/onSubmitForm";
 export * from "./helpers/sendMessage";
 export * from "./helpers/replaceChar";
+export * from "./helpers/getAnotherRooms";
 
 export * from "./hooks/useCanvas";
 export * from "./hooks/useCountdown";

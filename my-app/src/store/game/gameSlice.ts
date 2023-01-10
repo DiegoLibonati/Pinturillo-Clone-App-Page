@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Message, WordGuess } from "../../types/types";
+import { Message, Rooms, WordGuess } from "../../types/types";
 
 // Define a type for the slice state
 interface gameState {
@@ -9,12 +9,14 @@ interface gameState {
   limitRound: number;
   countdown: number;
   word: WordGuess;
+  rooms: Array<Rooms>;
 }
 
 interface payload {
   message: Message;
   word: WordGuess;
   countdown: { countdown: number };
+  rooms: Array<Rooms>;
 }
 
 // Define the initial state using that type
@@ -28,6 +30,7 @@ const initialState: gameState = {
     wordToGuess: "",
     uniqueLettersFromWord: [],
   },
+  rooms: [],
 };
 
 export const gameSlice = createSlice({
@@ -51,6 +54,7 @@ export const gameSlice = createSlice({
       state.word.misteryWord = "";
       state.word.uniqueLettersFromWord = [];
       state.word.wordToGuess = "";
+      state.rooms = [];
     },
     setCountdown: (state, action: PayloadAction<payload["countdown"]>) => {
       state.countdown = action.payload.countdown;
@@ -68,6 +72,9 @@ export const gameSlice = createSlice({
         state.word.wordToGuess = action.payload.wordToGuess;
       }
     },
+    setRoomsPage: (state, action: PayloadAction<payload["rooms"]>) => {
+      state.rooms = action.payload;
+    },
   },
 });
 
@@ -78,6 +85,7 @@ export const {
   resetGame,
   setWord,
   setCountdown,
+  setRoomsPage,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

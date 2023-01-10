@@ -8,6 +8,7 @@ import {
   setNewMessage,
   setNewUser,
   setOwnerUser,
+  setRoomsPage,
   setUsers,
   updateScores,
   usersUpdatePainter,
@@ -89,6 +90,12 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     dispatch(updateScores({ users, userId, score }));
   };
 
+  const setRooms = (
+    response: Array<{ roomId: string; lengthParticipants: number }>
+  ) => {
+    dispatch(setRoomsPage(response));
+  };
+
   useEffect(() => {
     ws.on("room-created", enterRoom);
     ws.on("get-users", getUsers);
@@ -99,6 +106,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     ws.on("new-message", getNewMessage);
     ws.on("new-painter", setNewPainter);
     ws.on("user-guess-word", setScores);
+    ws.on("get-all-rooms", setRooms);
 
     return () => {
       ws.off("room-created");
@@ -110,6 +118,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
       ws.off("new-message");
       ws.off("new-painter");
       ws.off("user-guess-word");
+      ws.off("get-all-rooms");
     };
     // eslint-disable-next-line
   }, []);
