@@ -5,6 +5,7 @@ import { formData, formValidations, onSubmitForm } from "../exports";
 import { NavBar } from "../../ui/exports";
 import { logo_blanco_y_negro } from "../../assets/exports";
 import "./ChooseLobbyPage.css";
+import { Link } from "react-router-dom";
 
 export const ChooseLobbyPage = () => {
   const { roomId, roomIdValid, onInputChange, isFormValid } = useForm(
@@ -46,6 +47,9 @@ export const ChooseLobbyPage = () => {
               onChange={(e) => onInputChange(e)}
             />
             <button type="submit">¡GO LOBBY!</button>
+            <Link to="" className="section_container_chooselobby_form_link">
+              ¡ANOTHER ROOMS!
+            </Link>
           </form>
         </section>
       </main>
