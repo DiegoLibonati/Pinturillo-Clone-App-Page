@@ -35,6 +35,7 @@ export const ChooseLobbyPage = () => {
             onSubmit={(e) =>
               onSubmitForm(
                 e,
+                ws,
                 isFormValid,
                 roomIdValid,
                 createRoom,

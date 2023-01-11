@@ -38,7 +38,7 @@ export const roomHandler = (socket: Socket) => {
 
   socket.on("clear-canvas", (roomId: string) => clearCanvas(roomId, socket));
 
-  socket.on("delete-room", (roomId: string) => deleteRoom(roomId));
+  socket.on("delete-room", (roomId: string) => deleteRoom(roomId, socket));
 
   socket.on(
     "user-guess-word",

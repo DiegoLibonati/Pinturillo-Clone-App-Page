@@ -1,10 +1,13 @@
+import { useContext } from "react";
+import { RoomContext } from "../../contexts/exports";
 import { useAppSelector } from "../../hooks/ReduxToolkitHooks";
 import { NavBar } from "../../ui/exports";
+import { handleJoinToAnotherRoom } from "../helpers/handleJoinToAnotherRoom";
 import "./AnotherRooms.css";
 
 export const AnotherRooms = () => {
   const { rooms } = useAppSelector((state) => state.game);
-
+  const { createRoom } = useContext(RoomContext);
   return (
     <>
       <NavBar></NavBar>
@@ -20,7 +23,13 @@ export const AnotherRooms = () => {
                   <div className="main_another_rooms_container_wrapper_room">
                     <h2>{room.roomId}</h2>
                     <h3>{room.lengthParticipants} Users ON</h3>
-                    <button>¡JOIN!</button>
+                    <button
+                      onClick={() =>
+                        handleJoinToAnotherRoom(room.roomId, createRoom)
+                      }
+                    >
+                      ¡JOIN!
+                    </button>
                   </div>
                 );
               })

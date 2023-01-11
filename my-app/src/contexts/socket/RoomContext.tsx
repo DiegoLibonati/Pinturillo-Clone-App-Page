@@ -94,6 +94,7 @@ export const RoomProvider: React.FunctionComponent<RoomContextProps> = ({
     response: Array<{ roomId: string; lengthParticipants: number }>
   ) => {
     dispatch(setRoomsPage(response));
+    console.log(response);
   };
 
   useEffect(() => {

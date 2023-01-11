@@ -1,5 +1,8 @@
+import { Socket } from "socket.io-client";
+
 export const onSubmitForm = (
   e: React.FormEvent<HTMLFormElement>,
+  ws: Socket,
   isFormValid: boolean,
   roomIdValid: string,
   createRoom: ({ roomId }: { roomId: string }) => void,
@@ -14,4 +17,5 @@ export const onSubmitForm = (
   }
 
   createRoom({ roomId: roomId });
+  ws.emit("get-all-rooms");
 };

@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
 import { rooms } from "..";
 import { UserParams } from "../../types/types";
+import { getAllUsers } from "./getAllUsers";
 import { leaveRoom } from "./leaveRoom";
 
 export const joinRoom = (
@@ -33,11 +34,13 @@ export const joinRoom = (
       participants: roomParticipants,
     });
     socket.to(roomId).emit("user-joined", { user });
+    getAllUsers(socket);
     console.log(`user joined the room: ${roomId} - ${user.userId}`);
   }
 
   socket.on("disconnect", () => {
     console.log("user left the room", user.userId);
+    getAllUsers(socket);
     leaveRoom(roomId, user, socket);
   });
 };

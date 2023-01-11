@@ -1,6 +1,8 @@
+import { Socket } from "socket.io";
 import { rooms } from "..";
+import { getAllUsers } from "./getAllUsers";
 
-export const deleteRoom = (roomId: string): void => {
+export const deleteRoom = (roomId: string, socket: Socket): void => {
   if (!rooms[roomId]) return;
 
   rooms[roomId] = {
@@ -15,4 +17,5 @@ export const deleteRoom = (roomId: string): void => {
     totalRounds: 3,
   };
   delete rooms[roomId];
+  getAllUsers(socket);
 };

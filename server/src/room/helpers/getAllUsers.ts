@@ -12,10 +12,10 @@ export const getAllUsers = (socket: Socket) => {
           lengthParticipants: rooms[key].participants.length,
         };
 
-        response.push(objectRoom);
+        if (objectRoom.lengthParticipants > 0) response.push(objectRoom);
       }
     }
-
     socket.emit("get-all-rooms", response);
+    socket.broadcast.emit("get-all-rooms", response);
   }
 };

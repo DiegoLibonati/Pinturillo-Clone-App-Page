@@ -1,5 +1,6 @@
 import { Socket } from "socket.io";
 import { rooms } from "..";
+import { getAllUsers } from "./getAllUsers";
 import { randomWords } from "./randomWords";
 
 const listWords = [
@@ -722,7 +723,7 @@ const listWords = [
 
 export const startGameRoom = (roomId: string, socket: Socket): void => {
   if (!rooms[roomId]) return;
-
+  getAllUsers(socket);
   let roomParticipants = rooms[roomId].participants;
 
   if (roomParticipants) {
@@ -735,7 +736,5 @@ export const startGameRoom = (roomId: string, socket: Socket): void => {
     });
 
     socket.to(roomId).emit("start-game-room", roomId, roomParticipants);
-
-    if (!rooms[roomId].roomIsStarted) rooms[roomId].roomIsStarted = true;
   }
 };

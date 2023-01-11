@@ -1,5 +1,6 @@
 import { Socket } from "socket.io";
 import { rooms } from "..";
+import { getAllUsers } from "./getAllUsers";
 export const createRoom = (roomId: string, socket: Socket): void => {
   if (rooms[roomId]) return;
 
@@ -15,5 +16,6 @@ export const createRoom = (roomId: string, socket: Socket): void => {
     totalRounds: 3,
   };
   socket.emit("room-created", { roomId });
+  getAllUsers(socket);
   console.log(`ROOM CREATED: ${roomId}`);
 };
